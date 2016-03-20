@@ -1,0 +1,11 @@
+---
+# This playbook configures the guest OS as Vagrant creates the VMs.
+- name: Common configuration
+  hosts: all
+  roles:
+    - role: common-packages
+
+- name: Local Time Server
+  hosts: pc-192.168.47.10
+  roles:
+    - role: ntpserver
