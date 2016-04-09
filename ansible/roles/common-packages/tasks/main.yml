@@ -1,20 +1,16 @@
 ---
 # tasks file for common-packages
 - name: Install screen package
-  apt: name=screen state=present
-  when: ansible_distribution == "Ubuntu"
+  yum: name=screen state=present
   become: True
 - name: Install strace package
-  apt: name=strace state=present
-  when: ansible_distribution == "Ubuntu"
+  yum: name=strace state=present
   become: True
 - name: Install sysstat package
-  apt: name=sysstat state=present
-  when: ansible_distribution == "Ubuntu"
+  yum: name=sysstat state=present
   become: True
 - name: Install vim
-  apt: name=vim state=present
-  when: ansible_distribution == "Ubuntu"
+  yum: name=vim state=present
   become: True
 # These are commented out because I keep forgetting about mtr and should really
 # spend some time learning to use it.
