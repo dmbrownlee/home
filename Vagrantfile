@@ -15,12 +15,12 @@ Vagrant.configure(2) do |config|
 
   # Note: 192.168.56.200 is the virtualbox host's adapter
 
-  # First infrastructure server on the network
-  config.vm.define "pc-192.168.56.10" do |node|
-    node.vm.hostname = "player1"
-    node.vm.network "private_network", ip: "192.168.56.10"
+  # .1 is a nice traditional value for a nameserver
+  config.vm.define "pc-192.168.56.1" do |node|
+    node.vm.hostname = "dns1"
+    node.vm.network "private_network", ip: "192.168.56.1"
     node.vm.provider "virtualbox" do |vb|
-      vb.name = "pc-192.168.56.10"
+      vb.name = "pc-192.168.56.1"
     end
   end
 
