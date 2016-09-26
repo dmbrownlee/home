@@ -3,10 +3,11 @@
 
 Vagrant.configure(2) do |config|
   config.ssh.private_key_path= "../keys/vagrant"
+  config.ssh.pty = true
   # Common to all VMs
-  config.vm.box = "ubuntu-15.10-server-amd64"
+  config.vm.box = "CentOS-7-x86_64-Everything-1511"
   config.vm.boot_timeout = 60
-  config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.synced_folder ".", "/vagrant", disabled: false
 
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "ansible/playbook.yml"
@@ -23,7 +24,6 @@ Vagrant.configure(2) do |config|
 
   # Workstation for testing network services
   config.vm.define "pc-192.168.47.100" do |node|
-    node.vm.box = "ubuntu-15.10-desktop-amd64"
     node.vm.hostname = "workstation"
     node.vm.network "private_network", ip: "192.168.47.100"
     node.vm.provider "virtualbox" do |vb|
