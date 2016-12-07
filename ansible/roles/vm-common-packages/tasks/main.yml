@@ -1,0 +1,13 @@
+---
+# Install packages
+- name: Upgrade existing packages
+  yum: name=* state=latest
+  become: yes
+- name: Installing common packages
+  yum: name={{ item }} state=present
+  become: yes
+  with_items:
+    - screen
+    - strace
+    - sysstat
+    - vim

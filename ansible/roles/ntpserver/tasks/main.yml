@@ -1,6 +1,0 @@
----
-# tasks file for ntpserver
-- name: Install ntp package
-  apt: name=ntp state=present
-  become: True
-  when: ansible_distribution == "Ubuntu"
