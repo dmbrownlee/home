@@ -11,3 +11,6 @@
     - strace
     - sysstat
     - vim
+    - net-tools
+    - mtr
+    - bash-completion
