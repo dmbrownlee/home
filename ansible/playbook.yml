@@ -4,3 +4,8 @@
   hosts: all
   roles:
     - role: vm-common-packages
+
+- name: ks configuration
+  hosts: ks
+  roles:
+    - role: vm-vertical-monitor
