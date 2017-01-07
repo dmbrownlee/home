@@ -2,6 +2,8 @@
 # tasks file for vm-vertical-monitor
 #- name: Configuring virtical virtual consoles
 - name: Configuring virtical virtual consoles
-  command: /bin/sed -i -r -e 's/^GRUB_CMDLINE_LINUX="(.*)"$/GRUB_CMDLINE_LINUX="\1 fbcon=rotate:3"' /etc/sysconfig/grub
+  command: /bin/sed -i -r -e 's/^GRUB_CMDLINE_LINUX="(.*)"$/GRUB_CMDLINE_LINUX="\1 fbcon=rotate:3"/' /etc/sysconfig/grub
+  become: yes
 - command: grub2-mkconfig -o /boot/grub2/grub.cfg
+  become: yes
   
