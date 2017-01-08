@@ -1,0 +1,39 @@
+--
+# Use the RPMs from cert
+- name: Add EPEL and CERT repos
+  yum: name={{ item }} state=present
+  with_items:
+  - "epel-release"
+  - "https://forensics.cert.org/cert-forensics-tools-release-el7.rpm"
+  become: yes
+#- name: Add the CERT forensics tools
+#  yum: name={{ item }} state=present
+#  with_items:
+#  - "https://forensics.cert.org/centos/cert/7/x86_64/"
+#  become: yes
+# The following sites will be indispensible if you want to build these RPMs
+# yourself from source:
+#
+# https://forensics.cert.org/
+# https://tools.netsa.cert.org/silk/silk-install-handbook.html
+# https://wiki.polaire.nl/doku.php?id=flowviewer_centos7
+#
+# tasks file for vm-silk-build
+# - name: Install development tools
+#   yum: name={{ item }} state=present
+#   with_items:
+#   - "@Development tools"
+#   - "glib2-devel"
+#   - "zlib"
+#   - "zlib-devel"
+#   - "lzo"
+#   - "lzo-devel"
+#   - "libpcap"
+#   - "libpcap-devel"
+#   - "gnutls"
+#   - "gnutls-devel"
+#   - "python-devel"
+#   - "c-ares"
+#   - "c-ares-devel"
+#   - "openssl-devel "
+#   become: yes
