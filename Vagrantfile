@@ -42,12 +42,12 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  # VM for testing kickstart installs for home server
-  config.vm.define "ks" do |node|
+  # VM for testing kickstart installs for the d1 host
+  config.vm.define "d1.home.test" do |node|
     node.vm.box = "CentOS-7-x86_64-minimal-1511"
-    node.vm.hostname = "ks"
+    node.vm.hostname = "d1.host.test"
     node.vm.provider "virtualbox" do |vb|
-      vb.name = "ks"
+      vb.name = "d1.home.test"
       vb.memory = 8192
       vb.cpus = 2
       vb.gui = true
@@ -70,13 +70,13 @@ Vagrant.configure(2) do |config|
         puts e
         puts e.message
       end
-      vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", 0, "--device", 0, "--type", "hdd", "--medium", "/Users/dmb/VirtualBox VMs/ks/CentOS-7-x86_64-Minimal-1511-disk1.vmdk"]
+      vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", 0, "--device", 0, "--type", "hdd", "--medium", "/Users/dmb/VirtualBox VMs/d1.home.test/CentOS-7-x86_64-Minimal-1511-disk1.vmdk"]
       # Create and attach two more drives to mimic the drives in the
       # physical workstation
-      vb.customize ["createmedium", "disk", "--filename", "/Users/dmb/VirtualBox VMs/ks/CentOS-7-x86_64-Minimal-1511-disk2.vmdk", "--size", 40000, "--format", "VMDK"]
-      vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", 1, "--device", 0, "--type", "hdd", "--medium", "/Users/dmb/VirtualBox VMs/ks/CentOS-7-x86_64-Minimal-1511-disk2.vmdk"]
-      vb.customize ["createmedium", "disk", "--filename", "/Users/dmb/VirtualBox VMs/ks/CentOS-7-x86_64-Minimal-1511-disk3.vmdk", "--size", 40000, "--format", "VMDK"]
-      vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", 2, "--device", 0, "--type", "hdd", "--medium", "/Users/dmb/VirtualBox VMs/ks/CentOS-7-x86_64-Minimal-1511-disk3.vmdk"]
+      vb.customize ["createmedium", "disk", "--filename", "/Users/dmb/VirtualBox VMs/d1.home.test/CentOS-7-x86_64-Minimal-1511-disk2.vmdk", "--size", 40000, "--format", "VMDK"]
+      vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", 1, "--device", 0, "--type", "hdd", "--medium", "/Users/dmb/VirtualBox VMs/d1.home.test/CentOS-7-x86_64-Minimal-1511-disk2.vmdk"]
+      vb.customize ["createmedium", "disk", "--filename", "/Users/dmb/VirtualBox VMs/d1.home.test/CentOS-7-x86_64-Minimal-1511-disk3.vmdk", "--size", 40000, "--format", "VMDK"]
+      vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", 2, "--device", 0, "--type", "hdd", "--medium", "/Users/dmb/VirtualBox VMs/d1.home.test/CentOS-7-x86_64-Minimal-1511-disk3.vmdk"]
     end
   end
 end
