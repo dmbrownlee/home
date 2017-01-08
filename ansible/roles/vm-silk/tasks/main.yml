@@ -1,4 +1,4 @@
---
+---
 # Use the RPMs from cert
 - name: Add EPEL and CERT repos
   yum: name={{ item }} state=present
@@ -6,6 +6,9 @@
   - "epel-release"
   - "https://forensics.cert.org/cert-forensics-tools-release-el7.rpm"
   become: yes
+- rpm_key:
+    state: present
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-cert-forensics-2018-04-07
 #- name: Add the CERT forensics tools
 #  yum: name={{ item }} state=present
 #  with_items:
