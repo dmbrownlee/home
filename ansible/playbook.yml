@@ -5,7 +5,8 @@
   roles:
     - role: vm-common-packages
 
-- name: ks configuration
-  hosts: ks
+- name: d1 configuration
+  hosts: d1.home.test
   roles:
     - role: vm-vertical-monitor
+    - role: vm-silk
