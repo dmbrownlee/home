@@ -19,30 +19,16 @@
   - "silk-rwflowpack"
   - "silk-rwreceiver"
   - "silk-rwsender"
+  - "yaf"
+  - "super_mediator"
   become: yes
-# The following sites will be indispensible if you want to build these RPMs
-# yourself from source:
-#
-# https://forensics.cert.org/
-# https://tools.netsa.cert.org/silk/silk-install-handbook.html
-# https://wiki.polaire.nl/doku.php?id=flowviewer_centos7
-#
-# tasks file for vm-silk-build
-# - name: Install development tools
-#   yum: name={{ item }} state=present
-#   with_items:
-#   - "@Development tools"
-#   - "glib2-devel"
-#   - "zlib"
-#   - "zlib-devel"
-#   - "lzo"
-#   - "lzo-devel"
-#   - "libpcap"
-#   - "libpcap-devel"
-#   - "gnutls"
-#   - "gnutls-devel"
-#   - "python-devel"
-#   - "c-ares"
-#   - "c-ares-devel"
-#   - "openssl-devel "
-#   become: yes
+- name: Download sample flow data
+  get_url:
+    url: http://tools.netsa.cert.org/silk/refdata/FCCX-silk.tar.gz
+    dest: /root/FCCX-silk.tar.gz
+  become: yes
+- name: Download sample pcap data
+  get_url:
+    url: http://tools.netsa.cert.org/silk/refdata/FCCX-pcap.tar.gz
+    dest: /root/FCCX-pcap.tar.gz
+  become: yes
