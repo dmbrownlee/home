@@ -22,13 +22,23 @@
   - "yaf"
   - "super_mediator"
   become: yes
-- name: Download sample flow data
-  get_url:
-    url: http://tools.netsa.cert.org/silk/refdata/FCCX-silk.tar.gz
-    dest: /root/FCCX-silk.tar.gz
-  become: yes
-- name: Download sample pcap data
-  get_url:
-    url: http://tools.netsa.cert.org/silk/refdata/FCCX-pcap.tar.gz
-    dest: /root/FCCX-pcap.tar.gz
-  become: yes
+# - name: Download sample flow data
+#   unarchive:
+#     src: http://tools.netsa.cert.org/silk/refdata/FCCX-silk.tar.gz
+#     dest: /root
+#     remote_src: yes
+#     mode: 0755
+#     owner: root
+#     group: root
+#     creates: /root/FCCX-silk
+#   become: yes
+# - name: Download sample pcap data
+#   unarchive:
+#     src: http://tools.netsa.cert.org/silk/refdata/FCCX-pcap.tar.gz
+#     dest: /root
+#     remote_src: yes
+#     mode: 0755
+#     owner: root
+#     group: root
+#     creates: /root/FCCX-data
+#   become: yes
