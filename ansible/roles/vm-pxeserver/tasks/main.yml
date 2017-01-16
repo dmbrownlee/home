@@ -1,0 +1,74 @@
+---
+# tasks file for vm-pxeserver
+- name: Install packages for DNS, DHCP, PXE server
+  yum: name={{ item }} state=present
+  become: yes
+  with_items:
+    - dnsmasq
+    - syslinux
+    - tftp-server
+    - vsftpd
+- name: Edit /etc/dnsmasq.conf
+  template:
+    src: dnsmasq.conf.js
+    dest: /etc/dnsmasq.conf
+    backup: yes
+  become: yes
+- name: Copy syslinux files to TFTP directory
+  copy:
+    src: /usr/share/syslinux/
+    dest: /var/lib/tftpboot/
+    remote_src: yes
+  become: yes
+# The assumption is it will be faster to copy the ISO from the local
+# control machine than from the Internet.
+- name: Copy ISO to control machine (if it doesn't already exist)
+  local_action: get_url url="http://centos.s.uw.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Everything-1611.iso" dest="/Users/dmb/Downloads/CentOS-7-x86_64-Everything-1611.iso" sha256sum="af4969ebbdc479d330de97c5bfbb37eedc64c369f009cb15a97f9553ba441c88"
+- name: Copy ISO from control machine to remote
+  copy:
+    src: "/Users/dmb/Downloads/CentOS-7-x86_64-Everything-1611.iso"
+    dest: "/root/CentOS-7-x86_64-Everything-1611.iso"
+  become: yes
+- name: Mount the ISO image
+  command: mount -o loop /root/CentOS-7-x86_64-Everything-1611.iso /mnt
+  become: yes
+- name: Make PXE boot directories
+  command: mkdir /var/lib/tftpboot/pxelinux.cfg /var/lib/tftpboot/centos7
+  become: yes
+- name: Create PXE default menu
+  copy:
+    src: default
+    dest: /var/lib/tftpboot/pxelinux.cfg/default
+  become: yes
+- name: Copy kernel from CentOS ISO to TFTP directory
+  copy:
+    src: /mnt/images/pxeboot/vmlinuz
+    dest: /var/lib/tftpboot/centos7/vmlinuz
+  become: yes
+- name: Copy initrd.img from CentOS ISO to TFTP directory
+  copy:
+    src: /mnt/images/pxeboot/initrd.img
+    dest: /var/lib/tftpboot/centos7/initrd.img
+  become: yes
+- name: Copy ISO contents to FTP pub directory
+  command: cp -r /mnt/* /var/ftp/pub/
+  become: yes
+- name: Enable and start services
+  service: name={{ item }} enabled=yes state=started
+  become: yes
+  with_items:
+    - dnsmasq
+    - vsftpd
+- name: Update firewall services
+  firewalld: service={{ item }} state=enabled permanent=yes immediate=yes
+  become: yes
+  with_items:
+    - ftp
+    - dns
+    - dhcp
+- name: Update firewall ports
+  firewalld: port={{ item }} state=enabled permanent=yes immediate=yes
+  become: yes
+  with_items:
+    - 69/udp
+    - 4011/udp

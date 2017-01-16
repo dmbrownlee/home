@@ -10,3 +10,5 @@
   roles:
     - role: vm-vertical-monitor
     - role: vm-silk
+    - role: vm-dhcp-to-static
+    - role: vm-pxeserver

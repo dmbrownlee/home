@@ -1,0 +1,44 @@
+---
+# tasks file for vm-dhcp-to-static
+- name: Change host to using static address
+  replace:
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ hostvars['localhost'].ansible_default_ipv4.alias }}
+    regexp: 'BOOTPROTO=dhcp'
+    replace: 'BOOTPROTO=none'
+  become: yes
+- replace:
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ hostvars['localhost'].ansible_default_ipv4.alias }}
+    regexp: 'IPV6INIT=yes'
+    replace: 'IPV6INIT=no'
+  become: yes
+- replace:
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ hostvars['localhost'].ansible_default_ipv4.alias }}
+    regexp: 'IPV4_FAILURE_FATAL=no'
+    replace: 'IPV4_FAILURE_FATAL=yes'
+  become: yes
+- replace:
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ hostvars['localhost'].ansible_default_ipv4.alias }}
+    regexp: 'PEERDNS=yes'
+    replace: 'PEERDNS=no'
+  become: yes
+- replace:
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ hostvars['localhost'].ansible_default_ipv4.alias }}
+    regexp: 'PEERROUTES=yes'
+    replace: 'PEERROUTES=no'
+  become: yes
+- lineinfile:
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ hostvars['localhost'].ansible_default_ipv4.alias }}
+    line: "IPADDR={{ hostvars['localhost'].ansible_default_ipv4.address }}"
+  become: yes
+- lineinfile:
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ hostvars['localhost'].ansible_default_ipv4.alias }}
+    line: 'PREFIX=24'
+  become: yes
+- lineinfile:
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ hostvars['localhost'].ansible_default_ipv4.alias }}
+    line: "GATEWAY={{ hostvars['localhost'].ansible_default_ipv4.gateway }}"
+  become: yes
+- lineinfile:
+    dest: /etc/sysconfig/network-scripts/ifcfg-{{ hostvars['localhost'].ansible_default_ipv4.alias }}
+    line: "DNS1={{ hostvars['localhost'].ansible_dns.nameservers[0] }}"
+  become: yes
