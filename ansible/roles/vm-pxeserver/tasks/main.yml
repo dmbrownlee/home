@@ -22,8 +22,15 @@
 - name: Mount the ISO image
   command: mount -o loop /root/CentOS-7-x86_64-Everything-1611.iso /mnt
   become: yes
-- name: Make PXE boot directories
-  command: mkdir /var/lib/tftpboot/pxelinux.cfg /var/lib/tftpboot/centos7
+- name: Make /var/lib/tftpboot/pxelinux.cfg
+  file:
+    path: /var/lib/tftpboot/pxelinux.cfg
+    state: directory
+  become: yes
+- name: Make /var/lib/tftpboot/centos7
+  file:
+    path: /var/lib/tftpboot/centos7
+    state: directory
   become: yes
 - name: Create PXE default menu
   copy:
