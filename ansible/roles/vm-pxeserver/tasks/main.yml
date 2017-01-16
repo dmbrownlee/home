@@ -15,7 +15,7 @@
     backup: yes
   become: yes
 - name: Copy syslinux files to TFTP directory
-  command: cp -r /usr/share/syslinux/* /var/lib/tftpboot/
+  command: rsync -avPS /usr/share/syslinux/ /var/lib/tftpboot/
   become: yes
 - name: Copy CentOS 7 ISO to localhost
   local_action: get_url url="http://centos.s.uw.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Everything-1611.iso" dest="/root/CentOS-7-x86_64-Everything-1611.iso" sha256sum="af4969ebbdc479d330de97c5bfbb37eedc64c369f009cb15a97f9553ba441c88"
