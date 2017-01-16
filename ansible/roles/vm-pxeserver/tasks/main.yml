@@ -15,10 +15,7 @@
     backup: yes
   become: yes
 - name: Copy syslinux files to TFTP directory
-  copy:
-    src: /usr/share/syslinux/
-    dest: /var/lib/tftpboot/
-    remote_src: yes
+  command: cp -r /usr/share/syslinux/* /var/lib/tftpboot/
   become: yes
 # The assumption is it will be faster to copy the ISO from the local
 # control machine than from the Internet.
