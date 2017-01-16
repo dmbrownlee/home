@@ -2,7 +2,7 @@ interface={{ ansible_default_ipv4.interface }}
 #bind-interfaces
 domain={{ ansible_domain }}
 # DHCP range-leases
-dhcp-range= {{ ansible_default_ipv4.interface }},192.168.42.100,192.168.42.199,{{ ansible_default_ipv4.broadcast }},1h
+dhcp-range= {{ ansible_default_ipv4.interface }},{{ ansible_default_ipv4.network }}-MIN,{{ ansible_default_ipv4.network }}-MAX,{{ ansible_default_ipv4.netmask }},1h
 # PXE
 dhcp-boot=pxelinux.0,pxeserver,{{ ansible_default_ipv4.address }}
 # Gateway

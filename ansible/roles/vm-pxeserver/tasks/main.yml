@@ -8,11 +8,23 @@
     - syslinux
     - tftp-server
     - vsftpd
-- name: Edit /etc/dnsmasq.conf
+- name: Create /etc/dnsmasq.conf from template
   template:
     src: dnsmasq.conf.js
     dest: /etc/dnsmasq.conf
     backup: yes
+  become: yes
+- name: Set lower bound of dynamic IP address pool
+  replace:
+    dest: /etc/dnsmasq.conf
+    regexp: '0-MIN'
+    replace: '100'
+  become: yes
+- name: Set upper bound of dynamic IP address pool
+  replace:
+    dest: /etc/dnsmasq.conf
+    regexp: '0-MAX'
+    replace: '199'
   become: yes
 - name: Copy syslinux files to TFTP directory
   command: rsync -avPS /usr/share/syslinux/ /var/lib/tftpboot/
