@@ -78,5 +78,5 @@
   mount:
     name: /centos7
     src: /root/CentOS-7-x86_64-Everything-1611.iso
-    state: unmounted
+    state: absent
   become: yes
