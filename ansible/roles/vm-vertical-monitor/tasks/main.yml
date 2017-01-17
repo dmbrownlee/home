@@ -3,7 +3,7 @@
 #- name: Configuring vertical virtual consoles
 - name: Configuring vertical virtual consoles
   replace:
-    dest: /etc/sysconfig/grub
+    dest: /etc/default/grub
     regexp: '^GRUB_CMDLINE_LINUX="(.*[^3])"$'
     replace: 'GRUB_CMDLINE_LINUX="\1 fbcon=rotate:3"'
   become: yes
