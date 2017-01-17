@@ -13,35 +13,6 @@ Vagrant.configure(2) do |config|
     ansible.playbook = "ansible/playbook.yml"
   end
 
-  # Note: 192.168.56.200 is the virtualbox host's adapter
-
-  # .1 is a nice traditional value for a nameserver
-  config.vm.define "pc-192.168.56.1" do |node|
-    node.vm.hostname = "dns1"
-    node.vm.network "private_network", ip: "192.168.56.1"
-    node.vm.provider "virtualbox" do |vb|
-      vb.name = "pc-192.168.56.1"
-    end
-  end
-
-  # Workstation for testing network services
-  config.vm.define "pc-192.168.56.100" do |node|
-    node.vm.hostname = "workstation"
-    node.vm.network "private_network", ip: "192.168.56.100"
-    node.vm.provider "virtualbox" do |vb|
-      vb.name = "pc-192.168.56.100"
-    end
-  end
-
-  # Default Gateway (NAT Firewall)
-  config.vm.define "pc-192.168.56.254" do |node|
-    node.vm.hostname = "defaultgw"
-    node.vm.network "private_network", ip: "192.168.56.254"
-    node.vm.provider "virtualbox" do |vb|
-      vb.name = "pc-192.168.56.254"
-    end
-  end
-
   # VM to emulate NetGear router on home network
   config.vm.define "netgear" do |node|
     node.vm.box = "CentOS-7-x86_64-minimal-1511"
