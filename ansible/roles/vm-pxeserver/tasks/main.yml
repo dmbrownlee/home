@@ -45,7 +45,7 @@
     dest: /var/lib/tftpboot/pxelinux.cfg/default
   become: yes
 - name: Enable and start services
-  service: name={{ item }} enabled=yes state=started
+  service: name={{ item }} enabled=yes
   become: yes
   with_items:
     - dnsmasq
