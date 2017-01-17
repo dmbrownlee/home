@@ -6,7 +6,7 @@ menu title ########## PXE Boot Menu ##########
 label 1
 menu label ^1) Install CentOS 7 x64 with Local Repo
 kernel centos7/vmlinuz
-append initrd=centos7/initrd.img method=ftp://192.168.1.20/pub devfs=nomount
+append initrd=centos7/initrd.img method=ftp://{{ ansible_default_ipv4.address }}/pub devfs=nomount
 label 2
 menu label ^2) Install CentOS 7 x64 with http://mirror.centos.org Repo
 kernel centos7/vmlinuz

@@ -40,8 +40,8 @@
     state: directory
   become: yes
 - name: Create PXE default menu
-  copy:
-    src: default
+  template:
+    src: default.js
     dest: /var/lib/tftpboot/pxelinux.cfg/default
   become: yes
 - name: Enable and start services
