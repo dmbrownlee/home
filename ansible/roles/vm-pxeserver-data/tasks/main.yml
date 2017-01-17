@@ -1,0 +1,31 @@
+---
+# tasks file for vm-pxeserver-data
+- name: Copy CentOS 7 ISO to localhost
+  local_action: get_url url="http://centos.s.uw.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Everything-1611.iso" dest="/root/CentOS-7-x86_64-Everything-1611.iso" sha256sum="af4969ebbdc479d330de97c5bfbb37eedc64c369f009cb15a97f9553ba441c88"
+- name: Mount the ISO image
+  mount:
+    name: /centos7
+    src: /root/CentOS-7-x86_64-Everything-1611.iso
+    fstype: iso9660
+    opts: ro,loop
+    state: mounted
+  become: yes
+- name: Copy kernel from CentOS ISO to TFTP directory
+  copy:
+    src: /centos7/images/pxeboot/vmlinuz
+    dest: /var/lib/tftpboot/centos7/vmlinuz
+  become: yes
+- name: Copy initrd.img from CentOS ISO to TFTP directory
+  copy:
+    src: /centos7/images/pxeboot/initrd.img
+    dest: /var/lib/tftpboot/centos7/initrd.img
+  become: yes
+- name: Copy ISO contents to FTP pub directory
+  command: rsync -avPS /centos7/ /var/ftp/pub/
+  become: yes
+- name: Unmount the ISO image
+  mount:
+    name: /centos7
+    src: /root/CentOS-7-x86_64-Everything-1611.iso
+    state: absent
+  become: yes

@@ -1,0 +1,8 @@
+---
+# This playbook downloads the ISO and copies the files to the TFTP root
+# for the PXE server.  It is separate from the main install because
+# downloading the 8GB ISO is slow.
+- name: Fetch ISOs and install to TFTP directory
+  hosts: d1.home.test
+  roles:
+    - role: vm-pxeserver-data
