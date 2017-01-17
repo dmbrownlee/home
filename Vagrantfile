@@ -42,6 +42,37 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  # VM to emulate NetGear router on home network
+  config.vm.define "netgear" do |node|
+    node.vm.box = "CentOS-7-x86_64-minimal-1511"
+    node.vm.hostname = "netgear.home.test"
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "netgear"
+      vb.memory = 1024
+      vb.cpus = 1
+      vb.gui = true
+      vb.customize ["modifyvm", :id, "--nic1", "nat", "--cableconnected1", "on", "--nicpromisc1", "allow-vms"]
+      vb.customize ["modifyvm", :id, "--nic2", "intnet", "--cableconnected2", "on", "--nicpromisc2", "allow-vms", "--intnet2", "home.test"]
+      vb.customize ["modifyvm", :id, "--ostype", "RedHat_64"]
+      vb.customize ["modifyvm", :id, "--vrde", "off"]
+      # Detach the hdd created by Vagrant from the IDE controller
+      vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", 0, "--device", 0, "--medium", "none"]
+      # Add a DVD drive to the IDE controller (do NOT insert disk)
+      # and change boot order to boot from the ISO image.
+      vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", 0, "--device", 0, "--type", "dvddrive", "--medium", "emptydrive"]
+      vb.customize ["modifyvm", :id, "--boot1", "dvd"]
+      vb.customize ["modifyvm", :id, "--boot2", "disk"]
+      # Add a SATA controller and reattach default disk to it
+      begin
+        vb.customize ["storagectl", :id, "--name", "SATA Controller", "--add", "sata"]
+        rescue   => e
+        puts e
+        puts e.message
+      end
+      vb.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", 0, "--device", 0, "--type", "hdd", "--medium", "/Users/dmb/VirtualBox VMs/netgear/CentOS-7-x86_64-Minimal-1511-disk1.vmdk"]
+    end
+  end
+
   # VM for testing kickstart installs for the d1 host
   config.vm.define "d1.home.test" do |node|
     node.vm.box = "CentOS-7-x86_64-minimal-1511"
