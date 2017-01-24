@@ -1,0 +1,36 @@
+---
+# tasks file for vm-netgear interfaces
+- name: install needed network manager libs
+  yum:
+    name: '{{ item }}'
+    state: installed
+  with_items:
+    - NetworkManager-glib
+  become: yes
+- name: Enable NetworkManager
+  service:
+    name: NetworkManager
+    state: started
+    enabled: yes
+  become: yes
+- name: Configure NetworkManager connection for first interface
+  nmcli:
+    ifname: enp0s3
+    type: ethernet
+    conn_name: enp0s3
+    state: present
+    autoconnect: yes
+  become: yes
+- name: Do not use IPv6
+  command: nmcli c mod {{ item }} ipv6.method ignore
+  with_items:
+    - enp0s3
+  become: yes
+- name: Use NetworkManager to configure zone for interface on home network
+  command: nmcli c mod enp0s3 connection.zone home
+  become: yes
+- name: Enable NetworkManager
+  service:
+    name: NetworkManager
+    state: restarted
+  become: yes

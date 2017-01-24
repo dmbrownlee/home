@@ -1,5 +1,5 @@
 ---
-# handlers file for vm-vertical-monitor
+# handlers file for vm-d1
 - name: grub2-mkconfig
   command: grub2-mkconfig -o /boot/grub2/grub.cfg
   become: yes

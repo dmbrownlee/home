@@ -1,0 +1,7 @@
+---
+# tasks file for vm-d1
+- include: interfaces.yml
+- include: firewall.yml
+- include: dnsmasq.yml
+- include: pxeserver.yml
+- include: vertical-monitor.yml

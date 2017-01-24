@@ -1,31 +1,12 @@
 ---
-# tasks file for vm-pxeserver
+# tasks file for vm-d1 pxeserver
 - name: Install packages for DNS, DHCP, PXE server
   yum: name={{ item }} state=present
   become: yes
   with_items:
-    - dnsmasq
     - syslinux
     - tftp-server
     - vsftpd
-- name: Create /etc/dnsmasq.conf from template
-  template:
-    src: dnsmasq.conf.js
-    dest: /etc/dnsmasq.conf
-    backup: yes
-  become: yes
-- name: Set lower bound of dynamic IP address pool
-  replace:
-    dest: /etc/dnsmasq.conf
-    regexp: '0-MIN'
-    replace: '100'
-  become: yes
-- name: Set upper bound of dynamic IP address pool
-  replace:
-    dest: /etc/dnsmasq.conf
-    regexp: '0-MAX'
-    replace: '199'
-  become: yes
 - name: Copy syslinux files to TFTP directory
   command: rsync -avPS /usr/share/syslinux/ /var/lib/tftpboot/
   become: yes
@@ -48,17 +29,14 @@
   service: name={{ item }} enabled=yes
   become: yes
   with_items:
-    - dnsmasq
     - vsftpd
 - name: Update firewall services
-  firewalld: service={{ item }} state=enabled permanent=yes immediate=yes
+  firewalld: service={{ item }} state=enabled permanent=yes immediate=yes zone=home
   become: yes
   with_items:
     - ftp
-    - dns
-    - dhcp
-- name: Update firewall ports
-  firewalld: port={{ item }} state=enabled permanent=yes immediate=yes
+- name: Open TFTP (69/udp) and PXE (4011/udp) firewall ports
+  firewalld: port={{ item }} state=enabled permanent=yes immediate=yes zone=home
   become: yes
   with_items:
     - 69/udp

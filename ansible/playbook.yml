@@ -8,7 +8,5 @@
 - name: d1 configuration
   hosts: d1.home.test
   roles:
-    - role: vm-vertical-monitor
+    - role: vm-d1
     - role: vm-silk
-    - role: vm-dhcp-to-static
-    - role: vm-pxeserver
