@@ -10,3 +10,9 @@
   roles:
     - role: vm-d1
     - role: vm-silk
+
+- name: d2 configuration
+  hosts: d2.home.test
+  roles:
+    - role: vm-d2
+    - role: vm-silk
