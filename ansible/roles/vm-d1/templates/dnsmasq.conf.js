@@ -14,7 +14,6 @@ server=8.8.4.4
 dhcp-option=28,{{ ansible_default_ipv4.address }}55
 # NTP Server
 #dhcp-option=42,0.0.0.0
-pxe-prompt="Press F8 for menu.", 60
 pxe-service=x86PC, "Install CentOS 7 from network server {{ ansible_default_ipv4.address }}", pxelinux
 enable-tftp
 tftp-root=/var/lib/tftpboot
