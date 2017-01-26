@@ -31,7 +31,10 @@
   firewalld: service={{ item }} state=disabled permanent=yes immediate=yes zone=work
   become: yes
   with_items:
+    - dhcpv6-client
+    - mdns
     - samba-client
+    - ssh
 - name: Remove default firewall services from external
   firewalld: service={{ item }} state=disabled permanent=yes immediate=yes zone=external
   become: yes
