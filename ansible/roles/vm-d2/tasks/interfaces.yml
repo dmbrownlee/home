@@ -20,25 +20,25 @@
   become: yes
 - name: Configure first interface for dhcp at boot
   nmcli:
-    ifname: {{ ansible_interfaces[1] }}
+    ifname: "{{ ansible_interfaces[1] }}"
     type: ethernet
-    conn_name: {{ ansible_interfaces[1] }}
+    conn_name: "{{ ansible_interfaces[1] }}"
     state: present
     autoconnect: yes
   become: yes
 - name: Configure second interface
   nmcli:
-    ifname: {{ ansible_interfaces[2] }} 
+    ifname: "{{ ansible_interfaces[2] }}"
     type: ethernet
-    conn_name: {{ ansible_interfaces[2] }}
+    conn_name: "{{ ansible_interfaces[2] }}"
     state: present
     autoconnect: no
   become: yes
 - name: Do not use IPv6
   command: nmcli c mod {{ item }} ipv6.method ignore
   with_items:
-    - {{ ansible_interfaces[1] }}
-    - {{ ansible_interfaces[2] }}
+    - "{{ ansible_interfaces[1] }}"
+    - "{{ ansible_interfaces[2] }}"
   become: yes
 - name: Use NetworkManager to configure zone for interface on home network
   command: nmcli c mod {{ ansible_interfaces[1] }} connection.zone home
