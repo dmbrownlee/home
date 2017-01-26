@@ -1,5 +1,10 @@
 ---
 # tasks file for vm-d2 interfaces
+#
+# - The first interface is active at boot and configures itself using DHCP
+#   on the home network.
+# - The second interface is not activated and is the interface used to
+#   sniff packets
 - name: install needed network manager libs
   yum:
     name: '{{ item }}'
@@ -13,33 +18,33 @@
     state: started
     enabled: yes
   become: yes
-- name: Configure NetworkManager connection for first interface
+- name: Configure first interface for dhcp at boot
   nmcli:
-    ifname: enp0s3
+    ifname: {{ ansible_interfaces[1] }}
     type: ethernet
-    conn_name: enp0s3
+    conn_name: {{ ansible_interfaces[1] }}
     state: present
     autoconnect: yes
   become: yes
-- name: Configure NetworkManager connection for nsm interface
+- name: Configure second interface
   nmcli:
-    ifname: enp0s8
+    ifname: {{ ansible_interfaces[2] }} 
     type: ethernet
-    conn_name: enp0s8
+    conn_name: {{ ansible_interfaces[2] }}
     state: present
-    autoconnect: yes
+    autoconnect: no
   become: yes
 - name: Do not use IPv6
   command: nmcli c mod {{ item }} ipv6.method ignore
   with_items:
-    - enp0s3
-    - enp0s8
+    - {{ ansible_interfaces[1] }}
+    - {{ ansible_interfaces[2] }}
   become: yes
 - name: Use NetworkManager to configure zone for interface on home network
-  command: nmcli c mod enp0s3 connection.zone home
+  command: nmcli c mod {{ ansible_interfaces[1] }} connection.zone home
   become: yes
 - name: Use NetworkManager to configure zone for interface on trusted network
-  command: nmcli c mod enp0s8 connection.zone trusted
+  command: nmcli c mod {{ ansible_interfaces[2] }} connection.zone trusted
   become: yes
 - name: Enable NetworkManager
   service:
