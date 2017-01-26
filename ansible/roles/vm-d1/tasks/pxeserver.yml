@@ -25,6 +25,14 @@
     src: default.js
     dest: /var/lib/tftpboot/pxelinux.cfg/default
   become: yes
+- template:
+    src: kickstart.menu.js
+    dest: /var/lib/tftpboot/pxelinux.cfg/kickstart.menu
+  become: yes
+- template:
+    src: graphics.conf.js
+    dest: /var/lib/tftpboot/pxelinux.cfg/graphics.conf
+  become: yes
 - name: Enable and start services
   service: name={{ item }} enabled=yes
   become: yes
