@@ -1,5 +1,5 @@
 ---
-# tasks file for vm-d1 interfaces
+# tasks file for vm-d2 interfaces
 - name: install needed network manager libs
   yum:
     name: '{{ item }}'
