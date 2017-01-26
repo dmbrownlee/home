@@ -1,0 +1,9 @@
+---
+# tasks file for vm-d2 netsniff
+- name: install netsniff-ng
+  yum:
+    name: '{{ item }}'
+    state: installed
+  with_items:
+    - netsniff-ng
+  become: yes
