@@ -1,8 +1,8 @@
 DEFAULT menu.c32
 PROMPT 0
 
-TIMEOUT 60
-TOTALTIMEOUT 300
+TIMEOUT 300
+TOTALTIMEOUT 3000
 ONTIMEOUT local
 
 MENU TITLE PXE Boot Main Menu
@@ -11,7 +11,7 @@ MENU AUTOBOOT Booting from local system in # seconds
 
 LABEL 1
   MENU LABEL ^Specific System Installs Menu
-  KERNEL menu.32
+  KERNEL menu.c32
   APPEND pxelinux.cfg/graphics.conf pxelinux.cfg/kickstart.menu
 
 LABEL 2
