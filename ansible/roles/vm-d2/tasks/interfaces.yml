@@ -24,8 +24,8 @@
   vars:
     this_interface: {{ item }}
   with_items:
-    - "{{ ansible_interfaces[0] }}"
     - "{{ ansible_interfaces[1] }}"
+    - "{{ ansible_interfaces[2] }}"
   become: yes
 - name: Enable NetworkManager
   service:
