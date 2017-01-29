@@ -3,8 +3,8 @@
 #
 #           nmcli c show {{ this_interface }}
 #
-NAME="{{ this_interface }}
-DEVICE="{{ this_interface }}
+NAME="{{ this_interface }}"
+DEVICE="{{ this_interface }}"
 ONBOOT=no
 NETBOOT=no
 IPV6INIT=no
