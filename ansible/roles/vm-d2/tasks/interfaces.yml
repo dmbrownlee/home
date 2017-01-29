@@ -22,7 +22,7 @@
     src: ifcfg-default.js
     dest: /etc/sysconfig/network-scripts/ifcfg-{{ item }}
   vars:
-    this_interface: {{ item }}
+    this_interface: "{{ item }}"
   with_items:
     - "{{ ansible_interfaces[1] }}"
     - "{{ ansible_interfaces[2] }}"
