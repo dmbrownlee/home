@@ -1,5 +1,12 @@
 ---
 # tasks file for vm-d1 interfaces
+#
+# - The second interface is active at boot and configures itself using DHCP
+#   on the home network. Note: This is because PXE boot fails when using
+#   the first interface.
+# - The first interface is not activated and is the interface used to
+#   sniff packets
+#
 - name: install needed network manager libs
   yum:
     name: '{{ item }}'
@@ -7,40 +14,47 @@
   with_items:
     - NetworkManager-glib
   become: yes
+#
+# Initialize the configs
+#
 - name: Enable NetworkManager
   service:
     name: NetworkManager
     state: started
     enabled: yes
   become: yes
-- name: Configure NetworkManager connection for first interface
-  nmcli:
-    ifname: enp0s3
-    type: ethernet
-    conn_name: enp0s3
-    state: present
-    autoconnect: yes
-  become: yes
-- name: Configure NetworkManager connection for nsm interface
-  nmcli:
-    ifname: enp0s8
-    type: ethernet
-    conn_name: enp0s8
-    state: present
-    autoconnect: yes
-  become: yes
-- name: Do not use IPv6
-  command: nmcli c mod {{ item }} ipv6.method ignore
+- name: Apply default interface config
+  include:
+    src: interface.yml
+  vars:
+    this_interface: "{{ item }}"
   with_items:
-    - enp0s3
-    - enp0s8
+    - "{{ ansible_interfaces[1] }}"
+    - "{{ ansible_interfaces[2] }}"
+  become: yes
+#
+# Configure first interface
+#
+- name: Configure first interface for dhcp at boot
+  nmcli:
+    ifname: "{{ ansible_interfaces[1] }}"
+    type: ethernet
+    conn_name: "{{ ansible_interfaces[1] }}"
+    state: present
+    autoconnect: yes
   become: yes
 - name: Use NetworkManager to configure zone for interface on home network
-  command: nmcli c mod enp0s3 connection.zone home
+  command: nmcli c mod {{ ansible_interfaces[1] }} connection.zone home
   become: yes
+#
+# Configure second interface
+#
 - name: Use NetworkManager to configure zone for interface on trusted network
-  command: nmcli c mod enp0s8 connection.zone trusted
+  command: nmcli c mod {{ ansible_interfaces[2] }} connection.zone trusted
   become: yes
+#
+# Restart NetworkManager
+#
 - name: Enable NetworkManager
   service:
     name: NetworkManager
