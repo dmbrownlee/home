@@ -17,22 +17,24 @@
 #
 # Initialize the configs
 #
-- name: Copy default config
-  template:
-    src: ifcfg-default.js
-    dest: /etc/sysconfig/network-scripts/ifcfg-{{ item }}
-  vars:
-    this_interface: "{{ item }}"
-  with_items:
-    - "{{ ansible_interfaces[1] }}"
-    - "{{ ansible_interfaces[2] }}"
-  become: yes
 - name: Enable NetworkManager
   service:
     name: NetworkManager
     state: started
     enabled: yes
   become: yes
+- name: Apply default interface config
+  include:
+    src: interface.yml
+  vars:
+    this_interface: "{{ item }}"
+  with_items:
+    - "{{ ansible_interfaces[1] }}"
+    - "{{ ansible_interfaces[2] }}"
+  become: yes
+#
+# Configure first interface
+#
 - name: Configure first interface for dhcp at boot
   nmcli:
     ifname: "{{ ansible_interfaces[1] }}"
@@ -41,26 +43,18 @@
     state: present
     autoconnect: yes
   become: yes
-- name: Configure second interface
-  nmcli:
-    ifname: "{{ ansible_interfaces[2] }}"
-    type: ethernet
-    conn_name: "{{ ansible_interfaces[2] }}"
-    state: present
-    autoconnect: no
-  become: yes
-- name: Do not use IPv6
-  command: nmcli c mod {{ item }} ipv6.method ignore
-  with_items:
-    - "{{ ansible_interfaces[1] }}"
-    - "{{ ansible_interfaces[2] }}"
-  become: yes
 - name: Use NetworkManager to configure zone for interface on home network
   command: nmcli c mod {{ ansible_interfaces[1] }} connection.zone home
   become: yes
+#
+# Configure second interface
+#
 - name: Use NetworkManager to configure zone for interface on trusted network
   command: nmcli c mod {{ ansible_interfaces[2] }} connection.zone trusted
   become: yes
+#
+# Restart NetworkManager
+#
 - name: Enable NetworkManager
   service:
     name: NetworkManager
