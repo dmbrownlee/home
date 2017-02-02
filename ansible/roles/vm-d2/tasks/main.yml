@@ -1,4 +1,4 @@
 ---
 # tasks file for vm-d2
-- include: interfaces.yml
+- include: network-setup.yml
 - include: netsniff.yml
