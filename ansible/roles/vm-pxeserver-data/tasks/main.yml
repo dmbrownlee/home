@@ -29,3 +29,9 @@
     src: /root/CentOS-7-x86_64-Everything-1611.iso
     state: absent
   become: yes
+- name: Copy d2-ks.cfg to FTP pub/ directory for local testing
+  copy:
+    src: /root/home.test/d2-ks.cfg
+    dest: /var/ftp/pub/d2-ks.cfg
+    remote_src: yes
+  become: yes
