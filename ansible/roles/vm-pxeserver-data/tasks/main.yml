@@ -20,8 +20,13 @@
     src: /centos7/images/pxeboot/initrd.img
     dest: /var/lib/tftpboot/centos7/initrd.img
   become: yes
+- name: Create a directory just for CentOS 7
+  file:
+    dest: /var/ftp/pub/centos7
+    state: directory
+  become: yes
 - name: Copy ISO contents to FTP pub directory
-  command: rsync -avPS /centos7/ /var/ftp/pub/
+  command: rsync -avPS /centos7/ /var/ftp/pub/centos7/
   become: yes
 - name: Unmount the ISO image
   mount:

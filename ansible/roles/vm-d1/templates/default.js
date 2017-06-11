@@ -17,7 +17,7 @@ LABEL 1
 LABEL 2
   MENU LABEL ^Install CentOS 7 x64 using Local Repo
   kernel centos7/vmlinuz
-  append initrd=centos7/initrd.img inst.repo=ftp://{{ ansible_default_ipv4.address }}/pub devfs=nomount
+  append initrd=centos7/initrd.img inst.repo=ftp://{{ ansible_default_ipv4.address }}/pub/centos7 devfs=nomount
 
 LABEL 3
   MENU LABEL ^Install CentOS 7 x64 using http://mirror.centos.org Repo
