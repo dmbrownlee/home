@@ -11,10 +11,10 @@
     - name: Ensure password authentication for SSH is disabled
       replace:
         path: /etc/ssh/sshd_config
-        regexp: '^.*#?PasswordAuthentication yes.*$'
+        regexp: '^PasswordAuthentication yes.*$'
         replace: 'PasswordAuthentication no'
     - name: Ensure SSHD is enabled at boot but stopped during install
       systemd:
         name: sshd
         state: stopped
-        enable: yes
+        enabled: yes
