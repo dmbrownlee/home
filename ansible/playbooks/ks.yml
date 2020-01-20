@@ -1,0 +1,10 @@
+---
+- name: Kickstart post configuration
+  hosts: all
+  tasks:
+    - name: Ensure public key is installed for root
+      authorized_key:
+        key: https://github.com/dmbrownlee.keys
+        state: present
+        user: root
+        comment: "Installed from GitHub via kickstart"
