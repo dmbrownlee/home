@@ -20,5 +20,5 @@
     - name: Ensure SSHD is enabled at boot but stopped during install
       systemd:
         name: sshd
-        state: stopped
+        state: reloaded
         enabled: yes
