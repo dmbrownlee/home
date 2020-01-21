@@ -2,10 +2,10 @@
 - name: Kickstart post configuration
   hosts: unconfigured
   tasks:
-    - name: Ensure all packages are updated
-      yum:
-        name: '*'
-        state: latest
+#    - name: Ensure all packages are updated
+#      yum:
+#        name: '*'
+#        state: latest
     - name: Ensure public key is installed for root
       authorized_key:
         key: https://github.com/dmbrownlee.keys
