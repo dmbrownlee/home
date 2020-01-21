@@ -1,6 +1,6 @@
 ---
 - name: Kickstart post configuration
-  hosts: localhost
+  hosts: unconfigured
   tasks:
     - name: Ensure all packages are updated
       yum:
