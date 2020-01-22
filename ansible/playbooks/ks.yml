@@ -2,10 +2,12 @@
 - name: Kickstart post configuration
   hosts: localhost
   tasks:
-#    - name: Ensure all packages are updated
-#      yum:
-#        name: '*'
-#        state: latest
+    - name: Ensure all packages are updated
+      tags:
+        - devexclude
+      yum:
+        name: '*'
+        state: latest
     - name: Ensure public key is installed for root
       authorized_key:
         key: https://github.com/dmbrownlee.keys
