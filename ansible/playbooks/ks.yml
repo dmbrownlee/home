@@ -3,11 +3,11 @@
   hosts: localhost
   tasks:
     - name: Ensure all packages are updated
-      tags:
-        - devexclude
       yum:
         name: '*'
         state: latest
+      tags:
+      - devexclude
     - name: Ensure public key is installed for root
       authorized_key:
         key: https://github.com/dmbrownlee.keys
@@ -28,3 +28,15 @@
       user:
         name: root
         password_lock: yes
+    - name: Ensure local users are created
+      user:
+        name: "{{ item.name }}"
+        state: present
+        comment: "{{ itme.comment | default(user_default.comment) }}"
+      become: yes
+      loop: "{{ local_users }}"
+      when: local_users is defined
+      tags:
+      - dev
+      - localusers
+      # FYI: ansible localhost -m debug -a "msg='{{ lookup('pipe','sed -n "s/^SHELL=//p" /etc/default/useradd') }}'"
