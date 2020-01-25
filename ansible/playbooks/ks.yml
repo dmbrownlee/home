@@ -23,10 +23,11 @@
       user:
         name: root
         password_lock: yes
-    - name: Ensure a local user account is created if requested
+    - name: Ensure a local admin user account is created if requested
       user:
         name: "{{ local_user }}"
         state: present
+        groups: wheel
       become: yes
       when: local_user is defined
       tags:
