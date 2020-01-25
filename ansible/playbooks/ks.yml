@@ -19,11 +19,6 @@
         path: /etc/ssh/sshd_config
         regexp: '^PasswordAuthentication yes.*$'
         replace: 'PasswordAuthentication no'
-    - name: Ensure SSHD is enabled at boot but stopped during install
-      systemd:
-        name: sshd
-        state: reloaded
-        enabled: yes
     - name: Ensure the password for the root account is locked
       user:
         name: root
