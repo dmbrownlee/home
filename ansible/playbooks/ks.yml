@@ -28,15 +28,12 @@
       user:
         name: root
         password_lock: yes
-    - name: Ensure local users are created
+    - name: Ensure a local user account is created if requested
       user:
-        name: "{{ item.name }}"
+        name: "{{ item }}"
         state: present
-        comment: "{{ itme.comment | default(user_default.comment) }}"
       become: yes
-      loop: "{{ local_users }}"
-      when: local_users is defined
+      when: local_user is defined
       tags:
       - dev
-      - localusers
-      # FYI: ansible localhost -m debug -a "msg='{{ lookup('pipe','sed -n "s/^SHELL=//p" /etc/default/useradd') }}'"
+      - local_user
