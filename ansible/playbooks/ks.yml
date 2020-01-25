@@ -30,7 +30,7 @@
         password_lock: yes
     - name: Ensure a local user account is created if requested
       user:
-        name: "{{ item }}"
+        name: "{{ local_user }}"
         state: present
       become: yes
       when: local_user is defined
