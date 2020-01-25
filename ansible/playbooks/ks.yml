@@ -1,6 +1,8 @@
 ---
 - name: Kickstart post configuration
   hosts: localhost
+  vars_files:
+    - vars_files/local_users.yml
   tasks:
     - name: Ensure all packages are updated
       yum:
@@ -8,12 +10,6 @@
         state: latest
       tags:
       - devexclude
-    - name: Ensure public key is installed for root
-      authorized_key:
-        key: https://github.com/dmbrownlee.keys
-        state: present
-        user: root
-        comment: "Installed from GitHub via kickstart"
     - name: Ensure password authentication for SSH is disabled
       replace:
         path: /etc/ssh/sshd_config
@@ -30,6 +26,17 @@
         groups: wheel
       become: yes
       when: local_user is defined
+      tags:
+      - dev
+      - local_user
+    - name: Ensure public key is installed for local_user
+      authorized_key:
+        key: "{{ local_user_pubkey_url }}"
+        state: present
+        user: "{{ local_user }}"
+        comment: "{{ local_user_pubkey_comment }}"
+      become: yes
+      when: local_user_pubkey_url is defined
       tags:
       - dev
       - local_user
