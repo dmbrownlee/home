@@ -23,6 +23,7 @@
       user:
         name: "{{ local_user }}"
         state: present
+        password: "{{ local_user_pw }}"
         groups: wheel
       become: yes
       when: local_user is defined
@@ -34,7 +35,6 @@
         key: "{{ local_user_pubkey_url }}"
         state: present
         user: "{{ local_user }}"
-        password: "{{ local_user_pw }}"
         comment: "{{ local_user_pubkey_comment }}"
       become: yes
       when: local_user_pubkey_url is defined
