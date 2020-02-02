@@ -1,0 +1,18 @@
+function colortest () {
+  for i in {0..255}; do
+    if [ $((i % 8)) == 0 ]; then
+      printf '\n'
+    fi
+    printf "\x1b[38;5;${i}mcolor%3d  " ${i}
+  done
+  printf "\x1b[38;5;0m\n\n"
+} 
+
+function tm () {
+  [ -z "$TMUX" ] || return 1
+  if [ -r ./.tmux.conf && "$(pwd)" != "$HOME" ]; then
+    tmux -f ./.tmux.conf attach
+  else
+    tmux
+  fi
+}
