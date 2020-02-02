@@ -1,5 +1,0 @@
----
-- name: Configure Initial Workstation
-  hosts: localhost
-  roles:
-    - role: workstation
