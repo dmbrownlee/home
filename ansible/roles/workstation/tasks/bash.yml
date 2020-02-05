@@ -7,6 +7,10 @@
   with_items:
     - bin
     - .bashrc.d
+- name: Ensure ~/bin is in PATH
+  template:
+    src: 90user_bin_dir.j2
+    dest: "{{ ansible_user_dir }}/.bashrc.d/90user_bin_dir"
 - name: Ensure {{ ansible_user_dir }}/.bashrc exists
   file:
     path: "{{ ansible_user_dir }}/.bashrc"
@@ -21,7 +25,3 @@
       if [[ -d "$HOME/.bashrc.d" ]]; then
         source $HOME/.bashrc.d/*
       fi
-- name: Ensure ~/bin is in PATH
-  template:
-    src: 90user_bin_dir.j2
-    dest: "{{ ansible_user_dir }}/.bashrc.d/90user_bin_dir"
