@@ -1,43 +1,9 @@
 ---
-# Git configuration
-- name: Ensure global git user.name is set
-  git_config:
-    name: user.name
-    scope: global
-    value: "{{ git_user_name }}"
-- name: Ensure global git user.email is set
-  git_config:
-    name: user.email
-    scope: global
-    value: "{{ git_user_email }}"
-# Vim configuration
-- name: Ensure vimrc is installed
-  copy:
-    src: vimrc
-    dest: "{{ ansible_user_dir }}/.vimrc"
-# Bash configuration
-- name: Ensure directories for bash exist
-  file:
-    path: "{{ ansible_user_dir }}/{{ item }}"
-    state: directory
-  with_items:
-    - bin
-    - .bashrc.d
-- name: Ensure {{ ansible_user_dir }}/.bashrc exists
-  file:
-    path: "{{ ansible_user_dir }}/.bashrc"
-    state: file
-- name: Ensure ~/.bashrc.d/ files are sourced from .bashrc
-  blockinfile:
-    path: "{{ ansible_user_dir }}/.bashrc"
-    marker: "# {mark}"
-    marker_begin: "=== ANSIBLE MANAGED BLOCK BEGIN: Source files in .bashrc.d"
-    marker_end: "END: .bashrc.d"
-    block: |
-      if [[ -d "$HOME/.bashrc.d" ]]; then
-        source $HOME/.bashrc.d/*
-      fi
-- name: Ensure ~/bin is in PATH
-  template:
-    src: 90user_bin_dir.j2
-    dest: "{{ ansible_user_dir }}/.bashrc.d/90user_bin_dir"
+- name: bash configuration
+  include_tasks: bash.yml
+- name: tmux configuration
+  include_tasks: tmux.yml
+- name: git configuration
+  include_tasks: git.yml
+- name: vim configuration
+  include_tasks: vim.yml

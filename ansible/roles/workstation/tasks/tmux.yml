@@ -1,0 +1,6 @@
+---
+# tmux configuration
+- name: Ensure tmux.conf is installed
+  copy:
+    src: tmux.conf
+    dest: "{{ ansible_user_dir }}/.tmux.conf"

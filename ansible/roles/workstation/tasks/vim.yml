@@ -1,0 +1,6 @@
+---
+# Vim configuration
+- name: Ensure vimrc is installed
+  copy:
+    src: vimrc
+    dest: "{{ ansible_user_dir }}/.vimrc"
