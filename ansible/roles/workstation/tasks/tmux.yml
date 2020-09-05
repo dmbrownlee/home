@@ -1,6 +1,7 @@
 ---
 # tmux configuration
-- name: Ensure tmux.conf is installed
-  copy:
-    src: tmux.conf
+- name: Ensure custom tmux config is installed
+  template:
+    src: .tmux.conf.j2
     dest: "{{ ansible_user_dir }}/.tmux.conf"
+    mode: '0644'

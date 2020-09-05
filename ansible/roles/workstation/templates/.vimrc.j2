@@ -27,6 +27,10 @@ nnoremap <space> za
 vnoremap <space> zf
 " Python folding override
 setlocal foldmethod=indent
+" Visual line wrapping (not adding LF to text in buffer)
+"set wrap
+"set linebreak
+"set showbreak
 " Scrolling
 " Start scrolling slightly before the cursor reaches the edge
 set scrolloff=3
@@ -52,3 +56,5 @@ set ignorecase
 "
 " Commentary - https://github.com/tpope/vim-commentary
 autocmd FileType python setlocal commentstring=#\ %s
+" Add vertical to the defaults for using :diffsplit <file> from within vim
+set diffopt=filler,vertical,foldcolumn:4

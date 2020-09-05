@@ -1,12 +1,10 @@
 ---
 # Git configuration
-- name: Ensure global git user.name is set
+- name: Ensure global git settings have been configured
   git_config:
     name: user.name
     scope: global
     value: "{{ git_user_name }}"
-- name: Ensure global git user.email is set
-  git_config:
-    name: user.email
-    scope: global
-    value: "{{ git_user_email }}"
+  loop:
+    - { name: 'user.name', value: '{{ git_user_name }}' }
+    - { name: 'user.email', value: '{{ git_user_email }}' }

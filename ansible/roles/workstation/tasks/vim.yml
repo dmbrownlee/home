@@ -1,6 +1,7 @@
 ---
 # Vim configuration
-- name: Ensure vimrc is installed
-  copy:
-    src: vimrc
+- name: Ensure custom vim configuration is installed
+  template:
+    src: .vimrc.j2
     dest: "{{ ansible_user_dir }}/.vimrc"
+    mode: '0644'
