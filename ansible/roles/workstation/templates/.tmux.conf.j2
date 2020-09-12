@@ -63,7 +63,6 @@ bind -r K resize-pane -U 1
 bind -r L resize-pane -R 1
 
 # mouse support
-set -g mouse-utf8 on
 set -g mouse on
 
 #============================
@@ -87,33 +86,39 @@ setw -g monitor-activity on
 set -g visual-activity on
 
 # set the status line's colors
-set -g status-fg colour4
-set -g status-bg colour14
+#set -g status-fg colour4
+#set -g status-bg colour14
+set -g status-style fg=colour4,bg=colour14
 
 # set the color of the window list
-setw -g window-status-fg colour4 
-setw -g window-status-bg colour14 
-setw -g window-status-attr dim
-setw -g window-status-current-fg colour14 
-setw -g window-status-current-bg colour4 
-setw -g window-status-current-attr bright
+#setw -g window-status-fg colour4 
+#setw -g window-status-bg colour14 
+#setw -g window-status-attr dim
+setw -g window-status-style fg=colour4,bg=colour14,dim
+#setw -g window-status-current-fg colour14 
+#setw -g window-status-current-bg colour4 
+#setw -g window-status-current-attr bright
+setw -g window-status-style fg=colour14,bg=colour4,bright
 
 # pane border colors
-set -g pane-border-fg black
-set -g pane-border-bg colour231
-set -g pane-active-border-fg black
-set -g pane-active-border-bg colour11
+#set -g pane-border-fg black
+#set -g pane-border-bg colour231
+set -g pane-border-style fg=black,bg=colour231
+#set -g pane-active-border-fg black
+#set -g pane-active-border-bg colour11
+set -g pane-active-border-style fg=black,bg=colour11
 
 # Command / message line
-set -g message-fg colour200
-set -g message-bg colour225
-set -g message-attr bright
+#set -g message-fg colour200
+#set -g message-bg colour225
+#set -g message-attr bright
+set -g message-style fg=colour200,bg=colour225,bright
 
 #============================
 #  Status bar settings
 #============================
 
-set -g status-utf8 on
+#set -g status-utf8 on
 
 # Status line left side
 set -g status-left-length 40 
