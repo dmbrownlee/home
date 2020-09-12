@@ -71,8 +71,8 @@ set -g mouse on
 #============================
 unbind [
 bind Escape copy-mode
-bind -t vi-copy 'v' begin-selection
-bind -t vi-copy 'y' copy-selection
+bind -T copy-mode-vi 'v' send-keys -X begin-selection
+bind -T copy-mode-vi 'y' send-keys -X copy-selection
 unbind p
 bind p paste-buffer
 #============================
