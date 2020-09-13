@@ -1,0 +1,23 @@
+---
+- name: Download homebrew installer
+  get_url:
+    url: "https://raw.githubusercontent.com/Homebrew/install/master/install.sh"
+    dest: "{{ ansible_user_dir }}/Downloads/homebrew_install.sh"
+    mode: '0755'
+# Installation of homebrew doesn't work yet.  Need to figure out sudo (sshpass?)
+# and dealing with interactive prompts from script (expect?) still.
+#- name: Ensure homebrew is installed
+#  shell:
+#    cmd: homebrew_install.sh
+#    chdir: "{{ ansible_user_dir }}/Downloads"
+#    creates: /usr/local/bin/brew
+- name: Ensure system brews are installed
+  homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_brews }}"
+- name: Ensure system casks are installed
+  homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ system_casks }}"

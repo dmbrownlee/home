@@ -1,6 +1,11 @@
 ---
+- name: Ensure OS specific vars have been loaded
+  include_vars:
+    file: "{{ ansible_distribution | lower }}.yml"
 - name: shell configuration
   include_tasks: "{{ ansible_user_shell | basename }}.yml"
+- name: system software
+  include_tasks: "system-software-{{ ansible_distribution | lower }}.yml"
 - name: tmux configuration
   include_tasks: tmux.yml
 - name: git configuration
