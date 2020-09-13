@@ -1,6 +1,6 @@
 ---
-- name: bash configuration
-  include_tasks: bash.yml
+- name: shell configuration
+  include_tasks: "{{ ansible_user_shell | basename }}.yml"
 - name: tmux configuration
   include_tasks: tmux.yml
 - name: git configuration
