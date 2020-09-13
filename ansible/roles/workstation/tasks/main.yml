@@ -12,3 +12,5 @@
   include_tasks: git.yml
 - name: vim configuration
   include_tasks: vim.yml
+- name: launcher configuration
+  include_tasks: "launcher-{{ ansible_distribution | lower }}.yml"
