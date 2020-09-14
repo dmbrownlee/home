@@ -12,3 +12,6 @@ dockitems:
   - name: Terminal
     path: /System/Applications/Utilities/Terminal.app
     pos: 2
+  - name: GNS3
+    path: /Applications/GNS3.app
+    pos: 3
