@@ -8,7 +8,9 @@
 - name: Ensure {{ ansible_user_dir }}/.zprofile exists
   file:
     path: "{{ ansible_user_dir }}/.zprofile"
-    state: file
+    state: touch
+    access_time: preserve
+    modification_time: preserve
     mode: '0644'
 - name: Ensure ~/.zshrc.d/ files are sourced from .zprofile
   blockinfile:
