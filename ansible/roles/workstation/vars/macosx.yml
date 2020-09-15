@@ -18,7 +18,6 @@ dockitems_to_remove:
   - FaceTime
   - Music
   - News
-  - Books
   - Podcasts
   - TV
   - App Store
@@ -31,6 +30,3 @@ dockitems_to_persist:
   - name: Terminal
     path: /System/Applications/Utilities/Terminal.app
     pos: 2
-  - name: GNS3
-    path: /Applications/GNS3.app
-    pos: 3
