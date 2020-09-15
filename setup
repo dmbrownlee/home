@@ -1,6 +1,6 @@
 #!/bin/bash
-# This script installs Ansible if on MacOSX and it is not already installed and
-# then runs the playbook to configure the virtualization software on the host.
+# This script installs Ansible if it is not already installed and then runs the
+# setup playbook to configure the workstation.
 
 if [[ $# -eq 1 ]]; then
   APARGS="-e study_group=study-group-$1"
