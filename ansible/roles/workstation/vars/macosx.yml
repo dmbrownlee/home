@@ -5,6 +5,7 @@ system_brews:
   - tmux
 system_casks:
   - google-chrome
+  - keepassxc
 dockitems_to_remove:
   - Launchpad
   - Mail
