@@ -6,6 +6,21 @@ system_brews:
 system_casks:
   - google-chrome
   - keepassxc
+system_dmgs:
+  - file: "Brother_PrinterDrivers_ColorLaser_1_2_0.dmg"
+    url: "https://download.brother.com/welcome/dlf102923/Brother_PrinterDrivers_ColorLaser_1_2_0.dmg"
+    checksum: "sha256:8ac0a35dd1ca271fae9d9596daa2a292231a8a798c96167c506b75f1f11aa6a4"
+    mount: "Brother_PrinterDrivers_ColorLaser"
+    contents: "Brother_PrinterDrivers_ColorLaser.pkg"
+    content_type: "pkg"
+    artifact: "com.Brother.Brotherdriver.Brother_PrinterDrivers_ColorLaser"
+  - file: "Brother_ScannerDrivers_1_10_10_1.dmg"
+    url: "https://download.brother.com/welcome/dlf103538/Brother_ScannerDrivers_1_10_10_1.dmg"
+    checksum: "sha256:7a561501401629bf6fa158d46c5a190eefe95941b2d995e77190840bfb4a58de"
+    contents: "Brother_ScannerDrivers.pkg"
+    mount: "Brother_ScannerDrivers"
+    content_type: "pkg"
+    artifact: "com.Brother.Brotherdriver.Brother_ScannerDrivers"
 dockitems_to_remove:
   - Launchpad
   - Mail

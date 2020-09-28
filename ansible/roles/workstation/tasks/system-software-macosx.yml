@@ -15,3 +15,26 @@
   when:
     - system_casks is defined
     - (system_casks | length > 0)
+- name: Ensure a special folder for software downloads exists
+  file:
+    path: "{{ ansible_user_dir }}/Software"
+    state: directory
+    mode: '0755'
+- name: Get a list of apps installed under /Applications
+  command:
+    cmd: "find /Applications -type d -name '*.app' -maxdepth 1"
+  register: installed_apps
+  changed_when: false
+- name: Get a list of installed packages
+  command:
+    cmd: "pkgutil --pkgs"
+  register: installed_packages
+  changed_when: false
+- name: Ensure system software distributed as dmg files has been downloaded
+  include_tasks: macosx-dmg-installer.yml
+  vars:
+    dmg: "{{ item }}"
+  loop: "{{ system_dmgs }}"
+  when:
+    - not item.artifact in installed_apps.stdout_lines
+    - not item.artifact in installed_packages.stdout_lines
