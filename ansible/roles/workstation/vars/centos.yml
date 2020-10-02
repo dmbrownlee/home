@@ -1,0 +1,6 @@
+---
+system_packages:
+  #- ansible-lint
+  - tmux
+  #- google-chrome
+  - keepassxc
