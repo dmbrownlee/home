@@ -1,0 +1,11 @@
+---
+- name: Ensure battery notification in menu bar shows percentage
+  # You need to reboot to see the effects of this change.  Logging out and/or
+  # killing SystemUIServer are insufficient.
+  # in Ansible 2.10: community.general.osx_defaults:
+  osx_defaults:
+    domain: com.apple.menuextra.battery.plist
+    key: ShowPercent
+    state: present
+    type: string
+    value: "YES"

@@ -14,3 +14,5 @@
   include_tasks: vim.yml
 - name: launcher configuration
   include_tasks: "launcher-{{ ansible_distribution | lower }}.yml"
+- name: system tweaks
+  include_tasks: "system-tweaks-{{ ansible_distribution | lower }}.yml"
