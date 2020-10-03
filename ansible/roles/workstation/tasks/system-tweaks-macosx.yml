@@ -9,3 +9,11 @@
     state: present
     type: string
     value: "YES"
+- name: Ensure clock in menu bar also shows date
+  # in Ansible 2.10: community.general.osx_defaults:
+  osx_defaults:
+    domain: com.apple.menuextra.clock.plist
+    key: DateFormat
+    state: present
+    type: string
+    value: "EEE MMM d  h:mm a"
