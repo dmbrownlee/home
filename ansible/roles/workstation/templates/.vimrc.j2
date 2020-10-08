@@ -2,6 +2,7 @@
 colorscheme blue
 set number
 set relativenumber
+set cursorline
 syntax on
 set hlsearch
 set incsearch
@@ -13,6 +14,7 @@ set showmode
 set title
 set colorcolumn=81
 " Indenting
+inoremap # X#
 set smartindent
 set tabstop=2
 set shiftwidth=2
@@ -58,3 +60,11 @@ set ignorecase
 autocmd FileType python setlocal commentstring=#\ %s
 " Add vertical to the defaults for using :diffsplit <file> from within vim
 set diffopt=filler,vertical,foldcolumn:4
+" Colors
+colorscheme blue
+highlight clear CursorColumn
+highlight clear CursorLine
+highlight clear CursorLineNr
+highlight CursorLineNr ctermbg=cyan ctermfg=15
+highlight CursorLine ctermbg=cyan ctermfg=15
+highlight clear CursorColumn CursorLine
