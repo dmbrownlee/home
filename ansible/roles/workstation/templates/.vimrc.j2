@@ -1,3 +1,19 @@
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin()
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" Color Theme
+Plug 'sainnhe/forest-night'
+call plug#end()
+
+set nocompatible
+set mouse=a
+
 " UI tweaks
 set number
 set relativenumber
@@ -61,7 +77,7 @@ autocmd FileType python setlocal commentstring=#\ %s
 " Add vertical to the defaults for using :diffsplit <file> from within vim
 set diffopt=filler,vertical,foldcolumn:4
 " Colors
-colorscheme blue
+colorscheme forest-night
 hi clear CursorColumn
 hi clear CursorLine
 hi clear CursorLineNr
