@@ -41,16 +41,6 @@ DONE
 DONE
       brew install ansible
     fi
-    # Warn if power adapter is not plugged in before continuing anyway
-    pmset -g ac | grep -q "No adapter attached"
-    if [[ $? -eq 0 ]]; then
-      cat <<DONE
-=========================================================================
-This script takes a long time to run.  Please plug in your power adapter.
-=========================================================================
-DONE
-      sleep 10
-    fi
     cat <<DONE
 =========================================================================
 Running Ansible playbook under caffeinate to prevent hibernation.
