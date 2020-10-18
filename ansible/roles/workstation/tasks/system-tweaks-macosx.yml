@@ -17,3 +17,11 @@
     state: present
     type: string
     value: "EEE MMM d  h:mm a"
+- name: Ensure Terminal uses Novel as the default theme
+  osx_defaults:
+    domain: com.apple.Terminal.plist
+    key: "Default Window Settings"
+    state: present
+    type: string
+    value: "Novel"
+
