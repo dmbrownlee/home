@@ -2,11 +2,7 @@
 # This script installs Ansible if it is not already installed and then runs the
 # setup playbook to configure the workstation.
 
-if [[ $# -eq 1 ]]; then
-  APARGS="-e study_group=study-group-$1"
-fi
-
-APARGS="$APARGS -e ansible_python_interpreter=$(which python3) --skip-tags disabled"
+APARGS="-K --skip-tags disabled"
 
 cat <<DONE
 =========================================================================
@@ -20,71 +16,43 @@ if [[ $? -ne 0 ]]; then
 fi
 echo
 
-case "$(uname)" in
-  "Darwin")
-    which -s brew
-    if [[ $? -ne 0 ]]; then
-      cat <<DONE
-    =========================================================================
-    Installing homebrew.
-    =========================================================================
+# Install Homebrew if not already installed
+which -s brew
+if [[ $? -ne 0 ]]; then
+  cat <<DONE
+=========================================================================
+Installing homebrew.
+=========================================================================
 DONE
-      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    fi
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+fi
 
-    which -s ansible-playbook
-    if [[ $? -ne 0 ]]; then
-      cat <<DONE
-    =========================================================================
-    Installing ansible.
-    =========================================================================
+# Install Ansible if not already installed
+which -s ansible-playbook
+if [[ $? -ne 0 ]]; then
+  cat <<DONE
+=========================================================================
+Installing ansible.
+=========================================================================
 DONE
-      brew install ansible
-    fi
-    cat <<DONE
+  brew install ansible
+fi
+
+# Do all remaining configuration with Ansible playbook
+cat <<DONE
 =========================================================================
 Running Ansible playbook under caffeinate to prevent hibernation.
 =========================================================================
 DONE
-    # In case we are curling this directly from raw.githubusercontent.com
-    if [[ ! -d ansible ]]; then
-      # Install git from Homebrew
-      [ -x /usr/local/bin/git ] || brew install git
-      # Clone this repo into the home directory
-      if [[ ! -d $HOME/home ]]; then
-        cd $HOME && /usr/local/bin/git clone https://github.com/dmbrownlee/home.git
-      fi
-      cd $HOME/home
-    fi
-    cd ansible &&
-    caffeinate -dsu ansible-playbook -K -i localhost, -c local $APARGS setup.yml
-    ;;
-  "Linux")
-    if [[ -f /etc/debian_version ]]; then
-      if [[ ! -x /usr/local/bin/pip3 ]]; then
-	      sudo apt install -y python3-pip
-      fi
-    elif [[ -f /etc/centos-release ]]; then
-      if [[ ! -x /usr/bin/pip3 ]]; then
-        sudo yum install -y python3-pip
-      fi
-    fi
-    which ansible-playbook
-    if [[ $? -ne 0 ]]; then
-      cat <<DONE
-    =========================================================================
-    Installing ansible.
-    =========================================================================
-DONE
-      sudo -H python3 -m pip install --upgrade pip
-      sudo -H python3 -m pip install --upgrade ansible
-      sudo -H python3 -m pip install --upgrade jmespath
-    fi
-    cd ansible &&
-    ansible-playbook -K -i localhost, -c local $APARGS setup.yml
-    ;;
-  "*")
-    echo "This setup script does not work with your host operating system."
-    exit 1
-    ;;
-esac
+# In case we are curling this directly from raw.githubusercontent.com
+if [[ ! -d ansible ]]; then
+  # Install git from Homebrew
+  [ -x /usr/local/bin/git ] || brew install git
+  # Clone this repo into the home directory
+  if [[ ! -d $HOME/home ]]; then
+    cd $HOME && /usr/local/bin/git clone https://github.com/dmbrownlee/home.git
+  fi
+  cd $HOME/home
+fi
+cd ansible &&
+caffeinate -dsu ansible-playbook $APARGS setup.yml
