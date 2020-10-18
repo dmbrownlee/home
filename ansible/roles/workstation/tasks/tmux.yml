@@ -1,5 +1,15 @@
 ---
 # tmux configuration
+- name: Check if the tmux plugin manager (TPM) is installed
+  stat:
+    path: "{{ ansible_user_dir }}/.tmux/plugins/tpm"
+  register: tpm
+  changed_when: false
+- name: Ensure TPM is installed
+  git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "~/.tmux/plugins/tpm"
+  when: not tpm.stat.exists
 - name: Ensure custom tmux config is installed
   template:
     src: tmux.conf.j2
