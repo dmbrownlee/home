@@ -24,4 +24,10 @@
     state: present
     type: string
     value: "Novel"
-
+- name: Ensure Terminal uses Novel as the startup theme
+  osx_defaults:
+    domain: com.apple.Terminal.plist
+    key: "Startup Window Settings"
+    state: present
+    type: string
+    value: "Novel"
