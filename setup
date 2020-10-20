@@ -2,7 +2,7 @@
 # This script installs Ansible if it is not already installed and then runs the
 # setup playbook to configure the workstation.
 
-APARGS="-K --skip-tags disabled"
+APARGS="-K -t default -t default --skip-tags disabled"
 
 cat <<DONE
 =========================================================================
