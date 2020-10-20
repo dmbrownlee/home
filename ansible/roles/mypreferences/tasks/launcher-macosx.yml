@@ -5,18 +5,20 @@
   changed_when: "'was found in persistent-apps at slot' in docksearch.stdout"
   loop: "{{ dockitems_to_remove }}"
   notify: launcher-restart-macosx
-- name: Check if items in dock exist
+- name: Ensure icons are added to the Dock
   shell: dockutil --find '{{ item.name }}' || dockutil -v --add '{{ item.path }}' --no-restart
   register: dockadd
   changed_when: "'item added at end' in dockadd.stdout"
-  loop: "{{ dockitems_to_persist }}"
+  loop: "{{ dockitems_to_add }}"
   notify: launcher-restart-macosx
 - name: Move Dock icons to preferred positions
-  shell:
-    cmd: 'dockutil --find "{{ item.name }}" | grep "was found in persistent-apps at slot {{ item.pos }}" || dockutil -v --move "{{ item.name }}" --position {{ item.pos }} --no-restart'
+  shell: >
+    dockutil --find "{{ item.name }}" |
+    grep "was found in persistent-apps at slot {{ item.pos }}" ||
+    dockutil -v --move "{{ item.name }}" --position {{ item.pos }} --no-restart
   register: dockmove
   changed_when: '"verbose:" in dockmove.stdout'
-  loop: "{{ dockitems_to_persist }}"
+  loop: "{{ dockitems_to_add }}"
   notify: launcher-restart-macosx
 - name: Ensure Recents is disabled
   osx_defaults:

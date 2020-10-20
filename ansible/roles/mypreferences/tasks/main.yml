@@ -5,5 +5,7 @@
     fail_msg: "This role is not supported on your host operating system."
 - name: Ensure OS specific vars have been loaded
   include_vars: "{{ ansible_distribution | lower }}.yml"
-- name: role packages
-  include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
+- name: launcher configuration
+  include_tasks: "launcher-{{ ansible_distribution | lower }}.yml"
+- name: system tweaks
+  include_tasks: "system-tweaks-{{ ansible_distribution | lower }}.yml"

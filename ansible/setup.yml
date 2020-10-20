@@ -6,4 +6,6 @@
   hosts: localhost
   connection: local
   roles:
+    - role: baseline
     - role: workstation
+    - role: mypreferences

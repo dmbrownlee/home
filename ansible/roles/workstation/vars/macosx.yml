@@ -1,10 +1,7 @@
 ---
-system_brews:
-  - ansible-lint
-  - dockutil
-  - tmux
+system_brews: []
 system_casks:
-  - google-chrome
+  - gimp
   - keepassxc
 system_dmgs:
   - file: "Brother_PrinterDrivers_ColorLaser_1_2_0.dmg"
@@ -21,35 +18,3 @@ system_dmgs:
     mount: "Brother_ScannerDrivers"
     content_type: "pkg"
     artifact: "com.Brother.Brotherdriver.Brother_ScannerDrivers"
-  - file: "steam.dmg"
-    url: "https://steamcdn-a.akamaihd.net/client/installer/steam.dmg"
-    checksum: "sha256:dda4744327fe200e08d132ccbba9828b6bde8672080a69f69d52e72e9a6bda17"
-    contents: "Steam.app"
-    mount: "Steam"
-    content_type: "app"
-    artifact: "/Applications/Steam.app"
-dockitems_to_remove:
-  - Launchpad
-  - Mail
-  - Safari
-  - Contacts
-  - Notes
-  - Reminders
-  - Maps
-  - Photos
-  - Messages
-  - FaceTime
-  - Music
-  - News
-  - Podcasts
-  - TV
-  - App Store
-  - System Preferences
-  - Calendar
-dockitems_to_persist:
-  - name: Google Chrome
-    path: "/Applications/Google Chrome.app"
-    pos: 1
-  - name: Terminal
-    path: /System/Applications/Utilities/Terminal.app
-    pos: 2
