@@ -1,7 +1,7 @@
 ---
 system_brews: []
 system_casks:
-  - gimp
+  #- gimp
   - keepassxc
 system_dmgs:
   - file: "Brother_PrinterDrivers_ColorLaser_1_2_0.dmg"
@@ -18,3 +18,10 @@ system_dmgs:
     mount: "Brother_ScannerDrivers"
     content_type: "pkg"
     artifact: "com.Brother.Brotherdriver.Brother_ScannerDrivers"
+  - file: "gimp-2.10.14-x86_64-1.dmg"
+    url: "https://download.gimp.org/mirror/pub/gimp/v2.10/osx/gimp-2.10.14-x86_64-1.dmg"
+    checksum: "sha256:52654d85f894834f6c134c724beff3eddf212a1bda317299314322cfeff97e52"
+    contents: "GIMP-2.10.app"
+    mount: "GIMP 2.10 Install"
+    content_type: "app"
+    artifact: "/Applications/GIMP-2.10.app"
