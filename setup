@@ -2,7 +2,29 @@
 # This script installs Ansible if it is not already installed and then runs the
 # setup playbook to configure the workstation.
 
-APARGS="-K -t default -t default --skip-tags disabled"
+APARGS="-K --skip-tags disabled -t default"
+
+# Pass -t and -e options to ansible-playbook
+while getopts "t:e:" OPT; do
+  case "$OPT" in
+    "t")
+      APARGS="$APARGS -t $OPTARG"
+      ;;
+    "e")
+      APARGS="$APARGS -e $OPTARG"
+      ;;
+    ":")
+      echo "Option $OPTARG requires an argument."
+      exit 1
+      ;;
+    "*")
+      echo "Invalid option $OPTARG."
+      exit 1
+      ;;
+  esac
+done
+
+shift $(($OPTIND - 1))
 
 cat <<DONE
 =========================================================================
