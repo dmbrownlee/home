@@ -16,6 +16,7 @@ Plug 'tmux-plugins/vim-tmux'
 "Plug 'edkolev/tmuxline.vim'
 " Color Theme
 Plug 'sainnhe/forest-night'
+Plug 'morhetz/gruvbox'
 call plug#end()
 
 set nocompatible
@@ -42,7 +43,6 @@ set shiftwidth=2
 set shiftround
 set smarttab
 set expandtab
-set nowrap
 inoremap # X#
 " Folding
 set foldmethod=syntax
@@ -53,9 +53,9 @@ vnoremap <space> zf
 " Python folding override
 setlocal foldmethod=indent
 " Visual line wrapping (not adding LF to text in buffer)
-"set wrap
-"set linebreak
-"set showbreak
+set wrap
+set linebreak
+let &showbreak = '>\ '
 " Scrolling
 " Start scrolling slightly before the cursor reaches the edge
 set scrolloff=3
@@ -84,7 +84,8 @@ autocmd FileType python setlocal commentstring=#\ %s
 " Add vertical to the defaults for using :diffsplit <file> from within vim
 set diffopt=filler,vertical,foldcolumn:4
 " Colors
-colorscheme forest-night
+set background=dark
+colorscheme gruvbox
 hi clear CursorColumn
 hi clear CursorLine
 hi clear CursorLineNr
