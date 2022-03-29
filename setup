@@ -76,5 +76,4 @@ if [[ ! -d ansible ]]; then
   fi
   cd $HOME/home
 fi
-cd ansible &&
 caffeinate -dsu ansible-playbook $APARGS setup.yml
