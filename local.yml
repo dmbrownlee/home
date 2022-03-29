@@ -3,8 +3,5 @@
   hosts: localhost
   connection: local
   become: yes
-  tasks:
-    - name: Ensure base packages are installed
-      packages:
-        - tmux
-        - vim-enhanced
+  roles:
+    - baseline
