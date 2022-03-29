@@ -1,12 +1,12 @@
 ---
 - name: Assert this host can use this role
-  assert:
+  ansible.builtin.assert:
     that: ansible_distribution in supported_distributions
     fail_msg: "This role is not supported on your host operating system."
 # - name: Include OS specific variables
 #   include_vars: "{{ ansible_distribution | lower }}.yml"
 - name: Ensure baseline packages are installed
-  packages:
+  ansible.builtin.package:
     name:
       - vim-enhanced
       - tmux
