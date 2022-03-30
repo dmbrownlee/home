@@ -9,6 +9,7 @@
   ansible.builtin.package:
     name:
       - vim-enhanced
+      - vim-nerdtree
       - tmux
       - git
     state: present
