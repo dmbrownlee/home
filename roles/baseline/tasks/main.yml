@@ -9,7 +9,17 @@
   ansible.builtin.package:
     name:
       - vim-enhanced
+      - vim-airline
+      - vim-ale
+      - vim-ansible
+      - vim-commentary
+      - vim-fugitive
       - vim-nerdtree
+      - vim-nerdtree-git-plugin
+      - vim-syntastic
+      - vim-syntastic-ansible
+      - vim-syntastic-python
+      - vim-syntastic-sh
       - tmux
       - git
     state: present
