@@ -29,7 +29,7 @@
     name: ansible-pull
     state: present
     user: confmgt
-    job: sudo ansible-pull -o -U https://github.com/dmbrownlee/home.git
+    job: /usr/bin/ansible-pull -o -U https://github.com/dmbrownlee/home.git
     minute: '*/10'
 # - name: role packages
 #   include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
