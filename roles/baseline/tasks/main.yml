@@ -10,7 +10,6 @@
     name:
       - vim-enhanced
       - vim-airline
-      - vim-ale
       - vim-ansible
       - vim-commentary
       - vim-fugitive
