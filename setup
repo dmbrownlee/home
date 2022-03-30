@@ -1,30 +1,9 @@
 #!/bin/bash
+PLATFORM="$(uname)"
 # This script installs Ansible if it is not already installed and then runs the
 # setup playbook to configure the workstation.
 
-APARGS="-K --skip-tags disabled -t default"
-
-# Pass -t and -e options to ansible-playbook
-while getopts "t:e:" OPT; do
-  case "$OPT" in
-    "t")
-      APARGS="$APARGS -t $OPTARG"
-      ;;
-    "e")
-      APARGS="$APARGS -e $OPTARG"
-      ;;
-    ":")
-      echo "Option $OPTARG requires an argument."
-      exit 1
-      ;;
-    "*")
-      echo "Invalid option $OPTARG."
-      exit 1
-      ;;
-  esac
-done
-
-shift $(($OPTIND - 1))
+APARGS="-K -l localhost, -c release -U https://github.com/dmbrownlee/home.git"
 
 cat <<DONE
 =========================================================================
@@ -38,42 +17,66 @@ if [[ $? -ne 0 ]]; then
 fi
 echo
 
-# Install Homebrew if not already installed
-which -s brew
-if [[ $? -ne 0 ]]; then
-  cat <<DONE
-=========================================================================
-Installing homebrew.
-=========================================================================
+# ============================================================================
+# ==
+# ==  Ensure prerequisite software is installed on each platform
+# ==
+# ============================================================================
+# On Mac, Homebrew is the package manager of choice
+if [ "$PLATFORM" == "Darwin" ]; then
+  which -s brew
+  if [[ $? -ne 0 ]]; then
+    cat <<DONE
+  =========================================================================
+  Installing homebrew.
+  =========================================================================
 DONE
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    # Also, use brew to install git (rather than use the older version in XCode)
+    cat <<DONE
+    =========================================================================
+    Installing git.
+    =========================================================================
+DONE
+    brew install git
+  fi
 fi
 
-# Install Ansible if not already installed
 which -s ansible-playbook
 if [[ $? -ne 0 ]]; then
   cat <<DONE
-=========================================================================
-Installing ansible.
-=========================================================================
+  =========================================================================
+  Installing ansible.
+  =========================================================================
 DONE
-  brew install ansible
+  case "$PLATFORM" in
+    "Darwin")
+      brew install ansible
+      ;;
+    "Linux")
+      if [[ -f /etc/debian_version ]]; then
+        if [[ ! -x /usr/local/bin/pip3 ]]; then
+          sudo apt install -y python3-pip
+        fi
+      elif [[ -f /etc/rocky-release ]]; then
+        if [[ ! -x /usr/bin/pip3 ]]; then
+          sudo yum install -y epel-release
+          sudo yum update -y
+          sudo yum install -y ansible
+        fi
+      fi
+      ;;
+    "*")
+      echo "This setup script does not work with your host operating system."
+      exit 1
+      ;;
+  esac
 fi
 
 # Do all remaining configuration with Ansible playbook
 cat <<DONE
 =========================================================================
-Running Ansible playbook under caffeinate to prevent hibernation.
+Running Ansible playbook
 =========================================================================
 DONE
-# In case we are curling this directly from raw.githubusercontent.com
-if [[ ! -d ansible ]]; then
-  # Install git from Homebrew
-  [ -x /usr/local/bin/git ] || brew install git
-  # Clone this repo into the home directory
-  if [[ ! -d $HOME/home ]]; then
-    cd $HOME && /usr/local/bin/git clone https://github.com/dmbrownlee/home.git
-  fi
-  cd $HOME/home
-fi
-caffeinate -dsu ansible-playbook $APARGS setup.yml
+ansible-pull $APARGS
