@@ -12,6 +12,18 @@
       - tmux
       - git
     state: present
+- name: Ensure confmgt user exists
+  ansible.builtin.user:
+    name: confmgt
+    state: present
+    system: yes
+- name: Ensure confmgt user can use sudo
+  ansible.builtin.copy:
+    dest: /etc/sudoers.d/confmgt
+    content: 'confmgt ALL=(ALL) NOPASSWD: ALL'
+    owner: root
+    group: root
+    mode: 0440
 # - name: role packages
 #   include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
 # - name: shell configuration
