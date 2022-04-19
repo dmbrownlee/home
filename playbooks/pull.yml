@@ -1,0 +1,7 @@
+---
+- name: Configure localhost using ansible-pull
+  hosts: localhost
+  connection: local
+  become: yes
+  roles:
+    - pull
