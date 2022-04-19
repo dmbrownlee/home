@@ -1,0 +1,12 @@
+---
+- name: Ensure baseline packages are installed
+  ansible.builtin.package:
+    name:
+      - vim-enhanced
+      - vim-airline
+      - vim-ansible
+      - vim-commentary
+      - vim-fugitive
+      - tmux
+      - git
+    state: present

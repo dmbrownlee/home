@@ -3,25 +3,8 @@
   ansible.builtin.assert:
     that: ansible_distribution in supported_distributions
     fail_msg: "This role is not supported on your host operating system."
-# - name: Include OS specific variables
-#   include_vars: "{{ ansible_distribution | lower }}.yml"
-- name: Ensure baseline packages are installed
-  ansible.builtin.package:
-    name:
-      - vim-enhanced
-      - vim-airline
-      - vim-ansible
-      - vim-commentary
-      - vim-fugitive
-      - vim-nerdtree
-      - vim-nerdtree-git-plugin
-      - vim-syntastic
-      - vim-syntastic-ansible
-      - vim-syntastic-python
-      - vim-syntastic-sh
-      - tmux
-      - git
-    state: present
+- name: Ensure baseline software for distribution is installed
+  include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
 - name: Ensure confmgt user exists
   ansible.builtin.user:
     name: confmgt
@@ -39,10 +22,8 @@
     name: ansible-pull
     state: present
     user: confmgt
-    job: /usr/bin/ansible-pull -o -U https://github.com/dmbrownlee/home.git
+    job: /usr/bin/ansible-pull -o -U https://github.com/dmbrownlee/home.git -C {{ ansible_pull_branch }}
     minute: '*/10'
-# - name: role packages
-#   include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
 # - name: shell configuration
 #   include_tasks: "{{ ansible_user_shell | basename }}-config.yml"
 # - name: tmux configuration

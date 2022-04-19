@@ -3,19 +3,20 @@
   assert:
     that: ansible_pkg_mgr == "homebrew"
     fail_msg: "A homebrew installation is required."
-- name: Ensure system brews are installed
-  homebrew:
+- name: Ensure baseline brews are installed
+  community.general.homebrew:
     name: "{{ item }}"
     state: present
-  loop: "{{ system_brews }}"
-  when:
-    - system_brews is defined
-    - (system_brews | length > 0)
-- name: Ensure system casks are installed
-  homebrew_cask:
+  loop:
+    - ansible
+    - ansible-lint
+    #- dockutil
+    - git
+    - tmux
+    - vim
+- name: Ensure baseline casks are installed
+  community.general.homebrew_cask:
     name: "{{ item }}"
     state: present
-  loop: "{{ system_casks }}"
-  when:
-    - system_casks is defined
-    - (system_casks | length > 0)
+  loop:
+    - google-chrome
