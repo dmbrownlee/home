@@ -30,7 +30,7 @@
 # Git configuration
 # =================
 - name: Ensure global git settings have been configured
-  community.general.git_config:
+  git_config:
     name: '{{ item.name }}'
     scope: global
     value: "{{ item.value }}"
