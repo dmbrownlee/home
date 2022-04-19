@@ -5,7 +5,6 @@
       - vim-enhanced
       - vim-airline
       - vim-ansible
-      - vim-commentary
       - vim-fugitive
       - tmux
       - git
