@@ -4,5 +4,6 @@ supported_distributions:
   - "Fedora"
   - "Rocky"
 ansible_pull_branch: "release"
-git_user_name: "D. M. Brownlee"
-git_user_email: "dmbrownlee@users.noreply.github.com"
+git:
+  user_name: "D. M. Brownlee"
+  user_email: "dmbrownlee@users.noreply.github.com"

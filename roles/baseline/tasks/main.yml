@@ -26,9 +26,40 @@
     minute: '*/10'
 # - name: shell configuration
 #   include_tasks: "{{ ansible_user_shell | basename }}-config.yml"
-# - name: tmux configuration
-#   include_tasks: tmux.yml
-# - name: git configuration
-#   include_tasks: git.yml
-# - name: vim configuration
-#   include_tasks: vim.yml
+# =================
+# Git configuration
+# =================
+- name: Ensure global git settings have been configured
+  community.general.git_config:
+    name: '{{ item.name }}'
+    scope: global
+    value: "{{ item.value }}"
+  loop:
+    - { name: 'user.name', value: '{{ git.user_name }}' }
+    - { name: 'user.email', value: '{{ git.user_email }}' }
+# ==================
+# tmux configuration
+# ==================
+- name: Check if the tmux plugin manager (TPM) is installed
+  ansible.builtin.stat:
+    path: "{{ ansible_user_dir }}/.tmux/plugins/tpm"
+  register: tpm
+  changed_when: false
+- name: Ensure TPM is installed
+  ansible.builtin.git:
+    repo: "https://github.com/tmux-plugins/tpm"
+    dest: "~/.tmux/plugins/tpm"
+  when: not tpm.stat.exists
+- name: Ensure custom tmux config is installed
+  ansible.builtin.template:
+    src: tmux.conf.j2
+    dest: "{{ ansible_user_dir }}/.tmux.conf"
+    mode: '0644'
+# =================
+# Vim configuration
+# =================
+- name: Ensure custom vim configuration is installed
+  ansible.builtin.template:
+    src: vimrc.j2
+    dest: "{{ ansible_user_dir }}/.vimrc"
+    mode: '0644'
