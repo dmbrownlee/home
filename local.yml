@@ -4,4 +4,5 @@
   connection: local
   become: yes
   roles:
+    - local-accounts
     - baseline

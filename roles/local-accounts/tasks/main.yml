@@ -1,0 +1,7 @@
+---
+- name: Ensure confmgt account is unlocked
+  ansible.builtin.user:
+    name: confmgt
+    state: present
+    password_lock: False
+  become: yes
