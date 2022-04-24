@@ -2,6 +2,28 @@
 - name: Ensure confmgt account is unlocked
   ansible.builtin.user:
     name: confmgt
-    state: present
     password_lock: False
+    become: yes
+#
+# available_accounts:
+#   Defined in the role variables, these are all the accounts available to
+#   any host.
+#
+# local_accounts:
+#   Defined in the host's vars, this is the list of usernames from the
+#   available_accounts which will be created on this host.
+- name: Ensure local account for {{ user.name }} exists
+  ansible.builtin.user:
+    name: "{{ user.name }}"
+    uid: "{{ user.uid | default(omit) }}"
+    comment: "{{ user.comment | default(omit) }}"
+    groups: "{{ user.groups | default(omit) }}"
+    password: "{{ user.password | default(omit) }}"
+    password_lock: "{{ user.password_lock | default('True') }}"
+    state: present
   become: yes
+  when: user.name in local_accounts
+  loop: "{{ available_accounts }}"
+  loop_control:
+    label: "{{ user.name }}"
+    loop_var: user
