@@ -12,9 +12,9 @@
 # local_accounts:
 #   Defined in the host's vars, this is the list of usernames from the
 #   available_accounts which will be created on this host.
-- name: Ensure local account for {{ user.name }} exists
+- name: Ensure local account for {{ user.username }} exists
   ansible.builtin.user:
-    name: "{{ user.name }}"
+    name: "{{ user.username }}"
     uid: "{{ user.uid | default(omit) }}"
     comment: "{{ user.comment | default(omit) }}"
     groups: "{{ user.groups | default(omit) }}"
@@ -22,8 +22,8 @@
     password_lock: "{{ user.password_lock | default('True') }}"
     state: present
   become: yes
-  when: user.name in local_accounts
+  when: user.username in local_accounts
   loop: "{{ available_accounts }}"
   loop_control:
-    label: "{{ user.name }}"
+    label: "{{ user.username }}"
     loop_var: user
