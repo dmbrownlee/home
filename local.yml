@@ -1,6 +1,6 @@
 ---
-- name: Configure localhost using ansible-pull
-  hosts: all
+- name: Configure home machines using ansible-pull
+  hosts: baseline
   connection: local
   become: yes
   roles:
