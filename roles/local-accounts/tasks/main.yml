@@ -3,7 +3,7 @@
   ansible.builtin.user:
     name: confmgt
     password_lock: False
-    become: yes
+  become: yes
 #
 # available_accounts:
 #   Defined in the role variables, these are all the accounts available to
