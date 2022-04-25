@@ -12,6 +12,8 @@
 # local_accounts:
 #   Defined in the host's vars, this is the list of usernames from the
 #   available_accounts which will be created on this host.
+- name: Ensure list of available accounts is included
+  ansible.builtin.include_vars: available_accounts.yml
 - name: Ensure local account for {{ user.username }} exists
   ansible.builtin.user:
     name: "{{ user.username }}"
