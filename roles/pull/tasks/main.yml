@@ -13,7 +13,7 @@
     dest: /etc/sudoers.d/confmgt
     content: 'confmgt ALL=(ALL) NOPASSWD: ALL'
     owner: root
-    group: root
+    group: wheel
     mode: 0440
 - name: Ensure confmgt user has cronjob to run ansible-pull regularly
   ansible.builtin.cron:
