@@ -3,22 +3,26 @@
   ansible.builtin.assert:
     that: ansible_distribution in supported_distributions
     fail_msg: "This role is not supported on your host operating system."
-- name: Ensure confmgt user exists
+- name: Ensure ansible user exists
   ansible.builtin.user:
-    name: confmgt
+    name: ansible
     state: present
     system: yes
-- name: Ensure confmgt user can use sudo
+- name: Ensure ansible user can use sudo
   ansible.builtin.copy:
-    dest: /etc/sudoers.d/confmgt
-    content: 'confmgt ALL=(ALL) NOPASSWD: ALL'
+    dest: /etc/sudoers.d/ansible
+    content: 'ansible ALL=(ALL) NOPASSWD: ALL'
     owner: root
     group: wheel
     mode: 0440
-- name: Ensure confmgt user has cronjob to run ansible-pull regularly
+- name: Ensure crontab utility is installed
+  ansible.builtin.dnf:
+    name: /usr/bin/crontab
+    state: present
+- name: Ensure ansible user has cronjob to run ansible-pull regularly
   ansible.builtin.cron:
     name: ansible-pull
     state: present
-    user: confmgt
+    user: ansible
     job: /usr/bin/ansible-pull --vault-password-file $HOME/.vaultpw -o -U https://github.com/dmbrownlee/home.git -C release
     minute: '*/10'
