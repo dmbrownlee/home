@@ -1,13 +1,22 @@
 ---
+- name: Ensure ansible group exists
+  ansible.builtin.group:
+    name: "{{ cfg_group.name }}"
+    state: present
+    gid: "{{ cfg_group.gid }}"
 - name: Ensure ansible user exists
   ansible.builtin.user:
-    name: ansible
+    name: "{{ cfg_account.name }}"
+    comment: "{{ cfg_account.comment | default(omit) }}"
+    uid: "{{ cfg_account.uid }}"
+    group: "{{ cfg_group.name }}"
+    groups: wheel
+    append: yes
     state: present
-    system: yes
-- name: Ensure ansible user can use sudo
+- name: Ensure configuration management user can use sudo
   ansible.builtin.copy:
-    dest: /etc/sudoers.d/ansible
-    content: 'ansible ALL=(ALL) NOPASSWD: ALL'
+    dest: /etc/sudoers.d/{{ cfg_account.name }}
+    content: '{{ cfg_account.name }} ALL=(ALL) NOPASSWD: ALL'
     owner: root
     group: wheel
     mode: 0440
@@ -15,10 +24,10 @@
   ansible.builtin.dnf:
     name: /usr/bin/crontab
     state: present
-- name: Ensure ansible user has cronjob to run ansible-pull regularly
+- name: Ensure configuration management user has cronjob to run ansible-pull regularly
   ansible.builtin.cron:
     name: ansible-pull
     state: present
-    user: ansible
+    user: "{{ cfg_account.name }}"
     job: /usr/bin/ansible-pull --vault-password-file $HOME/.vaultpw -o -U https://github.com/dmbrownlee/home.git -C release
     minute: '*/10'

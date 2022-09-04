@@ -1,3 +1,10 @@
 ---
+cfg_group:
+  name: ansible
+  gid: 1000
+cfg_account:
+  name: ansible
+  comment: "Configuration Management Account"
+  uid: 1000
 git_user_name: "D. M. Brownlee"
 git_user_email: "dmbrownlee@users.noreply.github.com"
