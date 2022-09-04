@@ -1,8 +1,4 @@
 ---
-- name: Assert this host can use this role
-  ansible.builtin.assert:
-    that: ansible_distribution in supported_distributions
-    fail_msg: "This role is not supported on your host operating system."
 - name: Ensure ansible user exists
   ansible.builtin.user:
     name: ansible
