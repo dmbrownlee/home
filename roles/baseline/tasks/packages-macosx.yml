@@ -1,6 +1,6 @@
 ---
 - name: Assert homebrew is installed
-  assert:
+  ansible.builtin.assert:
     that: ansible_pkg_mgr == "homebrew"
     fail_msg: "A homebrew installation is required."
 - name: Ensure baseline brews are installed

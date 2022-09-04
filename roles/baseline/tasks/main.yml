@@ -4,14 +4,18 @@
     that: ansible_distribution in supported_distributions
     fail_msg: "This role is not supported on your host operating system."
 - name: Ensure baseline software for distribution is installed
-  include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
+  ansible.builtin.include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
 # - name: shell configuration
 #   include_tasks: "{{ ansible_user_shell | basename }}-config.yml"
 # =================
 # Git configuration
 # =================
+- name: Ensure the necessary Ansible collections are installed
+  ansible.builtin.dnf:
+    name: ansible-collection-community-general
+    state: present
 - name: Ensure global git settings have been configured
-  git_config:
+  community.general.git_config:
     name: '{{ item.name }}'
     scope: global
     value: "{{ item.value }}"
