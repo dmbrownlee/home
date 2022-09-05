@@ -1,4 +1,9 @@
 ---
+- name: Ensure ansible collections are installed
+  ansible.builtin.dnf:
+    name:
+      - ansible-collection-community-general
+      - ansible-collection-ansible-posix
 - name: Ensure ansible group exists
   ansible.builtin.group:
     name: "{{ cfg_group.name }}"
