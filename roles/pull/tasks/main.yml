@@ -4,6 +4,7 @@
     name:
       - ansible-collection-community-general
       - ansible-collection-ansible-posix
+    state: present
 - name: Ensure ansible group exists
   ansible.builtin.group:
     name: "{{ cfg_group.name }}"
