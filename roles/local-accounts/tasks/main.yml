@@ -1,10 +1,4 @@
 ---
-- name: Ensure confmgt account is unlocked
-  ansible.builtin.user:
-    name: confmgt
-    password_lock: False
-  become: yes
-#
 # available_accounts:
 #   Defined in the role variables, these are all the accounts available to
 #   any host.
@@ -12,20 +6,29 @@
 # local_accounts:
 #   Defined in the host's vars, this is the list of usernames from the
 #   available_accounts which will be created on this host.
-- name: Ensure list of available accounts is included
-  ansible.builtin.include_vars: available_accounts.yml
-- name: Ensure local account for {{ user.username }} exists
-  ansible.builtin.user:
-    name: "{{ user.username }}"
-    uid: "{{ user.uid | default(omit) }}"
-    comment: "{{ user.comment | default(omit) }}"
-    groups: "{{ user.groups | default(omit) }}"
-    password: "{{ user.password | default(omit) }}"
-    password_lock: "{{ user.password_lock | default('True') }}"
+- name: Ensure local groups exist
+  ansible.builtin.group:
+    name: "{{ group.name }}"
+    gid: "{{ group.gid }}"
     state: present
-  become: yes
-  when: user.username in local_accounts
-  loop: "{{ available_accounts }}"
+  when: directory_groups is defined
+  loop: "{{ directory_groups }}"
   loop_control:
-    label: "{{ user.username }}"
+    label: "{{ group.name }}"
+    loop_var: group
+- name: Ensure local accounts exist
+  ansible.builtin.user:
+    name: "{{ user.name }}"
+    uid: "{{ user.uid }}"
+    comment: "{{ user.comment | default(omit) }}"
+    group: "{{ user.group }}"
+    groups: "{{ user.groups | default(omit) }}"
+    append: true
+    password: "{{ user.password | default(omit) }}"
+    password_lock: "{{ user.password_lock | default('true') }}"
+    state: present
+  when: directory_users is defined
+  loop: "{{ directory_users }}"
+  loop_control:
+    label: "{{ user.name }}"
     loop_var: user
