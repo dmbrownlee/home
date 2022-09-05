@@ -1,4 +1,4 @@
 ---
 system_packages:
-  - workstation-product-environment
+  - '@Fedora Workstation'
   - keepassxc
