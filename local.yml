@@ -6,3 +6,9 @@
   roles:
     - local-accounts
     - baseline
+- name: Configure Workstations
+  hosts: workstations
+  connection: local
+  become: yes
+  roles:
+    - workstation
