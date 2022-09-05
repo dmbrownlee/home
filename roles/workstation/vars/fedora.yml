@@ -1,0 +1,4 @@
+---
+system_packages:
+  - workstation-product-environment
+  - keepassxc
