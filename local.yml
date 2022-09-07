@@ -6,9 +6,9 @@
   roles:
     - local-accounts
     - baseline
-- name: Configure Workstations
-  hosts: workstations
+- name: Configure Fedora installs as Workstations
+  hosts: fedora
   connection: local
   become: yes
   roles:
-    - workstation
+    - graphical-desktop-environment

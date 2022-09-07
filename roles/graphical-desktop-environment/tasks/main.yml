@@ -1,0 +1,17 @@
+---
+- name: Ensure OS specific vars have been loaded
+  ansible.builtin.include_vars: "{{ ansible_distribution | lower }}.yml"
+- name: Ensure dnf packages are installed
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ dnf_packages }}"
+  when:
+    - ansible_pkg_mgr == 'dnf'
+    - dnf_packages is defined
+    - (dnf_packages | length > 0)
+- name: Ensure default systemd target is graphical.target
+  ansible.builtin.file:
+    src: /usr/lib/systemd/system/graphical.target
+    dest: /etc/systemd/system/default.target
+    state: link
