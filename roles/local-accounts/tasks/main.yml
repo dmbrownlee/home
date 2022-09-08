@@ -1,5 +1,5 @@
 ---
-# available_accounts:
+# directory_groups/directory_accounts:
 #   Defined in the role variables, these are all the accounts available to
 #   any host.
 #
@@ -16,19 +16,21 @@
   loop_control:
     label: "{{ group.name }}"
     loop_var: group
+  become: yes
 - name: Ensure local accounts exist
   ansible.builtin.user:
     name: "{{ user.name }}"
+    state: present
+    update_password: 'on_create'
+    password: "{{ user.password }}"
     uid: "{{ user.uid }}"
-    comment: "{{ user.comment | default(omit) }}"
     group: "{{ user.group }}"
+    comment: "{{ user.comment | default(omit) }}"
     groups: "{{ user.groups | default(omit) }}"
     append: true
-    password: "{{ user.password | default(omit) }}"
-    password_lock: "{{ user.password_lock | default('true') }}"
-    state: present
   when: directory_users is defined
   loop: "{{ directory_users }}"
   loop_control:
     label: "{{ user.name }}"
     loop_var: user
+  become: yes
