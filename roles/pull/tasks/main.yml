@@ -44,7 +44,7 @@
     mode: '0755'
 - name: Ensure the systemd service and timer files exist for ansible-pull
   ansible.builtin.template:
-    src: "{{ item }}".js
+    src: "{{ item }}.js"
     dest: /home/{{ cfg_account.name }}/.config/systemd/user/{{ item }}
     owner: "{{ cfg_account.name }}"
     group: "{{ cfg_group.name }}"
