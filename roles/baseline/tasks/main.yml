@@ -1,8 +1,4 @@
 ---
-- name: Assert this host can use this role
-  ansible.builtin.assert:
-    that: ansible_distribution in supported_distributions
-    fail_msg: "This role is not supported on your host operating system."
 - name: Ensure baseline software for distribution is installed
   ansible.builtin.include_tasks: "packages-{{ ansible_distribution | lower }}.yml"
 # - name: shell configuration

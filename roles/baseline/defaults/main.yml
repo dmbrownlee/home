@@ -1,8 +1,4 @@
 ---
-supported_distributions:
-  - "MacOSX"
-  - "Fedora"
-  - "Rocky"
 ansible_pull_branch: "release"
 git:
   user_name: "D. M. Brownlee"
