@@ -4,7 +4,7 @@ Documentation=man:ansible-pull(1)
 
 [Timer]
 OnCalendar=hourly
-OnBootSec=5m
+OnBootSec=1m
 AccuracySec=5m
 Persistent=true
 
