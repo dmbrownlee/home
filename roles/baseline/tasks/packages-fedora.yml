@@ -2,17 +2,9 @@
 - name: Ensure baseline packages are installed
   ansible.builtin.package:
     name:
-      - vim-enhanced
-      - vim-airline
-      - vim-ansible
-      - vim-commentary
-      - vim-fugitive
-      - vim-nerdtree
-      - vim-nerdtree-git-plugin
-      - vim-syntastic
-      - vim-syntastic-ansible
-      - vim-syntastic-python
-      - vim-syntastic-sh
-      - tmux
+      - bash-completion
+      - epel-release
       - git
+      - tmux
+      - vim
     state: present
