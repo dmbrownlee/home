@@ -3,7 +3,6 @@
   ansible.builtin.package:
     name:
       - bash-completion
-      - epel-release
       - git
       - tmux
       - vim
