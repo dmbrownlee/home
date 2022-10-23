@@ -16,7 +16,7 @@ ping -q -4 -W 2 -c 1 8.8.8.8 > /dev/null ||
 # Ensure ansible user can use sudo
 if [ ! -f /usr/bin/sudo ]; then
   echo "Your password is needed to elevate privleges so sudo can be installed"
-  doas sed -i .orig -e '3s/^#//'
+  doas sed -i.orig -e '3s/^#//'
   doas apk update
   doas apk add sudo
   echo 'ansible ALL=(ALL:ALL) ALL' | doas tee /etc/sudoers.d/ansible
