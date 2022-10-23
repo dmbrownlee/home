@@ -13,6 +13,16 @@ ping -q -4 -W 2 -c 1 8.8.8.8 > /dev/null ||
   exit 2
 }
 
+# Ensure ansible user can use sudo
+if [ ! /usr/bin/sudo ]; then
+  echo "Your password is needed to elevate privleges so sudo can be installed"
+  doas sed -i -e '3s/^#//'
+  doas apk update
+  doas apk add sudo
+  echo 'ansible ALL=(ALL:ALL) ALL' | doas tee /etc/sudoers.d/ansible
+  exit 3
+fi
+
 # If this script is being piped to the shell from wget, git may not be installed yet.
 if [ ! -d $HOME/home ]; then
   if [ ! -f /usr/bin/git ]; then
