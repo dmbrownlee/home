@@ -1,0 +1,29 @@
+#!/bin/ash
+# Make sure this is run from the correct account.
+id | grep -q '^uid=1000(ansible) '
+if [ $? -ne 0 ]; then
+  echo "This script should be run by the Ansible user (UID=1000)."
+  exit 1
+fi
+
+# Test connectivity
+ping -q -4 -W 2 -c 1 8.8.8.8 > /dev/null ||
+{
+  echo "You don't appear to have a connection to the Internet."
+  exit 2
+}
+
+# If this script is being piped to the shell from wget, git may not be installed yet.
+if [ ! -d $HOME/home ]; then
+  if [ ! -f /usr/bin/git ]; then
+    sudo -p "Your password is needed to elevate privleges so git can be installed (not displayed):" apk add git
+  fi
+
+  cd $HOME &&
+  git clone https://github.com/dmbrownlee/home.git
+fi
+
+# Make sure Ansible is installed
+if [ ! -f /usr/bin/ansible ]; then
+  sudo -p "Your password is needed to elevate privleges so ansible can be installed (not displayed):" apk add ansible-core
+fi
