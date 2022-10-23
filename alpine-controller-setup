@@ -29,10 +29,22 @@ if [ ! -d $HOME/home ]; then
   fi
 
   cd $HOME &&
-  git clone https://github.com/dmbrownlee/home.git
+  git clone https://github.com/dmbrownlee/home.git &&
+  cd $HOME/home &&
+  git remote set-url origin git@github.com:dmbrownlee/home.git https://github.com/dmbrownlee/home.git
+fi
+
+# Make sure git is configured
+if [ ! -f $HOME/.gitconfig ]; then
+  git config --global user.name "D. M. Brownlee"
+  git config --global user.email dmbrownlee@users.noreply.github.com
 fi
 
 # Make sure Ansible is installed
 if [ ! -f /usr/bin/ansible ]; then
   sudo -p "Your password is needed to elevate privleges so ansible can be installed (not displayed):" apk add ansible-core
 fi
+
+
+
+
