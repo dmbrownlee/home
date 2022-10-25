@@ -46,6 +46,7 @@ if [ ! -f /usr/bin/ansible ]; then
   ansible-galaxy collection install community.general
 fi
 
-
-
-
+# Make sure askpass is installed
+if [ ! -f /usr/bin/sshpass ]; then
+  sudo -p "Your password is needed to elevate privleges so sshpass can be installed (not displayed):" apk add sshpass
+fi
