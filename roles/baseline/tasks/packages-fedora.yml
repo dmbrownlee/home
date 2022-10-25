@@ -1,9 +1,0 @@
----
-- name: Ensure baseline packages are installed
-  ansible.builtin.package:
-    name:
-      - bash-completion
-      - git
-      - tmux
-      - vim
-    state: present

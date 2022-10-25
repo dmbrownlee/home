@@ -1,5 +1,6 @@
 ---
-ansible_pull_branch: "release"
-git:
-  user_name: "D. M. Brownlee"
-  user_email: "dmbrownlee@users.noreply.github.com"
+baseline:
+  packages:
+    - bash
+    - bash-completion
+    - vim
