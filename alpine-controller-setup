@@ -42,7 +42,8 @@ fi
 
 # Make sure Ansible is installed
 if [ ! -f /usr/bin/ansible ]; then
-  sudo -p "Your password is needed to elevate privleges so ansible can be installed (not displayed):" apk add ansible-core
+  sudo -p "Your password is needed to elevate privleges so ansible can be installed (not displayed):" apk add ansible-core &&
+  ansible-galaxy collection install community.general
 fi
 
 
