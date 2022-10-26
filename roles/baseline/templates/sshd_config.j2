@@ -1,0 +1,8 @@
+AllowTcpForwarding no
+AuthorizedKeysFile	.ssh/authorized_keys
+GatewayPorts no
+PasswordAuthentication no
+PermitRootLogin no
+Subsystem	sftp	/usr/lib/ssh/sftp-server
+X11Forwarding no
+Include /etc/ssh/sshd_config.d/*.conf

@@ -8,3 +8,13 @@
     user: ansible
     state: present
     key: "{{ lookup('file', '/home/ansible/.ssh/ansible.pub') }}"
+- name: Ensure sshd is configured
+  ansible.builtin.template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: '0644'
+    validate: /usr/sbin/sshd -t -f %s
+    backup: yes
+  notify: restart_sshd
