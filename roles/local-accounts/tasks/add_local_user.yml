@@ -1,0 +1,12 @@
+---
+- name: Ensure local account exists
+  ansible.builtin.user:
+    name: "{{ user.name }}"
+    state: "{{ item.state }}"
+    update_password: 'on_create'
+    password: "{{ user.password }}"
+    uid: "{{ user.uid }}"
+    group: "{{ user.group | default(omit) }}"
+    comment: "{{ user.comment | default(omit) }}"
+    groups: "{{ user.groups | default(omit) }}"
+    append: "{{ (user.groups is defined) | ternary(true, omit) }}"

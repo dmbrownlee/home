@@ -1,36 +1,15 @@
 ---
-# directory_groups/directory_accounts:
-#   Defined in the role variables, these are all the accounts available to
-#   any host.
-#
-# local_accounts:
-#   Defined in the host's vars, this is the list of usernames from the
-#   available_accounts which will be created on this host.
 - name: Ensure local groups exist
-  ansible.builtin.group:
-    name: "{{ group.name }}"
-    gid: "{{ group.gid }}"
-    state: present
-  when: directory_groups is defined
-  loop: "{{ directory_groups }}"
-  loop_control:
-    label: "{{ group.name }}"
-    loop_var: group
-  become: yes
-- name: Ensure local accounts exist
-  ansible.builtin.user:
-    name: "{{ user.name }}"
-    state: present
-    update_password: 'on_create'
-    password: "{{ user.password }}"
-    uid: "{{ user.uid }}"
-    group: "{{ user.group }}"
-    comment: "{{ user.comment | default(omit) }}"
-    groups: "{{ user.groups | default(omit) }}"
-    append: true
-  when: directory_users is defined
-  loop: "{{ directory_users }}"
-  loop_control:
-    label: "{{ user.name }}"
-    loop_var: user
-  become: yes
+  ansible.builtin.include_tasks: add_local_group.yml
+  vars:
+    group: "{{ domain_groups | selectattr('name', 'eq', item.name) | last }}"
+  when:
+    - local_groups is defined
+  loop: "{{ local_groups | list }}"
+- name: Ensure local users exist
+  ansible.builtin.include_tasks: add_local_user.yml
+  vars:
+    user: "{{ domain_users | selectattr('name', 'eq', item.name) | last }}"
+  when:
+    - local_users is defined
+  loop: "{{ local_users | list }}"
