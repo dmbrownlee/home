@@ -3,3 +3,8 @@
   ansible.builtin.package:
     name: "{{ baseline.packages }}"
     state: present
+- name: Ensure anible can connect using keys
+  ansible.posix.authorized_key:
+    user: ansible
+    state: present
+    key: "{{ lookup('file', '/home/ansible/.ssh/ansible.pub') }}"
