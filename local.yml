@@ -1,6 +1,6 @@
 ---
-- name: Configure home machines using ansible-pull
-  hosts: baseline
+- name: Ensure all hosts have the same standard operating environment
+  hosts: localhost
   connection: local
   become: yes
   roles:
