@@ -1,15 +1,23 @@
 ---
 - name: Ensure local groups exist
-  ansible.builtin.include_tasks: add_local_group.yml
-  vars:
-    group: "{{ domain_groups | selectattr('name', 'eq', item.name) | last }}"
+  ansible.builtin.group:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid }}"
+    state: "{{ item.state }}"
   when:
     - local_groups is defined
   loop: "{{ local_groups | list }}"
 - name: Ensure local users exist
-  ansible.builtin.include_tasks: add_local_user.yml
-  vars:
-    user: "{{ domain_users | selectattr('name', 'eq', item.name) | last }}"
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    update_password: 'on_create'
+    password: "{{ item.password }}"
+    uid: "{{ item.uid }}"
+    group: "{{ item.group | default(omit) }}"
+    comment: "{{ item.comment | default(omit) }}"
+    groups: "{{ item.groups | default(omit) }}"
+    append: "{{ (item.groups is defined) | ternary(true, omit) }}"
   when:
     - local_users is defined
   loop: "{{ local_users | list }}"
