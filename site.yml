@@ -20,11 +20,16 @@
   become: yes
   roles:
     - local-accounts
+- name: Ensure software for hosting containers is installed
+  hosts: container_hosts
+  become: yes
+  roles:
+    - podman
+  tags:
+    - testing
 - name: Configure Fedora installs as Workstations
   hosts: workstations
   connection: local
   become: yes
   roles:
     - graphical-desktop-environment
-  tags:
-    - testing
