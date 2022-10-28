@@ -1,0 +1,10 @@
+---
+- name: Ensure dnsmasq packages for distribution is installed
+  ansible.builtin.package:
+    name: "{{ dnsmasq.packages }}"
+    state: present
+- name: Ensure PXE packages for distribution is installed if needed
+  ansible.builtin.package:
+    name: "{{ pxe.packages }}"
+    state: present
+  when: is_pxe_server

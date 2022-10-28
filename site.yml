@@ -25,6 +25,11 @@
   become: yes
   roles:
     - podman
+- name: Ensure dnsmasq servers are configured
+  hosts: dnsmasq_servers
+  become: yes
+  roles:
+    - dnsmasq
   tags:
     - testing
 - name: Configure Fedora installs as Workstations
