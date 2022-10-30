@@ -34,7 +34,6 @@
     - testing
 - name: Configure Fedora installs as Workstations
   hosts: workstations
-  connection: local
   become: yes
   roles:
     - graphical-desktop-environment
