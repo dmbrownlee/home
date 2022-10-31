@@ -20,3 +20,9 @@
     name: autofs
     state: started
     enabled: yes
+- name: Ensure the ansible user is hidden from the display manager login screen
+  ansible.builtin.copy:
+    src: ansible
+    dest: /var/lib/AccountsService/users
+    mode: '0600'
+  notify: restart_display_manager
