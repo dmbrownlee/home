@@ -30,8 +30,6 @@
   become: yes
   roles:
     - dnsmasq
-  tags:
-    - testing
 - name: Configure Fedora installs as Workstations
   hosts: workstations
   become: yes
