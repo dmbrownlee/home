@@ -1,7 +1,7 @@
 ---
 - name: Ensure OS specific vars have been loaded
   ansible.builtin.include_vars: "{{ ansible_distribution | lower }}.yml"
-- name: Ensure the repo for Google Chrome is enabled
+- name: Ensure the Google Chrome repo is enabled for machines with Chrome
   ansible.builtin.yum_repository:
     name: google-chrome
     description: Where does this end up?
@@ -16,6 +16,22 @@
   when:
     - chrome_should_be_installed is defined
     - chrome_should_be_installed
+- name: Ensure the RPM Fusion free repo is enabled for machines with Steam
+  ansible.builtin.dnf:
+    name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
+    state: present
+    disable_gpg_check: yes
+  when:
+    - steam_should_be_installed is defined
+    - steam_should_be_installed
+- name: Ensure the RPM Fusion nonfree repo is enabled for machines with Steam
+  ansible.builtin.dnf:
+    name: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
+    state: present
+    disable_gpg_check: yes
+  when:
+    - steam_should_be_installed is defined
+    - steam_should_be_installed
 - name: Ensure dnf packages are installed
   ansible.builtin.dnf:
     name: "{{ item }}"
@@ -48,3 +64,10 @@
   when:
     - chrome_should_be_installed is defined
     - chrome_should_be_installed
+- name: Ensure Steam is installed if requested
+  ansible.builtin.package:
+    name: steam
+    state: present
+  when:
+    - steam_should_be_installed is defined
+    - steam_should_be_installed
