@@ -3,4 +3,4 @@
   listen: restart_display_manager
   ansible.builtin.service:
     name: gdm
-    state: restarted
+    state: reloaded
