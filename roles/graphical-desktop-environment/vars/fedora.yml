@@ -2,3 +2,4 @@
 dnf_packages:
   - '@Fedora Workstation'
   - keepassxc
+  - autofs

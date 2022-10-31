@@ -15,3 +15,8 @@
     src: /usr/lib/systemd/system/graphical.target
     dest: /etc/systemd/system/default.target
     state: link
+- name: Ensure autofs is enabled
+  ansible.builtin.service:
+    name: autofs
+    state: started
+    enabled: yes
