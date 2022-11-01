@@ -1,6 +1,0 @@
----
-system_packages:
-  - '@Fedora Workstation'
-  - keepassxc
-  - yubikey-manager
-  - yubikey-manager-qt
