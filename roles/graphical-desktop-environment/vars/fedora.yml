@@ -3,3 +3,5 @@ dnf_packages:
   - '@Fedora Workstation'
   - keepassxc
   - autofs
+  - yubikey-manager
+  - yubikey-manager-qt
