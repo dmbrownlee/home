@@ -10,28 +10,40 @@
         ssh_key_bits: 4096
         ssh_key_comment: ansible@localhost
         ssh_key_file: .ssh/ansible
+  tags:
+    - controller
 - name: Ensure all hosts have the same standard operating environment
   hosts: all
   become: yes
   roles:
+    - baseline
+  tags:
     - baseline
 - name: Ensure local accounts are created
   hosts: all
   become: yes
   roles:
     - local-accounts
+  tags:
+    - local-accounts
 - name: Ensure software for hosting containers is installed
   hosts: container_hosts
   become: yes
   roles:
+    - podman
+  tags:
     - podman
 - name: Ensure dnsmasq servers are configured
   hosts: dnsmasq_servers
   become: yes
   roles:
     - dnsmasq
+  tags:
+    - dnsmasq
 - name: Configure Fedora installs as Workstations
   hosts: workstations
   become: yes
   roles:
+    - graphical-desktop-environment
+  tags:
     - graphical-desktop-environment
