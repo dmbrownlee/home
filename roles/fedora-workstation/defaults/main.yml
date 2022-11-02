@@ -1,2 +1,9 @@
 ---
-dnf_packages: []
+dnf_packages:
+  - '@Fedora Workstation'
+  - autofs
+  - cifs-utils
+  - deja-dup
+  - keepassxc
+  - yubikey-manager
+  - yubikey-manager-qt

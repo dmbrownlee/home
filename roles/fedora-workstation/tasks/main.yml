@@ -1,6 +1,9 @@
 ---
 - name: Ensure OS specific vars have been loaded
-  ansible.builtin.include_vars: "{{ ansible_distribution | lower }}.yml"
+  ansible.builtin.assert:
+    that:
+      - ansible_distribution == "Fedora"
+    fail_msg: "The fedora-workstation role should only be used on Fedora machines."
 - name: Ensure the Google Chrome repo is enabled for machines with Chrome
   ansible.builtin.yum_repository:
     name: google-chrome
