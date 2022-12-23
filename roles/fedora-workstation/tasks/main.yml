@@ -108,6 +108,9 @@
   loop:
     - Go_Daddy_Root_Certificate_Authority_-_G2
     - Go_Daddy_Class_2_CA
+  when:
+    - icaclient_should_be_installed is defined
+    - icaclient_should_be_installed
 - name: Ensure default systemd target is graphical.target
   ansible.builtin.file:
     src: /usr/lib/systemd/system/graphical.target
