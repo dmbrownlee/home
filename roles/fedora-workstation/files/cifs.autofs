@@ -1,0 +1,1 @@
+/cifs  /etc/auto.smb --timeout=300

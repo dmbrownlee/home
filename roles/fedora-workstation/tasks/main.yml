@@ -124,3 +124,31 @@
     dest: /var/lib/AccountsService/users
     mode: '0600'
   notify: restart_display_manager
+- name: Ensure directories for automounting CIFS volumes exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  loop:
+    - /cifs
+    - /etc/creds
+- name: Ensure credential file for NAS exists
+  ansible.builtin.template:
+    dest: /etc/creds/{{ item.filename }}
+    src: cifscreds.j2
+    owner: "{{ item.username }}"
+    group: root
+    mode: '0640'
+  loop: "{{ cifscreds }}"
+  when:
+    - cifscreds is defined
+    - cifscreds | length > 0
+- name: Ensure autofs is configured to automount CIFS shares under /cifs
+  ansible.builtin.copy:
+    src: cifs.autofs
+    dest: /etc/auto.master.d/cifs.autofs
+    owner: root
+    group: root
+    mode: '0644'
