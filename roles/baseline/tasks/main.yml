@@ -1,4 +1,16 @@
 ---
+- name: Ensure default directory for custom facts exists
+  ansible.builtin.file:
+    path: /etc/ansible/fact.d
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+- name: Ensure any custom facts have been installed
+  debug:
+    msg: installing custom facts
+- name: Ensure setup is run
+  ansible.builtin.setup:
 - name: Ensure baseline software for distribution is installed
   ansible.builtin.package:
     name: "{{ baseline.packages }}"
