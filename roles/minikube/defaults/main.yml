@@ -1,0 +1,6 @@
+---
+minikube_profile_name: 'minikube'
+minikube_cpus: '2'
+minikube_mem: '8192'
+minikube_driver: 'kvm2'
+minikube_addons: 'ingress,metrics-server'

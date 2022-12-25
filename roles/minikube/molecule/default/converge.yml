@@ -1,0 +1,35 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    # On a real machine/VM, this configuration is handled during installation.
+    - name: Ensure related system packages are installed
+      become: yes
+      ansible.builtin.package:
+        name:
+          - "@Virtualization"
+          - libvirt-daemon
+    - name: Ensure libvirtd is started
+      ansible.builtin.service:
+        name: libvirtd
+        state: started
+        enabled: yes
+    - name: Ensure the ansible private group exists
+      ansible.builtin.group:
+        name: ansible
+        state: present
+        gid: 1000
+    - name: Ensure the ansible user exists
+      ansible.builtin.user:
+        name: ansible
+        state: present
+        uid: 1000
+        group: ansible
+        append: yes
+        groups:
+          - wheel
+          - libvirt
+    # Now test the role
+    - name: "Include home.minikube"
+      ansible.builtin.include_role:
+        name: "home.minikube"
