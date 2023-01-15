@@ -41,6 +41,7 @@
     src: /etc/systemd/system/ansible-pull.timer
     dest: /etc/systemd/system/timers.target.wants/ansible-pull.timer
     state: link
+    follow: false
     owner: root
     group: root
     mode: '0755'
