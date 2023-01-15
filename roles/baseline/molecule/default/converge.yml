@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include dmbrownlee.baseline"
+      ansible.builtin.include_role:
+        name: "baseline"
