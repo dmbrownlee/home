@@ -4,9 +4,9 @@ Documentation=man:ansible-pull(1)
 
 [Service]
 Type=oneshot
-WorkingDirectory=/home/{{ cfg_account.name }}
-User={{ cfg_account.name }}
-ExecStart=/usr/bin/ansible-pull --vault-password-file /home/{{ cfg_account.name }}/.vaultpw -o -U https://github.com/dmbrownlee/home.git -C release
+WorkingDirectory=/home/{{ provisioning.user.name }}
+User={{ provisioning.user.name }}
+ExecStart=/usr/bin/ansible-pull --vault-password-file /home/{{ provisioning.user.name }}/.vaultpw -o -U https://github.com/dmbrownlee/home.git -C release
 
 # hardening options
 #  details: https://www.freedesktop.org/software/systemd/man/systemd.exec.html

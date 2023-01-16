@@ -11,7 +11,7 @@ The local machine is assumed to be running Fedora Linux.
 Role Variables
 --------------
 
-None
+The defaults for the account ansible will use for provisioning can be overridden.  See defaults/main.yml.
 
 Dependencies
 ------------

@@ -1,8 +1,9 @@
 ---
-cfg_group:
-  name: ansible
-  gid: 1000
-cfg_account:
-  name: ansible
-  comment: "Configuration Management Account"
-  uid: 1000
+provisioning:
+  group:
+    name: ansible
+    gid: 1000
+  user:
+    name: ansible
+    comment: "Configuration Management Account"
+    uid: 1000

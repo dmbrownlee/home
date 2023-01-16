@@ -17,24 +17,24 @@
     msg: installing custom facts
 - name: Ensure setup is run
   ansible.builtin.setup:
-- name: Ensure ansible group exists
+- name: Ensure provisioning group exists
   ansible.builtin.group:
-    name: "{{ cfg_group.name }}"
+    name: "{{ provisioning.group.name }}"
     state: present
-    gid: "{{ cfg_group.gid }}"
-- name: Ensure ansible user exists
+    gid: "{{ provisioning.group.gid }}"
+- name: Ensure provisioning user exists
   ansible.builtin.user:
-    name: "{{ cfg_account.name }}"
-    comment: "{{ cfg_account.comment | default(omit) }}"
-    uid: "{{ cfg_account.uid }}"
-    group: "{{ cfg_group.name }}"
+    name: "{{ provisioning.user.name }}"
+    comment: "{{ provisioning.user.comment | default(omit) }}"
+    uid: "{{ provisioning.user.uid }}"
+    group: "{{ provisioning.group.name }}"
     groups: wheel
     append: yes
     state: present
-- name: Ensure ansible user can use sudo
+- name: Ensure provisioning user can use sudo
   ansible.builtin.copy:
-    dest: /etc/sudoers.d/{{ cfg_account.name }}
-    content: '{{ cfg_account.name }} ALL=(ALL) NOPASSWD: ALL'
+    dest: /etc/sudoers.d/{{ provisioning.user.name }}
+    content: '{{ provisioning.user.name }} ALL=(ALL) NOPASSWD: ALL'
     owner: root
     group: wheel
     mode: 0440
@@ -57,8 +57,8 @@
     owner: root
     group: root
     mode: '0755'
-- name: Ensure anible can connect using keys
+- name: Ensure provisioning user can connect using keys
   ansible.posix.authorized_key:
-    user: ansible
+    user: "{{ provisioning.user.name }}"
     state: present
-    key: "{{ lookup('file', '/etc/ansible/keys/ansible.pub') }}"
+    key: "{{ lookup('file', '/etc/ansible/keys/' + provisioning.user.name + '.pub') }}"
