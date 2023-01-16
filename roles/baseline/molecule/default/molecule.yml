@@ -10,6 +10,7 @@ lint: |
 platforms:
   - name: fedora37
     image: "docker.io/geerlingguy/docker-fedora37-ansible:latest"
+    command: "/sbin/init"
     pre_build_image: true
 provisioner:
   name: ansible
