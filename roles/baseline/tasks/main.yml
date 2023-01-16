@@ -1,25 +1,17 @@
 ---
-- name: Ensure default directory for custom facts exists
-  ansible.builtin.file:
-    path: /etc/ansible/fact.d
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
-- name: Ensure any custom facts have been installed
-  debug:
-    msg: installing custom facts
-- name: Ensure setup is run
-  ansible.builtin.setup:
 - name: Ensure baseline software for distribution is installed
   ansible.builtin.package:
     name: "{{ baseline.packages }}"
     state: present
-- name: Ensure anible can connect using keys
-  ansible.posix.authorized_key:
-    user: ansible
-    state: present
-    key: "{{ lookup('file', '/home/ansible/.ssh/ansible.pub') }}"
+- name: Ensure root password is locked
+  ansible.builtin.user:
+    name: root
+    password_lock: yes
+- name: Ensure sshd is started
+  ansible.builtin.service:
+    name: sshd
+    state: started
+    enabled: yes
 - name: Ensure sshd is configured
   ansible.builtin.template:
     src: sshd_config.j2
@@ -30,7 +22,3 @@
     validate: /usr/sbin/sshd -t -f %s
     backup: yes
   notify: restart_sshd
-- name: Ensure root password is locked
-  ansible.builtin.user:
-    name: root
-    password_lock: yes

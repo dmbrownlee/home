@@ -3,4 +3,5 @@ baseline:
   packages:
     - bash
     - bash-completion
+    - openssh-server
     - vim

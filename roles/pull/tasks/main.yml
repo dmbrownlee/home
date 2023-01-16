@@ -5,6 +5,18 @@
       - ansible-collection-community-general
       - ansible-collection-ansible-posix
     state: present
+- name: Ensure default directory for custom facts exists
+  ansible.builtin.file:
+    path: /etc/ansible/fact.d
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+- name: Ensure any custom facts have been installed
+  ansible.builtin.debug:
+    msg: installing custom facts
+- name: Ensure setup is run
+  ansible.builtin.setup:
 - name: Ensure ansible group exists
   ansible.builtin.group:
     name: "{{ cfg_group.name }}"
@@ -19,7 +31,7 @@
     groups: wheel
     append: yes
     state: present
-- name: Ensure configuration management user can use sudo
+- name: Ensure ansible user can use sudo
   ansible.builtin.copy:
     dest: /etc/sudoers.d/{{ cfg_account.name }}
     content: '{{ cfg_account.name }} ALL=(ALL) NOPASSWD: ALL'
@@ -45,3 +57,8 @@
     owner: root
     group: root
     mode: '0755'
+- name: Ensure anible can connect using keys
+  ansible.posix.authorized_key:
+    user: ansible
+    state: present
+    key: "{{ lookup('file', '/etc/ansible/keys/ansible.pub') }}"

@@ -1,7 +1,7 @@
 pull
 =========
 
-The ```pull``` role configures a machine to configure itself by using ```ansible-pull``` periodically.  Specifically, this was written for use in the ```%post``` post section of a Fedora kickstart file.
+The ```pull``` role configures a machine to configure itself by using ```ansible-pull``` periodically.  Specifically, this was written for use in the ```%post``` post section of a Fedora kickstart file.  It also configures public key authentication for the ansible user so you can push your plays as well.  However, it does not install openssh-server or start it.
 
 Requirements
 ------------
