@@ -4,17 +4,6 @@
     that:
       - ansible_distribution == "Fedora"
     fail_msg: "The fedora-workstation role should only be used on Fedora machines."
-- name: Ensure local repo is enabled
-  ansible.builtin.yum_repository:
-    name: home
-    description: Repo for locally managed packages
-    state: present
-    baseurl: "{{ home_repo.baseurl }}"
-    enabled: yes
-    gpgcheck: no
-    owner: root
-    group: root
-    mode: '0644'
 - name: Ensure the Google Chrome repo is enabled for machines with Chrome
   ansible.builtin.yum_repository:
     name: google-chrome
@@ -48,6 +37,56 @@
   when:
     - steam_should_be_installed is defined
     - steam_should_be_installed
+- name: Ensure autofs is enabled
+  ansible.builtin.service:
+    name: autofs
+    state: started
+    enabled: yes
+- name: Ensure the ansible user is hidden from the display manager login screen
+  ansible.builtin.copy:
+    src: ansible
+    dest: /var/lib/AccountsService/users
+    mode: '0600'
+  notify: restart_display_manager
+- name: Ensure directories for automounting CIFS volumes exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  loop:
+    - /cifs
+    - /etc/creds
+- name: Ensure credential file for NAS exists
+  ansible.builtin.template:
+    dest: /etc/creds/{{ item.filename }}
+    src: cifscreds.j2
+    owner: "{{ item.username }}"
+    group: root
+    mode: '0640'
+  loop: "{{ cifscreds }}"
+  when:
+    - cifscreds is defined
+    - cifscreds | length > 0
+- name: Ensure autofs is configured to automount CIFS shares under /cifs
+  ansible.builtin.copy:
+    src: cifs.autofs
+    dest: /etc/auto.master.d/cifs.autofs
+    owner: root
+    group: root
+    mode: '0644'
+- name: Ensure local repo is enabled
+  ansible.builtin.yum_repository:
+    name: home
+    description: Repo for locally managed packages
+    state: present
+    baseurl: "{{ home_repo.baseurl }}"
+    enabled: yes
+    gpgcheck: no
+    owner: root
+    group: root
+    mode: '0644'
 - name: Ensure baseline packages are installed
   ansible.builtin.dnf:
     name: "{{ item }}"
@@ -116,42 +155,3 @@
     src: /usr/lib/systemd/system/graphical.target
     dest: /etc/systemd/system/default.target
     state: link
-- name: Ensure autofs is enabled
-  ansible.builtin.service:
-    name: autofs
-    state: started
-    enabled: yes
-- name: Ensure the ansible user is hidden from the display manager login screen
-  ansible.builtin.copy:
-    src: ansible
-    dest: /var/lib/AccountsService/users
-    mode: '0600'
-  notify: restart_display_manager
-- name: Ensure directories for automounting CIFS volumes exist
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
-  loop:
-    - /cifs
-    - /etc/creds
-- name: Ensure credential file for NAS exists
-  ansible.builtin.template:
-    dest: /etc/creds/{{ item.filename }}
-    src: cifscreds.j2
-    owner: "{{ item.username }}"
-    group: root
-    mode: '0640'
-  loop: "{{ cifscreds }}"
-  when:
-    - cifscreds is defined
-    - cifscreds | length > 0
-- name: Ensure autofs is configured to automount CIFS shares under /cifs
-  ansible.builtin.copy:
-    src: cifs.autofs
-    dest: /etc/auto.master.d/cifs.autofs
-    owner: root
-    group: root
-    mode: '0644'
