@@ -27,6 +27,14 @@
     - local-accounts
   tags:
     - local-accounts
+- name: Ensure minikube is installed on machines use for k8s development
+  hosts: minikube
+  become: yes
+  roles:
+    - minikube
+  tags:
+    - minikube
+    - testing
 - name: Ensure software for hosting containers is installed
   hosts: container_hosts
   become: yes
