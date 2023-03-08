@@ -5,3 +5,8 @@
 .DS_Store
 *.retry
 inv
+.terraform.lock.hcl
+*/.terraform/*
+terraform-plugin-proxmox.log
+*.tfstate
+*.tfstate.*backup
