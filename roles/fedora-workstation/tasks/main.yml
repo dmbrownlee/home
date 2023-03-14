@@ -37,6 +37,10 @@
   when:
     - steam_should_be_installed is defined
     - steam_should_be_installed
+- name: Ensure autofs is installed
+  ansible.builtin.dnf:
+    name: autofs
+    update_cache: yes
 - name: Ensure old credential file for CIFS is removed
   ansible.builtin.file:
     path: /etc/creds/{{ item.filename }}
@@ -50,8 +54,6 @@
     path: /etc/auto.master.d/cifs.autofs
     state: absent
   register: autofs_config
-- debug:
-    var: autofs_config
 - name: Ensure autofs is restarted if the config changed
   ansible.builtin.service:
     name: autofs
