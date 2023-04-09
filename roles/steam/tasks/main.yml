@@ -1,0 +1,4 @@
+---
+- name: Ensure Steam is installed
+  ansible.builtin.include_tasks: steam.yml
+  when: install_steam

@@ -1,0 +1,18 @@
+---
+- name: Ensure the RPM Fusion free repo is enabled for machines with Steam
+  ansible.builtin.dnf:
+    name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
+    state: present
+    update_cache: true
+    disable_gpg_check: true
+- name: Ensure the RPM Fusion nonfree repo is enabled for machines with Steam
+  ansible.builtin.dnf:
+    name: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
+    state: present
+    update_cache: true
+    disable_gpg_check: true
+- name: Ensure Steam is installed if requested
+  ansible.builtin.package:
+    name: steam
+    state: present
+    update_cache: true

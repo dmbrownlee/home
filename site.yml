@@ -70,3 +70,10 @@
     - custombrowsers
   tags:
     - custombrowsers
+- name: Configure Steam
+  hosts: workstations
+  become: true
+  roles:
+    - steam
+  tags:
+    - steam
