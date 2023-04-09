@@ -4,21 +4,6 @@
     that:
       - ansible_distribution == "Fedora"
     fail_msg: "The fedora-workstation role should only be used on Fedora machines."
-- name: Ensure the Google Chrome repo is enabled for machines with Chrome
-  ansible.builtin.yum_repository:
-    name: google-chrome
-    description: google-chrome
-    state: present
-    baseurl: https://dl.google.com/linux/chrome/rpm/stable/x86_64
-    enabled: yes
-    gpgcheck: yes
-    gpgkey: https://dl.google.com/linux/linux_signing_key.pub
-    owner: root
-    group: root
-    mode: '0644'
-  when:
-    - chrome_should_be_installed is defined
-    - chrome_should_be_installed
 - name: Ensure the RPM Fusion free repo is enabled for machines with Steam
   ansible.builtin.dnf:
     name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
@@ -72,14 +57,6 @@
   when:
     - home_repo.packages is defined
     - (home_repo.packages | length > 0)
-- name: Ensure Google Chrome is installed if requested
-  ansible.builtin.package:
-    name: google-chrome-stable
-    state: present
-    update_cache: yes
-  when:
-    - chrome_should_be_installed is defined
-    - chrome_should_be_installed
 - name: Ensure Steam is installed if requested
   ansible.builtin.package:
     name: steam

@@ -63,3 +63,10 @@
     - fedora-workstation
   tags:
     - fedora-workstation
+- name: Configure custom browsers
+  hosts: workstations
+  become: true
+  roles:
+    - custombrowsers
+  tags:
+    - custombrowsers
