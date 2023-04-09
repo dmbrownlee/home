@@ -8,7 +8,7 @@ lint: |
   yamllint .
   ansible-lint
 platforms:
-  - name: fedora37
+  - name: fedora37-baseline
     image: "docker.io/geerlingguy/docker-fedora37-ansible:latest"
     command: "/sbin/init"
     pre_build_image: true
