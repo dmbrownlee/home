@@ -1,0 +1,15 @@
+---
+- name: Ensure the role is supported on this OS
+  ansible.builtin.assert:
+    that:
+      - ansible_distribution == "Fedora"
+    fail_msg: "The autofs role should only be used on Fedora machines."
+- name: Ensure autofs is installed
+  ansible.builtin.dnf:
+    name: autofs
+    update_cache: true
+- name: Ensure autofs is enabled
+  ansible.builtin.service:
+    name: autofs
+    state: started
+    enabled: true

@@ -27,6 +27,13 @@
     - local-accounts
   tags:
     - local-accounts
+- name: Ensure autofs is configured on nasclients
+  hosts: nasclients
+  become: true
+  roles:
+    - autofs
+  tags:
+    - autofs
 - name: Ensure minikube is installed on machines use for k8s development
   hosts: minikube
   become: yes
