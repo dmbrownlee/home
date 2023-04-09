@@ -139,19 +139,6 @@
   when:
     - icaclient_should_be_installed is defined
     - icaclient_should_be_installed
-- name: Ensure Citrix Workspace has Go Daddy Root CA cert
-  ansible.builtin.copy:
-    dest: /opt/Citrix/ICAClient/keystore/cacerts/{{ item }}.pem
-    src: /usr/share/ca-certificates/mozilla/{{ item }}.crt
-    owner: root
-    group: root
-    mode: '0444'
-  loop:
-    - Go_Daddy_Root_Certificate_Authority_-_G2
-    - Go_Daddy_Class_2_CA
-  when:
-    - icaclient_should_be_installed is defined
-    - icaclient_should_be_installed
 - name: Ensure default systemd target is graphical.target
   ansible.builtin.file:
     src: /usr/lib/systemd/system/graphical.target
