@@ -1,0 +1,5 @@
+### Starting a new role
+In order to create a new role that utilizes the molecule testing framework, initialize the role from within the ```roles``` directory with:
+```
+molecule init role -d podman dmbrownlee.<role name>
+```
