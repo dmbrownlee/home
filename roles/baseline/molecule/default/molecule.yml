@@ -12,6 +12,10 @@ platforms:
     image: "docker.io/geerlingguy/docker-fedora38-ansible:latest"
     command: "/sbin/init"
     pre_build_image: true
+  - name: debian12-baseline
+    image: "docker.io/geerlingguy/docker-debian12-ansible:latest"
+    command: "/sbin/init"
+    pre_build_image: true
 provisioner:
   name: ansible
 verifier:
