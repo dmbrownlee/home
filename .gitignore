@@ -1,4 +1,13 @@
 .vagrant
+
+# Exclude terraform state files and plans
+.terraform/
+.terraform.lock.hcl
+terraform-plugin-proxmox.log
+terraform.tfstate
+terraform.tfstate*backup
+*.plan
+
 .travis.yml
 *.swp
 *.un~
