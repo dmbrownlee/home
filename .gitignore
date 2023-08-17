@@ -1,6 +1,7 @@
 .vagrant
 
-# Exclude terraform state files and plans
+# Exclude terraform secrets, state files and plans
+secrets.tfvars
 .terraform/
 .terraform.lock.hcl
 terraform-plugin-proxmox.log
