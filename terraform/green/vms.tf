@@ -9,7 +9,7 @@ resource "proxmox_vm_qemu" "git-green" {
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
     force_create           = false
-    full_clone             = true
+    full_clone             = false
     hotplug                = "network,disk,usb"
     vmid                   = "200"
     kvm                    = true
@@ -17,7 +17,7 @@ resource "proxmox_vm_qemu" "git-green" {
     name                   = "git-green"
     numa                   = false
     onboot                 = true
-    oncreate               = false
+    oncreate               = true
     qemu_os                = "l26"
     scsihw                 = "virtio-scsi-single"
     sockets                = 1
@@ -66,17 +66,6 @@ resource "proxmox_vm_qemu" "git-green" {
     }
 }
 
-resource "ansible_playbook" "playbook" {
-  playbook   = "playbook.yml"
-  name       = "git1.site1.thebrownleefamily.net"
-  replayable = true
-
-  extra_vars = {
-    var_a = "Some variable"
-    var_b = "Another variable"
-  }
-}
-
 # proxmox_vm_qemu.ansible2:
 resource "proxmox_vm_qemu" "ansible-green" {
     agent                  = 1
@@ -88,7 +77,7 @@ resource "proxmox_vm_qemu" "ansible-green" {
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
     force_create           = false
-    full_clone             = true
+    full_clone             = false
     hotplug                = "network,disk,usb"
     vmid                   = "201"
     kvm                    = true
@@ -96,7 +85,7 @@ resource "proxmox_vm_qemu" "ansible-green" {
     name                   = "ansible-green"
     numa                   = false
     onboot                 = true
-    oncreate               = false
+    oncreate               = true
     qemu_os                = "l26"
     scsihw                 = "virtio-scsi-single"
     sockets                = 1
@@ -157,7 +146,7 @@ resource "proxmox_vm_qemu" "netbox-green" {
     cpu                    = "host"
     define_connection_info = false
     force_create           = false
-    full_clone             = true
+    full_clone             = false
     hotplug                = "network,disk,usb"
     vmid                   = "202"
     kvm                    = true
@@ -165,7 +154,7 @@ resource "proxmox_vm_qemu" "netbox-green" {
     name                   = "netbox-green"
     numa                   = false
     onboot                 = true
-    oncreate               = false
+    oncreate               = true
     qemu_os                = "l26"
     scsihw                 = "virtio-scsi-single"
     sockets                = 1
@@ -225,7 +214,7 @@ resource "proxmox_vm_qemu" "pxe-green" {
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
     force_create           = false
-    full_clone             = true
+    full_clone             = false
     hotplug                = "network,disk,usb"
     vmid                   = "203"
     kvm                    = true
@@ -233,7 +222,7 @@ resource "proxmox_vm_qemu" "pxe-green" {
     name                   = "pxe-green"
     numa                   = false
     onboot                 = true
-    oncreate               = false
+    oncreate               = true
     qemu_os                = "l26"
     scsihw                 = "virtio-scsi-single"
     sockets                = 1
