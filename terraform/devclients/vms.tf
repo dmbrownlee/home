@@ -35,7 +35,7 @@ resource "proxmox_vm_qemu" "framework1-dev" {
 
     network {
         bridge    = "vmbr0"
-        macaddr   = "aa:aa:aa:01:01:01"
+        macaddr   = "ca:fe:01:06:01:01"
         model     = "virtio"
         tag       = 10
     }
@@ -84,7 +84,7 @@ resource "proxmox_vm_qemu" "framework2-dev" {
 
     network {
         bridge    = "vmbr0"
-        macaddr   = "aa:aa:aa:01:02:01"
+        macaddr   = "ca:fe:01:06:02:01"
         model     = "virtio"
         tag       = 10
     }
@@ -133,7 +133,7 @@ resource "proxmox_vm_qemu" "workstation1-dev" {
 
     network {
         bridge    = "vmbr0"
-        macaddr   = "aa:aa:aa:01:03:01"
+        macaddr   = "ca:fe:01:06:03:01"
         model     = "virtio"
         tag       = 10
     }
