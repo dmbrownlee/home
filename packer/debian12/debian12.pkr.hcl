@@ -48,7 +48,7 @@ variable "cores" {
 }
 variable "disk_size" {
   type    = string
-  default = "8G"
+  default = "20G"
 }
 variable "memory" {
   type    = string
@@ -172,7 +172,7 @@ source "proxmox-iso" "debian12-preseed" {
   ssh_password         = "${var.password}"
   ssh_timeout          = "25m"
   ssh_username         = "${var.username}"
-  template_description = "Debian 12 Workstation, generated on ${timestamp()}"
+  template_description = "Debian 12 (${var.preseed_file}), generated on ${timestamp()}"
   template_name        = "${var.vm_name}"
   token                = "${var.pm_api_token_secret}"
   unmount_iso          = true
@@ -208,4 +208,3 @@ build {
     start_retry_timeout = "${var.start_retry_timeout}"
   }
 }
-
