@@ -1,0 +1,65 @@
+#!/bin/bash
+packer validate \
+    -var pm_api_url=$PM_API_URL \
+    -var pm_api_token_id=$PM_API_TOKEN_ID \
+    -var pm_api_token_secret=$PM_API_TOKEN_SECRET \
+    -var username=$PROVISION_USER \
+    -var gecos="$PROVISION_GECOS" \
+    -var password='$PROVISION_PW' \
+    -var iso_storage_pool=$PM_ISO_STORAGE_POOL \
+    -var domain=$(dnsdomainname) \
+    -var vm_id=$TPLT1_ID \
+    -var pve_node="$TPLT1_NODE" \
+    -var storage_pool=$TPLT1_STORAGE_POOL \
+    -var vlan=$TPLT1_VLAN \
+    -var vm_name=$TPLT1_NAME \
+    -var preseed_file=$TPLT1_PRESEED \
+    debian12.pkr.hcl &&
+packer build \
+    -var pm_api_url=$PM_API_URL \
+    -var pm_api_token_id=$PM_API_TOKEN_ID \
+    -var pm_api_token_secret=$PM_API_TOKEN_SECRET \
+    -var username=$PROVISION_USER \
+    -var gecos="$PROVISION_GECOS" \
+    -var password='$PROVISION_PW' \
+    -var iso_storage_pool=$PM_ISO_STORAGE_POOL \
+    -var domain=$(dnsdomainname) \
+    -var vm_id=$TPLT1_ID \
+    -var pve_node="$TPLT1_NODE" \
+    -var storage_pool=$TPLT1_STORAGE_POOL \
+    -var vlan=$TPLT1_VLAN \
+    -var vm_name=$TPLT1_NAME \
+    -var preseed_file=$TPLT1_PRESEED \
+    debian12.pkr.hcl
+ packer validate \
+    -var pm_api_url=$PM_API_URL \
+    -var pm_api_token_id=$PM_API_TOKEN_ID \
+    -var pm_api_token_secret=$PM_API_TOKEN_SECRET \
+    -var username=$PROVISION_USER \
+    -var gecos="$PROVISION_GECOS" \
+    -var password='$PROVISION_PW' \
+    -var iso_storage_pool=$PM_ISO_STORAGE_POOL \
+    -var domain=$(dnsdomainname) \
+    -var vm_id=$TPLT2_ID \
+    -var pve_node="$TPLT2_NODE" \
+    -var storage_pool=$TPLT2_STORAGE_POOL \
+    -var vlan=$TPLT2_VLAN \
+    -var vm_name=$TPLT2_NAME \
+    -var preseed_file=$TPLT2_PRESEED \
+    debian12.pkr.hcl &&
+ packer build \
+    -var pm_api_url=$PM_API_URL \
+    -var pm_api_token_id=$PM_API_TOKEN_ID \
+    -var pm_api_token_secret=$PM_API_TOKEN_SECRET \
+    -var username=$PROVISION_USER \
+    -var gecos="$PROVISION_GECOS" \
+    -var password='$PROVISION_PW' \
+    -var iso_storage_pool=$PM_ISO_STORAGE_POOL \
+    -var domain=$(dnsdomainname) \
+    -var vm_id=$TPLT2_ID \
+    -var pve_node="$TPLT2_NODE" \
+    -var storage_pool=$TPLT2_STORAGE_POOL \
+    -var vlan=$TPLT2_VLAN \
+    -var vm_name=$TPLT2_NAME \
+    -var preseed_file=$TPLT2_PRESEED \
+    debian12.pkr.hcl
