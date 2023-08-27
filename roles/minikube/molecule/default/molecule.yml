@@ -4,9 +4,8 @@ dependency:
 driver:
   name: podman
 platforms:
-  - name: fedora
-    image: docker.io/geerlingguy/docker-fedora37-ansible
-    #image: registry.fedoraproject.org/fedora
+  - name: fedora38-minikube
+    image: docker.io/geerlingguy/docker-fedora38-ansible
     pre_build_image: true
     privileged: true
     volumes:
