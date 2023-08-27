@@ -1,9 +1,0 @@
-You must export the environment variables below for terraform to work with
-ProxMox.  Consider creating this ~/.bashrc.d/terraform and substituting the
-correct values.  Also, verify the file is not world readable.
-
-  # $HOME/.bashrc.d/terraform
-  complete -C /usr/bin/terraform terraform
-  export PM_API_URL='https://<< ProxMox node FQDN >>:8006/api2/json'
-  export PM_API_TOKEN_ID='<< token ID >>'
-  export PM_API_TOKEN_SECRET='<< token secret >>'
