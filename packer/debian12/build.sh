@@ -13,7 +13,7 @@ packer validate \
     -var storage_pool=$TPLT1_STORAGE_POOL \
     -var vlan=$TPLT1_VLAN \
     -var vm_name=$TPLT1_NAME \
-    -var preseed_file=$TPLT1_PRESEED \
+    -var install_file=$TPLT1_INSTALL_FILE \
     debian12.pkr.hcl &&
 packer build \
     -var pm_api_url=$PM_API_URL \
@@ -29,7 +29,7 @@ packer build \
     -var storage_pool=$TPLT1_STORAGE_POOL \
     -var vlan=$TPLT1_VLAN \
     -var vm_name=$TPLT1_NAME \
-    -var preseed_file=$TPLT1_PRESEED \
+    -var install_file=$TPLT1_INSTALL_FILE \
     debian12.pkr.hcl
  packer validate \
     -var pm_api_url=$PM_API_URL \
@@ -45,7 +45,7 @@ packer build \
     -var storage_pool=$TPLT2_STORAGE_POOL \
     -var vlan=$TPLT2_VLAN \
     -var vm_name=$TPLT2_NAME \
-    -var preseed_file=$TPLT2_PRESEED \
+    -var install_file=$TPLT2_INSTALL_FILE \
     debian12.pkr.hcl &&
  packer build \
     -var pm_api_url=$PM_API_URL \
@@ -61,5 +61,5 @@ packer build \
     -var storage_pool=$TPLT2_STORAGE_POOL \
     -var vlan=$TPLT2_VLAN \
     -var vm_name=$TPLT2_NAME \
-    -var preseed_file=$TPLT2_PRESEED \
+    -var install_file=$TPLT2_INSTALL_FILE \
     debian12.pkr.hcl

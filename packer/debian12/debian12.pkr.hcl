@@ -73,7 +73,7 @@ variable "password" {
 #==========================================
 # Variables for the automated install
 #==========================================
-variable "preseed_file" {
+variable "install_file" {
   type    = string
   default = "minimal-uefi.preseed"
 }
@@ -125,7 +125,7 @@ source "proxmox-iso" "debian12-preseed" {
     "<wait><wait><wait>c<wait><wait><wait>",
     "linux /install.amd/vmlinuz ",
     "auto=true ",
-    "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/${var.preseed_file} ",
+    "url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/${var.install_file} ",
     "hostname=${var.vm_name} ",
     "domain=${var.domain} ",
     "interface=auto ",
@@ -148,7 +148,7 @@ source "proxmox-iso" "debian12-preseed" {
     efi_type          = "4m"
     pre_enrolled_keys = true
   }
-  http_content         = { "/${var.preseed_file}" = templatefile(var.preseed_file, { var = var }) }
+  http_content         = { "/${var.install_file}" = templatefile(var.install_file, { var = var }) }
   http_port_max        = var.http_port_max
   http_port_min        = var.http_port_min
   insecure_skip_tls_verify = true
@@ -172,7 +172,7 @@ source "proxmox-iso" "debian12-preseed" {
   ssh_password         = "${var.password}"
   ssh_timeout          = "25m"
   ssh_username         = "${var.username}"
-  template_description = "Debian 12 (${var.preseed_file}), generated on ${timestamp()}"
+  template_description = "Debian 12 (${var.install_file}), generated on ${timestamp()}"
   template_name        = "${var.vm_name}"
   token                = "${var.pm_api_token_secret}"
   unmount_iso          = true
