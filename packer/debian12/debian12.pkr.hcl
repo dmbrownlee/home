@@ -192,7 +192,11 @@ build {
     binary              = false
     execute_command     = "echo '${var.password}' | {{ .Vars }} sudo -E -S '{{ .Path }}'"
     expect_disconnect   = true
-    inline              = ["echo '${var.username} ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/99${var.username}", "chmod 0440 /etc/sudoers.d/99${var.username}"]
+    inline              = [
+      "echo '${var.username} ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/99${var.username}",
+      "chmod 0440 /etc/sudoers.d/99${var.username}",
+      "echo -n -e 'auto ens18\niface ens18 inet dhcp\n' > /etc/network/interfaces.d/ens18"
+    ]
     inline_shebang      = "/bin/sh -e"
     skip_clean          = false
     start_retry_timeout = "${var.start_retry_timeout}"
