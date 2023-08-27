@@ -1,5 +1,5 @@
 .vagrant
-
+vaultpw
 # Exclude terraform secrets, state files and plans
 secrets.tfvars
 .terraform/
@@ -17,6 +17,6 @@ terraform.tfstate*backup
 inv
 .terraform.lock.hcl
 */.terraform/*
-terraform-plugin-proxmox.log
+*.log
 *.tfstate
 *.tfstate.*backup
