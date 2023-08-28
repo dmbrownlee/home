@@ -5,7 +5,7 @@ packer validate \
     -var pm_api_token_secret=$PM_API_TOKEN_SECRET \
     -var username=$PROVISION_USER \
     -var gecos="$PROVISION_GECOS" \
-    -var password='$PROVISION_PW' \
+    -var password="$PROVISION_PW" \
     -var iso_storage_pool=$PM_ISO_STORAGE_POOL \
     -var domain=$(dnsdomainname) \
     -var vm_id=$TPLT1_ID \
@@ -21,7 +21,7 @@ packer build \
     -var pm_api_token_secret=$PM_API_TOKEN_SECRET \
     -var username=$PROVISION_USER \
     -var gecos="$PROVISION_GECOS" \
-    -var password='$PROVISION_PW' \
+    -var password="$PROVISION_PW" \
     -var iso_storage_pool=$PM_ISO_STORAGE_POOL \
     -var domain=$(dnsdomainname) \
     -var vm_id=$TPLT1_ID \
@@ -37,7 +37,7 @@ packer build \
     -var pm_api_token_secret=$PM_API_TOKEN_SECRET \
     -var username=$PROVISION_USER \
     -var gecos="$PROVISION_GECOS" \
-    -var password='$PROVISION_PW' \
+    -var password="$PROVISION_PW" \
     -var iso_storage_pool=$PM_ISO_STORAGE_POOL \
     -var domain=$(dnsdomainname) \
     -var vm_id=$TPLT2_ID \
@@ -53,7 +53,7 @@ packer build \
     -var pm_api_token_secret=$PM_API_TOKEN_SECRET \
     -var username=$PROVISION_USER \
     -var gecos="$PROVISION_GECOS" \
-    -var password='$PROVISION_PW' \
+    -var password="$PROVISION_PW" \
     -var iso_storage_pool=$PM_ISO_STORAGE_POOL \
     -var domain=$(dnsdomainname) \
     -var vm_id=$TPLT2_ID \
