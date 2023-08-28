@@ -42,7 +42,7 @@ d-i mirror/http/proxy string
 # d-i mirror/http/proxy string http://...
 d-i apt-setup/contrib boolean true
 d-i apt-setup/non-free boolean true
-tasksel tasksel/first multiselect print-server, ssh-server, standard
+tasksel tasksel/first multiselect print-server, ssh-server, standard, desktop
 d-i pkgsel/include string sudo, unattended-upgrades
 popularity-contest popularity-contest/participate boolean false
 
