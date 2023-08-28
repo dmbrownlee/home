@@ -2,7 +2,7 @@ resource "proxmox_vm_qemu" "k8s_node1" {
     agent                  = 1
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-minimal-green"
     cores                  = 2
     cpu                    = "host"
     define_connection_info = false
@@ -71,7 +71,7 @@ resource "proxmox_vm_qemu" "k8s_node2" {
     agent                  = 1
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-minimal-green"
     cores                  = 2
     cpu                    = "host"
     define_connection_info = false
@@ -140,7 +140,7 @@ resource "proxmox_vm_qemu" "k8s_node3" {
     agent                  = 1
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-minimal-green"
     cores                  = 2
     cpu                    = "host"
     define_connection_info = false
