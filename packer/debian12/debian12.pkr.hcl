@@ -170,7 +170,7 @@ source "proxmox-iso" "debian12-preseed" {
   scsi_controller      = "virtio-scsi-single"
   sockets              = 1
   ssh_password         = "${var.password}"
-  ssh_timeout          = "25m"
+  ssh_timeout          = "120m"
   ssh_username         = "${var.username}"
   template_description = "Debian 12 (${var.install_file}), generated on ${timestamp()}"
   template_name        = "${var.vm_name}"
@@ -195,7 +195,7 @@ build {
     inline              = [
       "echo '${var.username} ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/99${var.username}",
       "chmod 0440 /etc/sudoers.d/99${var.username}",
-      "echo -n -e 'auto ens18\niface ens18 inet dhcp\n' > /etc/network/interfaces.d/ens18"
+      "echo 'auto ens18\niface ens18 inet dhcp\n' > /etc/network/interfaces.d/ens18"
     ]
     inline_shebang      = "/bin/sh -e"
     skip_clean          = false
