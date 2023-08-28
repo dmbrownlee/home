@@ -4,7 +4,7 @@ resource "proxmox_vm_qemu" "ansible1" {
     balloon                = 0
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-workstation-blue"
     cores                  = 8
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
@@ -73,7 +73,7 @@ resource "proxmox_vm_qemu" "git1" {
     balloon                = 0
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-minimal-blue"
     cores                  = 1
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
@@ -141,7 +141,7 @@ resource "proxmox_vm_qemu" "netbox1" {
     balloon                = 0
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-workstation-blue"
     cores                  = 4
     cpu                    = "host"
     define_connection_info = false
@@ -209,7 +209,7 @@ resource "proxmox_vm_qemu" "pxe1" {
     balloon                = 0
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-minimal-blue"
     cores                  = 2
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
@@ -289,7 +289,7 @@ resource "proxmox_vm_qemu" "registry1" {
     balloon                = 0
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-minimal-blue"
     cores                  = 2
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false

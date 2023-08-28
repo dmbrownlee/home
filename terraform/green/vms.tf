@@ -1,10 +1,10 @@
 # proxmox_vm_qemu.ansible2:
-resource "proxmox_vm_qemu" "ansible2" {
+resource "proxmox_vm_qemu" "ansible-green" {
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-workstation-green"
     cores                  = 8
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
@@ -14,7 +14,7 @@ resource "proxmox_vm_qemu" "ansible2" {
     vmid                   = "200"
     kvm                    = true
     memory                 = 8192
-    name                   = "ansible2"
+    name                   = "ansible-green"
     numa                   = false
     onboot                 = true
     oncreate               = true
@@ -68,12 +68,12 @@ resource "proxmox_vm_qemu" "ansible2" {
 }
 
 # proxmox_vm_qemu.git2:
-resource "proxmox_vm_qemu" "git2" {
+resource "proxmox_vm_qemu" "git-green" {
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-minimal-green"
     cores                  = 1
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
@@ -83,7 +83,7 @@ resource "proxmox_vm_qemu" "git2" {
     vmid                   = "201"
     kvm                    = true
     memory                 = 2048
-    name                   = "git2"
+    name                   = "git-green"
     numa                   = false
     onboot                 = true
     oncreate               = true
@@ -136,12 +136,12 @@ resource "proxmox_vm_qemu" "git2" {
 }
 
 # proxmox_vm_qemu.netbox2:
-resource "proxmox_vm_qemu" "netbox2" {
+resource "proxmox_vm_qemu" "netbox-green" {
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-workstation-green"
     cores                  = 4
     cpu                    = "host"
     define_connection_info = false
@@ -151,7 +151,7 @@ resource "proxmox_vm_qemu" "netbox2" {
     vmid                   = "202"
     kvm                    = true
     memory                 = 4096
-    name                   = "netbox2"
+    name                   = "netbox-green"
     numa                   = false
     onboot                 = true
     oncreate               = true
@@ -204,12 +204,12 @@ resource "proxmox_vm_qemu" "netbox2" {
 }
 
 # proxmox_vm_qemu.pxe2:
-resource "proxmox_vm_qemu" "pxe2" {
+resource "proxmox_vm_qemu" "pxe-green" {
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-minimal-green"
     cores                  = 2
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
@@ -219,7 +219,7 @@ resource "proxmox_vm_qemu" "pxe2" {
     vmid                   = "203"
     kvm                    = true
     memory                 = 2048
-    name                   = "pxe2"
+    name                   = "pxe-green"
     numa                   = false
     onboot                 = true
     oncreate               = true
@@ -284,12 +284,12 @@ resource "proxmox_vm_qemu" "pxe2" {
 }
 
 # proxmox_vm_qemu.registry2:
-resource "proxmox_vm_qemu" "registry2" {
+resource "proxmox_vm_qemu" "registry-green" {
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-minimal-green"
     cores                  = 2
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
@@ -299,7 +299,7 @@ resource "proxmox_vm_qemu" "registry2" {
     vmid                   = "204"
     kvm                    = true
     memory                 = 2048
-    name                   = "registry2"
+    name                   = "registry-green"
     numa                   = false
     onboot                 = true
     oncreate               = true
