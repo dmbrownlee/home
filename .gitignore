@@ -1,4 +1,6 @@
 .vagrant
+# Exclude site specific data
+site_data
 vaultpw
 # Exclude terraform secrets, state files and plans
 secrets.tfvars
