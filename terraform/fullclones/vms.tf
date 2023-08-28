@@ -9,7 +9,7 @@ resource "proxmox_vm_qemu" "ansible1" {
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
     force_create           = false
-    full_clone             = false
+    full_clone             = true
     hotplug                = "network,disk,usb"
     vmid                   = "300"
     kvm                    = true
@@ -78,7 +78,7 @@ resource "proxmox_vm_qemu" "git1" {
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
     force_create           = false
-    full_clone             = false
+    full_clone             = true
     hotplug                = "network,disk,usb"
     vmid                   = "301"
     kvm                    = true
@@ -146,7 +146,7 @@ resource "proxmox_vm_qemu" "netbox1" {
     cpu                    = "host"
     define_connection_info = false
     force_create           = false
-    full_clone             = false
+    full_clone             = true
     hotplug                = "network,disk,usb"
     vmid                   = "302"
     kvm                    = true
@@ -214,7 +214,7 @@ resource "proxmox_vm_qemu" "pxe1" {
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
     force_create           = false
-    full_clone             = false
+    full_clone             = true
     hotplug                = "network,disk,usb"
     vmid                   = "303"
     kvm                    = true
@@ -294,7 +294,7 @@ resource "proxmox_vm_qemu" "registry1" {
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
     force_create           = false
-    full_clone             = false
+    full_clone             = true
     hotplug                = "network,disk,usb"
     vmid                   = "304"
     kvm                    = true
