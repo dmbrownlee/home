@@ -4,7 +4,7 @@ resource "proxmox_vm_qemu" "minikube1" {
     balloon                = 0
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-template"
+    clone                  = "debian12-workstation-green"
     cores                  = 4
     cpu                    = "host"
     define_connection_info = false

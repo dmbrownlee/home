@@ -2,7 +2,7 @@ resource "proxmox_vm_qemu" "framework1-dev" {
     agent                  = 1
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-uefi-workstation"
+    clone                  = "debian12-workstation-green"
     cores                  = 2
     cpu                    = "x86-64-v2-AES"
     desc                   = "framework1-dev"
