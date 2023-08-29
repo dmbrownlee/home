@@ -125,7 +125,7 @@ source "proxmox-iso" "fedora38-kickstart" {
     "<up>e<down><down><leftCtrlOn>e<leftCtrlOff><bs><bs><bs><bs><bs>",
     " text",
     " inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/${var.install_file}",
-    " kspost.fqdn=fedora38-kickstart",
+    " kspost.fqdn=${var.vm_name}",
     " kspost.ansible_vault_password_file=http://{{ .HTTPIP }}:{{ .HTTPPort }}/vaultpw",
     " kspost.ansible_branch=main",
     "<wait><wait><wait><wait>",
@@ -146,7 +146,7 @@ source "proxmox-iso" "fedora38-kickstart" {
     efi_type          = "4m"
     pre_enrolled_keys = true
   }
-  http_content         = { "/${var.install_file}" = file(var.install_file,{var = var}) }
+  http_content         = { "/${var.install_file}" = file(var.install_file) }
   http_port_max        = var.http_port_max
   http_port_min        = var.http_port_min
   insecure_skip_tls_verify = true
