@@ -4,7 +4,7 @@ resource "proxmox_vm_qemu" "k3s1" {
     balloon                = 0
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "debian12-minimal-green"
+    clone                  = "debian12-workstation-green"
     cores                  = 4
     cpu                    = "host"
     define_connection_info = false

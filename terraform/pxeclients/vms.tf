@@ -4,7 +4,7 @@ resource "proxmox_vm_qemu" "pxe-bios-client" {
     balloon                = 1
     bios                   = "seabios"
     boot                   = "order=net0;scsi0;ide2"
-    clone                  = "debian12-uefi-workstation"
+    clone                  = "debian12-minimal-green"
     cores                  = 2
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false
@@ -57,7 +57,7 @@ resource "proxmox_vm_qemu" "pxe-uefi-client" {
     balloon                = 1
     bios                   = "ovmf"
     boot                   = "order=net0;scsi0;ide2"
-    clone                  = "debian12-uefi-workstation"
+    clone                  = "debian12-minimal-green"
     cores                  = 2
     cpu                    = "x86-64-v2-AES"
     define_connection_info = false

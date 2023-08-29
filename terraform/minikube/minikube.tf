@@ -11,7 +11,7 @@ resource "proxmox_vm_qemu" "minikube1" {
     force_create           = false
     full_clone             = false
     hotplug                = "network,disk,usb"
-    vmid                   = 699
+    vmid                   = 600
     kvm                    = true
     memory                 = 16384
     name                   = "minikube1"
@@ -28,7 +28,7 @@ resource "proxmox_vm_qemu" "minikube1" {
     disk {
         backup             = true
         cache              = "none"
-        file               = "699/vm-699-disk-1.qcow2"
+        file               = "600/vm-600-disk-1.qcow2"
         format             = "qcow2"
         iops               = 0
         iops_max           = 0
@@ -51,7 +51,7 @@ resource "proxmox_vm_qemu" "minikube1" {
         ssd                = 0
         storage            = "truenas1"
         type               = "scsi"
-        volume             = "truenas1:699/vm-699-disk-1.qcow2"
+        volume             = "truenas1:600/vm-600-disk-1.qcow2"
     }
 
     network {
