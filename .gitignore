@@ -10,7 +10,7 @@ terraform-plugin-proxmox.log
 terraform.tfstate
 terraform.tfstate*backup
 *.plan
-
+.vaultpw
 .travis.yml
 *.swp
 *.un~
