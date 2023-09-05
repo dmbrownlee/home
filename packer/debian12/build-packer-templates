@@ -22,5 +22,6 @@
             -var vlan={{ item.vlan }} \
             -var vm_name={{ item.name }} \
             -var install_file={{ item.af }} \
+            -var mirror={{ item.mirror }} \
             debian12.pkr.hcl
       loop: "{{ templates }}"
