@@ -51,7 +51,7 @@ resource "proxmox_vm_qemu" "framework2-dev" {
     agent                  = 1
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "fedora38-workstation-template"
+    clone                  = "fedora38-workstation-blue"
     cores                  = 2
     cpu                    = "x86-64-v2-AES"
     desc                   = "framework2-dev"
@@ -100,7 +100,7 @@ resource "proxmox_vm_qemu" "workstation1-dev" {
     agent                  = 1
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
-    clone                  = "fedora38-workstation-template"
+    clone                  = "fedora38-workstation-blue"
     cores                  = 2
     cpu                    = "x86-64-v2-AES"
     desc                   = "workstation1-dev"
