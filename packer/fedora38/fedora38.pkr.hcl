@@ -93,10 +93,6 @@ variable "locale" {
   type    = string
   default = "en_US.UTF-8"
 }
-variable "mirror" {
-  type    = string
-  default = "ftp.us.debian.org"
-}
 variable "system_clock_in_utc" {
   type    = string
   default = "true"
@@ -168,7 +164,7 @@ source "proxmox-iso" "fedora38-kickstart" {
   scsi_controller      = "virtio-scsi-single"
   sockets              = 1
   ssh_password         = "${var.password}"
-  ssh_timeout          = "25m"
+  ssh_timeout          = "60m"
   ssh_username         = "${var.username}"
   template_description = "Fedora 38 (${var.install_file}), generated on ${timestamp()}"
   template_name        = "${var.vm_name}"
