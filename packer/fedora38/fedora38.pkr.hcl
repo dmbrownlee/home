@@ -37,6 +37,10 @@ variable "iso_storage_pool" {
 variable "vlan" {
   type    = string
 }
+variable "luks_initial_password" {
+  type    = string
+  default = ""
+}
 
 
 #==========================================
@@ -142,7 +146,7 @@ source "proxmox-iso" "fedora38-kickstart" {
     efi_type          = "4m"
     pre_enrolled_keys = true
   }
-  http_content         = { "/${var.install_file}" = file(var.install_file) }
+  http_content         = { "/${var.install_file}" = templatefile(var.install_file, { var = var }) }
   http_port_max        = var.http_port_max
   http_port_min        = var.http_port_min
   insecure_skip_tls_verify = true
