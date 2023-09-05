@@ -150,7 +150,7 @@ source "proxmox-iso" "fedora38-kickstart" {
   http_port_max        = var.http_port_max
   http_port_min        = var.http_port_min
   insecure_skip_tls_verify = true
-  iso_file                 = "${var.iso_storage_pool}:iso/Fedora-Server-dvd-x86_64-38-1.6.iso"
+  iso_file                 = "${var.iso_storage_pool}:iso/Fedora-Server-netinst-x86_64-38-1.6.iso"
   machine                  = "pc"
   memory                   = "${var.memory}"
   network_adapters {
