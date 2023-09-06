@@ -1,0 +1,25 @@
+<VirtualHost *:80>
+        ServerName {{ ansible_fqdn }}
+        ServerAdmin {{ mirroradmin.username }}@{{ ansible_domain }}
+
+        DocumentRoot {{ mirrors.mirror_root }}
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory {{ mirrors.mirror_root }}>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Require all granted
+        </Directory>
+
+        ErrorLog /var/log/apache2/debmirror-error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog /var/log/apache2/debmirror-access.log combined
+        ServerSignature On
+
+</VirtualHost>

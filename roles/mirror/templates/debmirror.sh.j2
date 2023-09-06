@@ -1,0 +1,30 @@
+#!/bin/bash
+VERBOSE='-v'
+ 
+# sourcehost: choose a mirror in your proximity!
+HOST={{ mirrors.debian.src }}
+ 
+# destination directory
+DEST={{ mirrors.mirror_root }}/debian
+ 
+# Debian version(s) to mirror
+DIST=bookworm
+ 
+# architecture
+ARCH=amd64
+ 
+# log timestamp
+logger -t mirror[$$] updating Debian mirror
+ 
+debmirror ${DEST} \
+ --nosource \
+ --host=${HOST} \
+ --root=/debian \
+ --dist=${DIST},${DIST}-updates \
+ --section=main,contrib,non-free,non-free-firmware,main/debian-installer \
+ --i18n \
+ --arch=${ARCH} \
+ --passive --cleanup \
+ $VERBOSE
+ 
+logger -t mirror[$$] finished updating Debian mirror

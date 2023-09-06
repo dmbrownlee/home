@@ -1,0 +1,28 @@
+---
+dependency:
+  name: galaxy
+  options:
+    requirements-file: requirements.yml
+driver:
+  name: podman
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+platforms:
+  - name: ${DIST:-debian12}-mirror
+    image: "docker.io/geerlingguy/docker-${DIST:-debian12}-ansible:latest"
+    command: "/sbin/init"
+    privileged: true
+    pre_build_image: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+provisioner:
+  name: ansible
+  options:
+    # Put sensitive vars in site_data which is ignored by git and have
+    # ansible-playbook include it with the "-e @site_data" extra_args option
+    e: "@site_data"
+  log: true
+verifier:
+  name: ansible

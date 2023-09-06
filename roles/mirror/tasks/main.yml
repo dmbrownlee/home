@@ -1,0 +1,56 @@
+---
+# tasks file for mirror
+- name: Ensure the mirroradmin group exists
+  ansible.builtin.group:
+    name: "{{ mirroradmin.groupname }}"
+    gid: "{{ mirroradmin.gid }}"
+    state: present
+- name: Ensure the mirroradmin user exists
+  ansible.builtin.user:
+    name: "{{ mirroradmin.username }}"
+    uid: "{{ mirroradmin.uid }}"
+    group: "{{ mirroradmin.groupname }}"
+    comment: "{{ mirroradmin.gecos }}"
+    state: present
+- name: Ensure autofs mounts hosts under /net
+  ansible.builtin.lineinfile:
+    path: /etc/auto.master
+    regexp: '^#?(/net.*)$'
+    line: '\1'
+    backrefs: true
+    owner: root
+    group: root
+    mode: '0644'
+  register: result
+  notify: restart_autofs
+- name: Ensure apache2 and debmirror are installed
+  ansible.builtin.apt:
+    name:
+      - apache2
+      - debmirror
+    state: present
+    update_cache: true
+    cache_valid_time: 300
+- name: Ensure shell script to mirror Debian exists
+  ansible.builtin.template:
+    src: debmirror.sh.j2
+    dest: "{{ mirroradmin.home }}/debmirror.sh"
+    owner: "{{ mirroradmin.username }}"
+    group: "{{ mirroradmin.groupname }}"
+    mode: '0744'
+- name: Ensure the mirror site configuration file exists
+  ansible.builtin.template:
+    src: debmirror.conf.j2
+    dest: /etc/apache2/sites-available/debmirror.conf
+  notify: restart_apache
+- name: Ensure the mirror site is enabled
+  ansible.builtin.file:
+    src: ../sites-available/debmirror.conf
+    path: /etc/apache2/sites-enabled/debmirror.conf
+    state: link
+  notify: restart_apache
+- name: Ensure the default site is disabled
+  ansible.builtin.file:
+    path: /etc/apache2/sites-enabled/000-default.conf
+    state: absent
+  notify: restart_apache
