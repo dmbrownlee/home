@@ -1,6 +1,8 @@
 ---
 dependency:
   name: galaxy
+  options:
+    requirements-file: requirements.yml
 driver:
   name: podman
 lint: |
@@ -8,10 +10,13 @@ lint: |
   yamllint .
   ansible-lint
 platforms:
-  - name: fedora38-autofs
-    image: "docker.io/geerlingguy/docker-fedora38-ansible:latest"
+  - name: ${DIST:-debian12}-autofs
+    image: "docker.io/geerlingguy/docker-${DIST:-debian12}-ansible:latest"
     command: "/sbin/init"
+    privileged: true
     pre_build_image: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
 provisioner:
   name: ansible
 verifier:

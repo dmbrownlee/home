@@ -1,7 +1,20 @@
 ---
-- name: Converge
-  hosts: all
+- name: Fail if molecule group is missing
+  hosts: localhost
   tasks:
-    - name: "Include dmbrownlee.autofs"
+    - name: Print inventory groups
+      ansible.builtin.debug:
+        msg: "{{ groups }}"
+
+    - name: Assert group existence
+      ansible.builtin.assert:
+        that: "'molecule' in groups"
+        fail_msg: |
+          molecule group was not found inside inventory groups: {{ groups }}
+
+- name: Converge
+  hosts: molecule
+  tasks:
+    - name: Include the role
       ansible.builtin.include_role:
-        name: "dmbrownlee.autofs"
+        name: autofs

@@ -6,7 +6,7 @@ Configures installs and starts autofs.
 Requirements
 ------------
 
-Fedora Linux
+Fedora or Debian Linux
 
 Role Variables
 --------------
@@ -21,9 +21,11 @@ none
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+This might work.
 
-    - hosts: nasclients
+    - hosts: nfsclients
+      vars_files:
+        - site_data
       roles:
          - { role: dmbrownlee.autofs }
 
