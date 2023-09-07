@@ -1,8 +1,22 @@
 ---
-- name: Ensure baseline software for distribution is installed
-  ansible.builtin.package:
+- name: Ensure baseline packages are installed (Fedora)
+  ansible.builtin.dnf:
+    name: "{{ baseline.packages }}"
+    state: latest
+    update_cache: true
+  when: ansible_distribution == "Fedora"
+- name: Update apt cache and existing packages (Debian)
+  ansible.builtin.apt:
+    update_cache: true
+    clean: true
+    autoremove: true
+    upgrade: full
+  when: ansible_distribution == "Debian"
+- name: Ensure baseline packages are installed (Debian)
+  ansible.builtin.apt:
     name: "{{ baseline.packages }}"
     state: present
+  when: ansible_distribution == "Debian"
 - name: Ensure ansible SSH key is authorized
   ansible.posix.authorized_key:
     user: ansible
