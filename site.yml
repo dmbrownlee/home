@@ -34,6 +34,13 @@
     - autofs
   tags:
     - autofs
+- name: Ensure mirror hosts are configured
+  hosts: mirrors
+  become: yes
+  roles:
+    - mirror
+  tags:
+    - mirror
 - name: Ensure minikube is installed on machines use for k8s development
   hosts: minikube
   become: true
