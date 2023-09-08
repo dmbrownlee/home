@@ -1,4 +1,4 @@
-resource "proxmox_vm_qemu" "k8s_node1" {
+resource "proxmox_vm_qemu" "k8s1" {
     lifecycle {
         ignore_changes = [
             # The packer generated templates contain a note with a timestamp
@@ -21,7 +21,7 @@ resource "proxmox_vm_qemu" "k8s_node1" {
     vmid                   = 620
     kvm                    = true
     memory                 = 4096
-    name                   = "k8s-node1"
+    name                   = "k8s1"
     numa                   = false
     onboot                 = false
     oncreate               = true
@@ -76,7 +76,7 @@ resource "proxmox_vm_qemu" "k8s_node1" {
     timeouts {}
 }
 
-resource "proxmox_vm_qemu" "k8s_node2" {
+resource "proxmox_vm_qemu" "k8s2" {
     lifecycle {
         ignore_changes = [
             # The packer generated templates contain a note with a timestamp
@@ -99,7 +99,7 @@ resource "proxmox_vm_qemu" "k8s_node2" {
     vmid                   = 621
     kvm                    = true
     memory                 = 4096
-    name                   = "k8s-node2"
+    name                   = "k8s2"
     numa                   = false
     onboot                 = false
     oncreate               = true
@@ -154,7 +154,7 @@ resource "proxmox_vm_qemu" "k8s_node2" {
     timeouts {}
 }
 
-resource "proxmox_vm_qemu" "k8s_node3" {
+resource "proxmox_vm_qemu" "k8s3" {
     lifecycle {
         ignore_changes = [
             # The packer generated templates contain a note with a timestamp
@@ -177,7 +177,7 @@ resource "proxmox_vm_qemu" "k8s_node3" {
     vmid                   = 622
     kvm                    = true
     memory                 = 4096
-    name                   = "k8s-node3"
+    name                   = "k8s3"
     numa                   = false
     onboot                 = false
     oncreate               = true
