@@ -16,7 +16,7 @@ resource "proxmox_vm_qemu" "ansible-green" {
     memory                 = 8192
     name                   = "ansible-green"
     numa                   = false
-    onboot                 = true
+    onboot                 = false
     oncreate               = true
     qemu_os                = "l26"
     scsihw                 = "virtio-scsi-single"
@@ -85,7 +85,7 @@ resource "proxmox_vm_qemu" "git-green" {
     memory                 = 2048
     name                   = "git-green"
     numa                   = false
-    onboot                 = true
+    onboot                 = false
     oncreate               = true
     qemu_os                = "l26"
     scsihw                 = "virtio-scsi-single"
@@ -153,7 +153,7 @@ resource "proxmox_vm_qemu" "netbox-green" {
     memory                 = 4096
     name                   = "netbox-green"
     numa                   = false
-    onboot                 = true
+    onboot                 = false
     oncreate               = true
     qemu_os                = "l26"
     scsihw                 = "virtio-scsi-single"
@@ -221,7 +221,7 @@ resource "proxmox_vm_qemu" "pxe-green" {
     memory                 = 2048
     name                   = "pxe-green"
     numa                   = false
-    onboot                 = true
+    onboot                 = false
     oncreate               = true
     qemu_os                = "l26"
     scsihw                 = "virtio-scsi-single"
@@ -301,7 +301,7 @@ resource "proxmox_vm_qemu" "registry-green" {
     memory                 = 2048
     name                   = "registry-green"
     numa                   = false
-    onboot                 = true
+    onboot                 = false
     oncreate               = true
     qemu_os                = "l26"
     scsihw                 = "virtio-scsi-single"
