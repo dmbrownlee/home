@@ -23,11 +23,6 @@
     name: "{{ baseline.packages }}"
     state: present
   when: ansible_distribution == "Debian"
-- name: Ensure ansible SSH key is authorized
-  ansible.posix.authorized_key:
-    user: ansible
-    state: present
-    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFJIXb28FVVgoNBtMUO3KS7nBVPvAnP8cHuP97POlEU/ ansible"
 - name: Ensure root password is locked
   ansible.builtin.user:
     name: root
