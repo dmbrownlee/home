@@ -15,7 +15,7 @@
 - name: Ensure all hosts have the same standard operating environment
   hosts: all
   become: true
-  gather_facts: false
+  gather_facts: true
   roles:
     - baseline
   tags:
