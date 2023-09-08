@@ -1,5 +1,14 @@
 # proxmox_vm_qemu.pxe-bios-client:
 resource "proxmox_vm_qemu" "pxe-bios-client" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 1
     bios                   = "seabios"
@@ -53,6 +62,15 @@ resource "proxmox_vm_qemu" "pxe-bios-client" {
 
 # proxmox_vm_qemu.pxe-uefi-client:
 resource "proxmox_vm_qemu" "pxe-uefi-client" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 0
     balloon                = 1
     bios                   = "ovmf"

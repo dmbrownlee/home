@@ -1,5 +1,14 @@
 # proxmox_vm_qemu.mirror1:
 resource "proxmox_vm_qemu" "mirror1" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
@@ -80,6 +89,15 @@ resource "proxmox_vm_qemu" "mirror1" {
 
 # proxmox_vm_qemu.mirror2:
 resource "proxmox_vm_qemu" "mirror2" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"

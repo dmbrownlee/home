@@ -1,4 +1,13 @@
 resource "proxmox_vm_qemu" "framework1-dev" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
@@ -48,6 +57,15 @@ resource "proxmox_vm_qemu" "framework1-dev" {
 }
 
 resource "proxmox_vm_qemu" "framework2-dev" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
@@ -97,6 +115,15 @@ resource "proxmox_vm_qemu" "framework2-dev" {
 }
 
 resource "proxmox_vm_qemu" "workstation1-dev" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"

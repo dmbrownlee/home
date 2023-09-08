@@ -1,4 +1,13 @@
 resource "proxmox_vm_qemu" "k8s_node1" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
@@ -68,6 +77,15 @@ resource "proxmox_vm_qemu" "k8s_node1" {
 }
 
 resource "proxmox_vm_qemu" "k8s_node2" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"
@@ -137,6 +155,15 @@ resource "proxmox_vm_qemu" "k8s_node2" {
 }
 
 resource "proxmox_vm_qemu" "k8s_node3" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     bios                   = "ovmf"
     boot                   = "order=scsi0;ide2;net0"

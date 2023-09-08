@@ -1,5 +1,14 @@
 # proxmox_vm_qemu.minikube1:
 resource "proxmox_vm_qemu" "minikube1" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"

@@ -1,5 +1,14 @@
 # proxmox_vm_qemu.ansible2:
 resource "proxmox_vm_qemu" "ansible-green" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
@@ -69,6 +78,15 @@ resource "proxmox_vm_qemu" "ansible-green" {
 
 # proxmox_vm_qemu.git2:
 resource "proxmox_vm_qemu" "git-green" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
@@ -137,6 +155,15 @@ resource "proxmox_vm_qemu" "git-green" {
 
 # proxmox_vm_qemu.netbox2:
 resource "proxmox_vm_qemu" "netbox-green" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
@@ -205,6 +232,15 @@ resource "proxmox_vm_qemu" "netbox-green" {
 
 # proxmox_vm_qemu.pxe2:
 resource "proxmox_vm_qemu" "pxe-green" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
@@ -285,6 +321,15 @@ resource "proxmox_vm_qemu" "pxe-green" {
 
 # proxmox_vm_qemu.registry2:
 resource "proxmox_vm_qemu" "registry-green" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"

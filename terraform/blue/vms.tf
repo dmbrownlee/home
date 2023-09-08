@@ -1,5 +1,14 @@
 # proxmox_vm_qemu.ansible1:
 resource "proxmox_vm_qemu" "ansible1" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
@@ -69,6 +78,15 @@ resource "proxmox_vm_qemu" "ansible1" {
 
 # proxmox_vm_qemu.git1:
 resource "proxmox_vm_qemu" "git1" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
@@ -137,6 +155,15 @@ resource "proxmox_vm_qemu" "git1" {
 
 # proxmox_vm_qemu.netbox1:
 resource "proxmox_vm_qemu" "netbox1" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
@@ -205,6 +232,15 @@ resource "proxmox_vm_qemu" "netbox1" {
 
 # proxmox_vm_qemu.pxe1:
 resource "proxmox_vm_qemu" "pxe1" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
@@ -285,6 +321,15 @@ resource "proxmox_vm_qemu" "pxe1" {
 
 # proxmox_vm_qemu.registry1:
 resource "proxmox_vm_qemu" "registry1" {
+    lifecycle {
+        ignore_changes = [
+            # The packer generated templates contain a note with a timestamp
+            # as to when the template was created.  Changed in this note can
+            # be ignored.
+            desc,
+        ]
+    }
+
     agent                  = 1
     balloon                = 0
     bios                   = "ovmf"
