@@ -1,6 +1,6 @@
 galaxy_info:
   author: dmbrownlee
-  description: Role to ensure host meets Standard Operating Environment requirements
+  description: Configure sshd
   company: none
 
   # If the issue tracker for your role is not on github, uncomment the
@@ -9,7 +9,7 @@ galaxy_info:
 
   license: TBD
 
-  min_ansible_version: '2.1'
+  min_ansible_version: 2.1
 
   # If this a Container Enabled role, provide the minimum Ansible Container version.
   # min_ansible_container_version:
