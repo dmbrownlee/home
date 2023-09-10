@@ -1,0 +1,13 @@
+---
+- name: Authorize Keys
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Ensure provisioning account's current key is authorized
+      ansible.posix.authorized_key:
+        user: "{{ lookup('env','PROVISION_USER') }}"
+        key: "{{ lookup('file',
+          lookup('env','HOME') + '/keys/' +
+          lookup('env','PROVISION_USER') + '.pub') }}"
+        manage_dir: true
+        exclusive: true
