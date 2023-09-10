@@ -1,13 +1,27 @@
 ---
+- name: Ensure the required environment variables are set on the local host
+  hosts: localhost
+  tasks:
+    - name: Ensure PROVISION_USER is set in the environment
+      ansible.builtin.assert:
+        that: lookup('env','PROVISION_USER') != ''
+    - name: Ensure PROVISION_PUBKEY_FILE is set in the environment
+      ansible.builtin.assert:
+        that: lookup('env','PROVISION_PUBKEY_FILE') != ''
+- name: Ensure sshpass is installed on the local host (since -k requires it)
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Ensure the sshpass utility is installed
+      ansible.builtin.apt:
+        name: sshpass
 - name: Authorize Keys
-  hosts: all
+  hosts: all:!localhost
   gather_facts: true
   tasks:
     - name: Ensure provisioning account's current key is authorized
       ansible.posix.authorized_key:
         user: "{{ lookup('env','PROVISION_USER') }}"
-        key: "{{ lookup('file',
-          lookup('env','HOME') + '/keys/' +
-          lookup('env','PROVISION_USER') + '.pub') }}"
+        key: "{{ lookup('file',lookup('env','PROVISION_PUBKEY_FILE')) }}"
         manage_dir: true
         exclusive: true
