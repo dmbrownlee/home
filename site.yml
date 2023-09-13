@@ -14,6 +14,8 @@
     - controller
 - name: Ensure all hosts have the same standard operating environment
   hosts: all
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: true
   gather_facts: true
@@ -23,6 +25,8 @@
     - baseline
 - name: Ensure local accounts are created
   hosts: all
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: true
   roles:
@@ -31,6 +35,8 @@
     - local-accounts
 - name: Ensure autofs is configured on nasclients
   hosts: nasclients
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: true
   roles:
@@ -39,6 +45,8 @@
     - autofs
 - name: Ensure mirror hosts are configured
   hosts: mirrors
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: yes
   roles:
@@ -47,6 +55,8 @@
     - mirror
 - name: Ensure minikube is installed on machines use for k8s development
   hosts: minikube
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: true
   roles:
@@ -56,6 +66,8 @@
     - testing
 - name: Ensure software for hosting containers is installed
   hosts: container_hosts
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: true
   roles:
@@ -64,6 +76,8 @@
     - podman
 - name: Ensure netbox servers are configured
   hosts: netbox
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: true
   roles:
@@ -72,6 +86,8 @@
     - netbox
 - name: Ensure dnsmasq servers are configured
   hosts: dnsmasq_servers
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: true
   roles:
@@ -80,6 +96,8 @@
     - dnsmasq
 - name: Configure Fedora installs as Workstations
   hosts: workstations
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: true
   roles:
@@ -88,6 +106,8 @@
     - fedora-workstation
 - name: Configure custom browsers
   hosts: workstations
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: true
   roles:
@@ -96,6 +116,8 @@
     - custombrowsers
 - name: Configure Steam
   hosts: workstations
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: true
   roles:
