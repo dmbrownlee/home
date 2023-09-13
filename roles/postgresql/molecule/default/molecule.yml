@@ -19,11 +19,6 @@ platforms:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
 provisioner:
   name: ansible
-  # Put sensitive variables in site_data.yml which is ignored by git and have
-  # molecule include them with the "-e @site_data.yml" extra_args option by
-  # uncommenting this two lines.
-  # options:
-  #   e: "@site_data.yml"
   log: true
 verifier:
   name: ansible

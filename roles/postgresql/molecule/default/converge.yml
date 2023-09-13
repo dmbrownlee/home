@@ -11,6 +11,8 @@
 
 - name: Apply the role to the testing containers (converge.yml)
   hosts: molecule
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   tasks:
     - name: Include the role
       ansible.builtin.include_role:
