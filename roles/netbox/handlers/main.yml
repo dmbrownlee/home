@@ -1,0 +1,8 @@
+---
+# handlers file for netbox
+- name: Ensure nginx is restarted
+  listen: restart_nginx
+  ansible.builtin.systemd:
+    name: nginx
+    enabled: true
+    state: restarted

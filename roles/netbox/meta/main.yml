@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: D. M. Brownlee
+  description: netbox
+  company: The Brownlee Family
+  license: TBD
+  namespace: dmbrownlee
+
+  min_ansible_version: 2.1
+
+  platforms:
+    - name: Debian
+      versions:
+        - 12
+
+  galaxy_tags: []
+dependencies:
+  - role: dmbrownlee.postgresql
