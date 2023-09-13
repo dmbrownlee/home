@@ -1,8 +1,21 @@
-.vagrant
+#===========================
 # Exclude site specific data
+#===========================
 site_data
+site_data.yml
 vaultpw
-# Exclude terraform secrets, state files and plans
+.vaultpw
+#===========================
+# Excludes for ansible
+#===========================
+*.retry
+#===========================
+# Excludes for vagrant
+#===========================
+.vagrant
+#===========================
+# Excludes for terraform
+#===========================
 secrets.tfvars
 .terraform/
 .terraform.lock.hcl
@@ -10,15 +23,15 @@ terraform-plugin-proxmox.log
 terraform.tfstate
 terraform.tfstate*backup
 *.plan
-.vaultpw
+*/.terraform/*
+*.tfstate
+*.tfstate.*backup
+#===========================
+# Other files
+#===========================
 .travis.yml
 *.swp
 *.un~
 .DS_Store
-*.retry
 inv
-.terraform.lock.hcl
-*/.terraform/*
 *.log
-*.tfstate
-*.tfstate.*backup
