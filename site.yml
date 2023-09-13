@@ -56,6 +56,13 @@
     - podman
   tags:
     - podman
+- name: Ensure netbox servers are configured
+  hosts: netbox
+  become: true
+  roles:
+    - netbox
+  tags:
+    - netbox
 - name: Ensure dnsmasq servers are configured
   hosts: dnsmasq_servers
   become: true
