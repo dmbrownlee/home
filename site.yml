@@ -14,6 +14,7 @@
     - controller
 - name: Ensure all hosts have the same standard operating environment
   hosts: all
+  remote_user: "{{ provisioning.username }}"
   become: true
   gather_facts: true
   roles:
@@ -22,6 +23,7 @@
     - baseline
 - name: Ensure local accounts are created
   hosts: all
+  remote_user: "{{ provisioning.username }}"
   become: true
   roles:
     - local-accounts
@@ -29,6 +31,7 @@
     - local-accounts
 - name: Ensure autofs is configured on nasclients
   hosts: nasclients
+  remote_user: "{{ provisioning.username }}"
   become: true
   roles:
     - autofs
@@ -36,6 +39,7 @@
     - autofs
 - name: Ensure mirror hosts are configured
   hosts: mirrors
+  remote_user: "{{ provisioning.username }}"
   become: yes
   roles:
     - mirror
@@ -43,6 +47,7 @@
     - mirror
 - name: Ensure minikube is installed on machines use for k8s development
   hosts: minikube
+  remote_user: "{{ provisioning.username }}"
   become: true
   roles:
     - minikube
@@ -51,6 +56,7 @@
     - testing
 - name: Ensure software for hosting containers is installed
   hosts: container_hosts
+  remote_user: "{{ provisioning.username }}"
   become: true
   roles:
     - podman
@@ -58,6 +64,7 @@
     - podman
 - name: Ensure netbox servers are configured
   hosts: netbox
+  remote_user: "{{ provisioning.username }}"
   become: true
   roles:
     - netbox
@@ -65,6 +72,7 @@
     - netbox
 - name: Ensure dnsmasq servers are configured
   hosts: dnsmasq_servers
+  remote_user: "{{ provisioning.username }}"
   become: true
   roles:
     - dnsmasq
@@ -72,6 +80,7 @@
     - dnsmasq
 - name: Configure Fedora installs as Workstations
   hosts: workstations
+  remote_user: "{{ provisioning.username }}"
   become: true
   roles:
     - fedora-workstation
@@ -79,6 +88,7 @@
     - fedora-workstation
 - name: Configure custom browsers
   hosts: workstations
+  remote_user: "{{ provisioning.username }}"
   become: true
   roles:
     - custombrowsers
@@ -86,6 +96,7 @@
     - custombrowsers
 - name: Configure Steam
   hosts: workstations
+  remote_user: "{{ provisioning.username }}"
   become: true
   roles:
     - steam
