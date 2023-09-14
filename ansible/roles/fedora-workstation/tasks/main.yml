@@ -16,7 +16,7 @@
     name: home
     description: Repo for locally managed packages
     state: present
-    baseurl: "{{ home_repo.baseurl }}"
+    baseurl: "{{ local_software.baseurl }}"
     enabled: true
     gpgcheck: false
     owner: root
@@ -35,10 +35,10 @@
   ansible.builtin.package:
     name: "{{ item }}"
     state: present
-  loop: "{{ home_repo.packages }}"
+  loop: "{{ local_software.packages }}"
   when:
-    - home_repo.packages is defined
-    - (home_repo.packages | length > 0)
+    - local_software.packages is defined
+    - (local_software.packages | length > 0)
 - name: Ensure Zoom is installed if requested
   ansible.builtin.package:
     name: zoom
