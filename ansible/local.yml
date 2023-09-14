@@ -10,7 +10,7 @@
   roles:
     - local-accounts
 - name: Configure Fedora installs as Workstations
-  hosts: fedora
+  hosts: fedora_workstations
   connection: local
   become: true
   roles:
