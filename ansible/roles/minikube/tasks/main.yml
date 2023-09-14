@@ -1,7 +1,7 @@
 # vi: et ts=2 sw=2 foldmethod=indent
 ---
 - name: Ensure related system packages are installed
-  become: yes
+  become: true
   ansible.builtin.package:
     name:
       - bash-completion
@@ -10,7 +10,7 @@
       - golang-sigs-k8s-kustomize
       - kubernetes-client
 - name: Ensure minikube and related packages are installed
-  become: yes
+  become: true
   ansible.builtin.dnf:
     name:
       - https://storage.googleapis.com/minikube/releases/latest/minikube-latest.x86_64.rpm
