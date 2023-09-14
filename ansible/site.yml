@@ -48,7 +48,7 @@
   vars_files:
     - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
-  become: yes
+  become: true
   roles:
     - mirror
   tags:
