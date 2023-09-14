@@ -46,7 +46,7 @@ resource "proxmox_vm_qemu" "framework1-dev" {
         bridge    = "vmbr0"
         macaddr   = "ca:fe:01:06:01:01"
         model     = "virtio"
-        tag       = 10
+        tag       = 30
     }
 
     timeouts {}
@@ -104,7 +104,7 @@ resource "proxmox_vm_qemu" "framework2-dev" {
         bridge    = "vmbr0"
         macaddr   = "ca:fe:01:06:02:01"
         model     = "virtio"
-        tag       = 10
+        tag       = 30
     }
 
     timeouts {}
@@ -162,7 +162,7 @@ resource "proxmox_vm_qemu" "workstation1-dev" {
         bridge    = "vmbr0"
         macaddr   = "ca:fe:01:06:03:01"
         model     = "virtio"
-        tag       = 10
+        tag       = 30
     }
 
     timeouts {}
