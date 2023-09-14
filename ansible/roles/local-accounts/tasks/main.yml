@@ -1,57 +1,41 @@
 ---
-- name: Ensure local groups exist
+- name: Ensure site groups exist locally
   ansible.builtin.group:
     name: "{{ item.name }}"
     gid: "{{ item.gid }}"
     state: present
-  when:
-    - local_groups is defined
-  loop: "{{ local_groups | list }}"
-- name: Ensure local users exist
+  loop: "{{ site_data.accounts.groups | list }}"
+- name: Ensure site users exist locally
   ansible.builtin.user:
     name: "{{ item.name }}"
     state: present
-    update_password: 'on_create'
-    password: "{{ item.password }}"
+    password: "{{ item.password | default('!') }}"
+    update_password: on_create
     uid: "{{ item.uid }}"
     group: "{{ item.group | default(omit) }}"
     comment: "{{ item.comment | default(omit) }}"
     groups: "{{ item.groups | default(omit) }}"
     append: "{{ (item.groups is defined) | ternary(true, omit) }}"
-  when:
-    - local_users is defined
-    - item.name in enabled_users
-  loop: "{{ local_users | list }}"
-- name: Ensure admin users are in the wheel group
+  loop: "{{ site_data.accounts.users | list }}"
+- name: Ensure administrative users are in the admin group
   ansible.builtin.user:
     name: "{{ item.name }}"
     state: present
-    groups: wheel
+    groups: "{{ admin_group }}"
     append: true
   when:
-    - local_users is defined
     - item.name in admin_users
-  loop: "{{ local_users | list }}"
+  loop: "{{ site_data.accounts.users | list }}"
 - name: Ensure non-admin users are NOT in the wheel group
   ansible.builtin.command:
     argv:
       - 'gpasswd'
       - '-d'
       - "{{ item.name }}"
-      - 'wheel'
+      - "{{ admin_group }}"
   changed_when: gpw.rc == 0
   failed_when: gpw.rc != 0 and gpw.rc != 3
   register: gpw
   when:
-    - local_users is defined
-    - item.name in enabled_users
     - item.name not in admin_users
-  loop: "{{ local_users | list }}"
-- name: Ensure local users not in enabled users are removed
-  ansible.builtin.user:
-    name: "{{ item.name }}"
-    state: absent
-  when:
-    - local_users is defined
-    - item.name not in enabled_users
-  loop: "{{ local_users | list }}"
+  loop: "{{ site_data.accounts.users | list }}"
