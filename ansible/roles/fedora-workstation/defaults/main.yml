@@ -1,4 +1,6 @@
 ---
+zoom_should_be_installed: true
+icaclient_should_be_installed: true
 dnf_packages:
   - '@Fedora Workstation'
   - deja-dup
