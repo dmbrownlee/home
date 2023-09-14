@@ -3,7 +3,8 @@
   ansible.builtin.assert:
     that:
       - ansible_distribution == "Fedora"
-    fail_msg: "The fedora-workstation role should only be used on Fedora machines."
+    fail_msg: |
+      "The fedora-workstation role should only be used on Fedora machines."
 - name: Ensure the ansible user is hidden from the display manager login screen
   ansible.builtin.copy:
     src: ansible
@@ -16,8 +17,8 @@
     description: Repo for locally managed packages
     state: present
     baseurl: "{{ home_repo.baseurl }}"
-    enabled: yes
-    gpgcheck: no
+    enabled: true
+    gpgcheck: false
     owner: root
     group: root
     mode: '0644'
@@ -25,7 +26,7 @@
   ansible.builtin.dnf:
     name: "{{ item }}"
     state: present
-    update_cache: yes
+    update_cache: true
   loop: "{{ dnf_packages }}"
   when:
     - dnf_packages is defined
@@ -42,7 +43,7 @@
   ansible.builtin.package:
     name: zoom
     state: present
-    update_cache: yes
+    update_cache: true
   when:
     - zoom_should_be_installed is defined
     - zoom_should_be_installed
@@ -50,7 +51,7 @@
   ansible.builtin.package:
     name: ICAClient
     state: present
-    update_cache: yes
+    update_cache: true
   when:
     - icaclient_should_be_installed is defined
     - icaclient_should_be_installed
