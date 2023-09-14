@@ -1,0 +1,14 @@
+---
+- name: Ensure the ansible controller is configured
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Ensure the ansible user has a keypair
+      ansible.builtin.user:
+        name: ansible
+        generate_ssh_key: true
+        ssh_key_bits: 4096
+        ssh_key_comment: ansible@localhost
+        ssh_key_file: .ssh/ansible
+  tags:
+    - controller

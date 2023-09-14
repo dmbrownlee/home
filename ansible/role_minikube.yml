@@ -1,0 +1,9 @@
+---
+- name: Ensure minikube is installed on machines use for k8s development
+  hosts: minikube
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
+  remote_user: "{{ provisioning.username }}"
+  become: true
+  roles:
+    - minikube

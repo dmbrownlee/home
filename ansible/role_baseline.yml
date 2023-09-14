@@ -1,0 +1,10 @@
+---
+- name: Ensure all hosts have the same standard operating environment
+  hosts: all
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
+  remote_user: "{{ provisioning.username }}"
+  become: true
+  gather_facts: true
+  roles:
+    - baseline

@@ -1,0 +1,9 @@
+---
+- name: Configure Steam
+  hosts: workstations
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
+  remote_user: "{{ provisioning.username }}"
+  become: true
+  roles:
+    - steam

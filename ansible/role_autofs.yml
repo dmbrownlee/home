@@ -1,0 +1,9 @@
+---
+- name: Ensure autofs is configured on nasclients
+  hosts: nasclients
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
+  remote_user: "{{ provisioning.username }}"
+  become: true
+  roles:
+    - autofs
