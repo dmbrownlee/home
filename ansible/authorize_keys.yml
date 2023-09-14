@@ -9,6 +9,8 @@
         name: sshpass
 - name: Authorize Keys
   hosts: all:!localhost
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   gather_facts: true
   tasks:
