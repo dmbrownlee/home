@@ -1,6 +1,0 @@
----
-# tasks file for vm-d1
-- include: network-setup.yml
-- include: firewall.yml
-- include: dnsmasq.yml
-- include: pxeserver.yml
