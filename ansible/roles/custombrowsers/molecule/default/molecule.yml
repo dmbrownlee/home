@@ -12,7 +12,13 @@ platforms:
     image: "docker.io/geerlingguy/docker-fedora38-ansible:latest"
     command: "/sbin/init"
     pre_build_image: true
+  - name: debian12-custombrowsers
+    image: "docker.io/geerlingguy/docker-debian12-ansible:latest"
+    command: "/sbin/init"
+    pre_build_image: true
 provisioner:
   name: ansible
+  options:
+    "extra-vars": "install_chrome=true install_brave=true"
 verifier:
   name: ansible
