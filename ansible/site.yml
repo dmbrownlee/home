@@ -15,22 +15,15 @@
   import_playbook: role_mirror.yml
   tags:
     - mirror
-- name: minikube
-  import_playbook: role_minikube.yml
-  tags:
-    - minikube
-- name: podman
-  import_playbook: role_podman.yml
-  tags:
-    - podman
 - name: netbox
   import_playbook: role_netbox.yml
   tags:
     - netbox
-- name: dnsmasq
-  import_playbook: role_dnsmasq.yml
+- name: minikube
+  import_playbook: role_minikube.yml
   tags:
-    - dnsmasq
+    - minikube
+# Clients (user workstations and laptops)
 - name: fedora-workstation
   import_playbook: role_fedora-workstation.yml
   tags:
