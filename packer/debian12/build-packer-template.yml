@@ -1,0 +1,31 @@
+---
+- name: Build steps
+  block:
+    - name: Ensure {{ item.name }} template is built
+      shell: >
+        packer build \
+            -var pm_api_url=$PM_API_URL \
+            -var pm_api_token_id=$PM_API_TOKEN_ID \
+            -var pm_api_token_secret=$PM_API_TOKEN_SECRET \
+            -var username=$PROVISION_USER \
+            -var gecos="$PROVISION_GECOS" \
+            -var password="$PROVISION_PW" \
+            -var keydir="$PROVISION_KEYDIR" \
+            -var iso_storage_pool=$PM_ISO_STORAGE_POOL \
+            -var domain=$(dnsdomainname) \
+            -var vm_id={{ item.id }} \
+            -var pve_node={{ item.node }} \
+            -var storage_pool={{ item.sp }} \
+            -var vlan={{ item.vlan }} \
+            -var vm_name={{ item.name }} \
+            -var install_file={{ item.af }} \
+            -var mirror={{ item.mirror }} \
+            debian12.pkr.hcl
+      register: build
+    - name: Dump build result
+      debug:
+        var: build
+  rescue:
+    - name: Dump build result
+      debug:
+        var: build
