@@ -1,3 +1,30 @@
 ---
 - name: Ensure Steam is installed
-  ansible.builtin.include_tasks: steam.yml
+  block:
+    - name: Ensure Steam client is installed on Debian
+      block:
+        - name: TODO
+          debug:
+            msg: >
+              "Automating the installation of Steam on Debian is not"
+              "implemented yet."
+      when: ansible_distribution == "Debian"
+    - name: Ensure Steam client is installed on Fedora
+      block:
+        - name: Ensure the RPM Fusion free repo is enabled for machines with Steam
+          ansible.builtin.dnf:
+            name: https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm
+            state: present
+            disable_gpg_check: true
+        - name: Ensure the RPM Fusion nonfree repo is enabled for machines with Steam
+          ansible.builtin.dnf:
+            name: https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm
+            state: present
+            disable_gpg_check: true
+        - name: Ensure the Steam client is installed
+          ansible.builtin.dnf:
+            name: steam
+            state: present
+            update_cache: true
+      when: ansible_distribution == "Fedora"
+  when: install_steam

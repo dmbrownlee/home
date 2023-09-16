@@ -12,7 +12,13 @@ platforms:
     image: "docker.io/geerlingguy/docker-fedora38-ansible:latest"
     command: "/sbin/init"
     pre_build_image: true
+  - name: debian12-steam
+    image: "docker.io/geerlingguy/docker-debian12-ansible:latest"
+    command: "/sbin/init"
+    pre_build_image: true
 provisioner:
   name: ansible
+  options:
+    "extra-vars": "install_steam=true"
 verifier:
   name: ansible
