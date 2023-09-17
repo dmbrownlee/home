@@ -1,3 +1,7 @@
+variable "provision_username" {
+    type = string
+}
+
 # proxmox_vm_qemu.ansible1:
 resource "proxmox_vm_qemu" "ansible1" {
     lifecycle {
@@ -73,6 +77,22 @@ resource "proxmox_vm_qemu" "ansible1" {
         queues    = 0
         rate      = 0
         tag       = 30
+    }
+
+    provisioner "remote-exec" {
+        inline = ["ip a"]
+
+        connection {
+            host        = self.name
+            type        = "ssh"
+            user        = var.provision_username
+            agent       = true
+        }
+    }
+
+    provisioner "local-exec" {
+        command = "ansible-playbook -i inv.blue.yml -l ${self.name} -u ${var.provision_username} site.yml"
+        working_dir = "../../ansible"
     }
 }
 
@@ -151,6 +171,22 @@ resource "proxmox_vm_qemu" "git1" {
         rate      = 0
         tag       = 30
     }
+
+    provisioner "remote-exec" {
+        inline = ["ip a"]
+
+        connection {
+            host        = self.name
+            type        = "ssh"
+            user        = var.provision_username
+            agent       = true
+        }
+    }
+
+    provisioner "local-exec" {
+        command = "ansible-playbook -i inv.blue.yml -l ${self.name} -u ${var.provision_username} site.yml"
+        working_dir = "../../ansible"
+    }
 }
 
 # proxmox_vm_qemu.netbox1:
@@ -227,6 +263,22 @@ resource "proxmox_vm_qemu" "netbox1" {
         queues    = 0
         rate      = 0
         tag       = 30
+    }
+
+    provisioner "remote-exec" {
+        inline = ["ip a"]
+
+        connection {
+            host        = self.name
+            type        = "ssh"
+            user        = var.provision_username
+            agent       = true
+        }
+    }
+
+    provisioner "local-exec" {
+        command = "ansible-playbook -i inv.blue.yml -l ${self.name} -u ${var.provision_username} site.yml"
+        working_dir = "../../ansible"
     }
 }
 
@@ -317,6 +369,22 @@ resource "proxmox_vm_qemu" "pxe1" {
         rate      = 0
         tag       = 10
     }
+
+    provisioner "remote-exec" {
+        inline = ["ip a"]
+
+        connection {
+            host        = self.name
+            type        = "ssh"
+            user        = var.provision_username
+            agent       = true
+        }
+    }
+
+    provisioner "local-exec" {
+        command = "ansible-playbook -i inv.blue.yml -l ${self.name} -u ${var.provision_username} site.yml"
+        working_dir = "../../ansible"
+    }
 }
 
 # proxmox_vm_qemu.registry1:
@@ -405,5 +473,21 @@ resource "proxmox_vm_qemu" "registry1" {
         queues    = 0
         rate      = 0
         tag       = 10
+    }
+
+    provisioner "remote-exec" {
+        inline = ["ip a"]
+
+        connection {
+            host        = self.name
+            type        = "ssh"
+            user        = var.provision_username
+            agent       = true
+        }
+    }
+
+    provisioner "local-exec" {
+        command = "ansible-playbook -i inv.blue.yml -l ${self.name} -u ${var.provision_username} site.yml"
+        working_dir = "../../ansible"
     }
 }

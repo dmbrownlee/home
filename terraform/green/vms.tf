@@ -1,5 +1,9 @@
+variable "provision_username" {
+    type = string
+}
+
 # proxmox_vm_qemu.ansible2:
-resource "proxmox_vm_qemu" "ansible-green" {
+resource "proxmox_vm_qemu" "ansible2" {
     lifecycle {
         ignore_changes = [
             # The packer generated templates contain a note with a timestamp
@@ -23,7 +27,7 @@ resource "proxmox_vm_qemu" "ansible-green" {
     vmid                   = "200"
     kvm                    = true
     memory                 = 8192
-    name                   = "ansible-green"
+    name                   = "ansible2"
     numa                   = false
     onboot                 = false
     oncreate               = true
@@ -74,10 +78,26 @@ resource "proxmox_vm_qemu" "ansible-green" {
         rate      = 0
         tag       = 30
     }
+
+    provisioner "remote-exec" {
+        inline = ["ip a"]
+
+        connection {
+            host        = self.name
+            type        = "ssh"
+            user        = var.provision_username
+            agent       = true
+        }
+    }
+
+    provisioner "local-exec" {
+        command = "ansible-playbook -i inv.green.yml -l ${self.name} -u ${var.provision_username} site.yml"
+        working_dir = "../../ansible"
+    }
 }
 
 # proxmox_vm_qemu.git2:
-resource "proxmox_vm_qemu" "git-green" {
+resource "proxmox_vm_qemu" "git2" {
     lifecycle {
         ignore_changes = [
             # The packer generated templates contain a note with a timestamp
@@ -101,7 +121,7 @@ resource "proxmox_vm_qemu" "git-green" {
     vmid                   = "201"
     kvm                    = true
     memory                 = 2048
-    name                   = "git-green"
+    name                   = "git2"
     numa                   = false
     onboot                 = false
     oncreate               = true
@@ -151,10 +171,26 @@ resource "proxmox_vm_qemu" "git-green" {
         rate      = 0
         tag       = 30
     }
+
+    provisioner "remote-exec" {
+        inline = ["ip a"]
+
+        connection {
+            host        = self.name
+            type        = "ssh"
+            user        = var.provision_username
+            agent       = true
+        }
+    }
+
+    provisioner "local-exec" {
+        command = "ansible-playbook -i inv.green.yml -l ${self.name} -u ${var.provision_username} site.yml"
+        working_dir = "../../ansible"
+    }
 }
 
 # proxmox_vm_qemu.netbox2:
-resource "proxmox_vm_qemu" "netbox-green" {
+resource "proxmox_vm_qemu" "netbox2" {
     lifecycle {
         ignore_changes = [
             # The packer generated templates contain a note with a timestamp
@@ -178,7 +214,7 @@ resource "proxmox_vm_qemu" "netbox-green" {
     vmid                   = "202"
     kvm                    = true
     memory                 = 4096
-    name                   = "netbox-green"
+    name                   = "netbox2"
     numa                   = false
     onboot                 = false
     oncreate               = true
@@ -228,10 +264,26 @@ resource "proxmox_vm_qemu" "netbox-green" {
         rate      = 0
         tag       = 30
     }
+
+    provisioner "remote-exec" {
+        inline = ["ip a"]
+
+        connection {
+            host        = self.name
+            type        = "ssh"
+            user        = var.provision_username
+            agent       = true
+        }
+    }
+
+    provisioner "local-exec" {
+        command = "ansible-playbook -i inv.green.yml -l ${self.name} -u ${var.provision_username} site.yml"
+        working_dir = "../../ansible"
+    }
 }
 
 # proxmox_vm_qemu.pxe2:
-resource "proxmox_vm_qemu" "pxe-green" {
+resource "proxmox_vm_qemu" "pxe2" {
     lifecycle {
         ignore_changes = [
             # The packer generated templates contain a note with a timestamp
@@ -255,7 +307,7 @@ resource "proxmox_vm_qemu" "pxe-green" {
     vmid                   = "203"
     kvm                    = true
     memory                 = 2048
-    name                   = "pxe-green"
+    name                   = "pxe2"
     numa                   = false
     onboot                 = false
     oncreate               = true
@@ -317,10 +369,26 @@ resource "proxmox_vm_qemu" "pxe-green" {
         rate      = 0
         tag       = 10
     }
+
+    provisioner "remote-exec" {
+        inline = ["ip a"]
+
+        connection {
+            host        = self.name
+            type        = "ssh"
+            user        = var.provision_username
+            agent       = true
+        }
+    }
+
+    provisioner "local-exec" {
+        command = "ansible-playbook -i inv.green.yml -l ${self.name} -u ${var.provision_username} site.yml"
+        working_dir = "../../ansible"
+    }
 }
 
 # proxmox_vm_qemu.registry2:
-resource "proxmox_vm_qemu" "registry-green" {
+resource "proxmox_vm_qemu" "registry2" {
     lifecycle {
         ignore_changes = [
             # The packer generated templates contain a note with a timestamp
@@ -344,7 +412,7 @@ resource "proxmox_vm_qemu" "registry-green" {
     vmid                   = "204"
     kvm                    = true
     memory                 = 2048
-    name                   = "registry-green"
+    name                   = "registry2"
     numa                   = false
     onboot                 = false
     oncreate               = true
@@ -405,5 +473,21 @@ resource "proxmox_vm_qemu" "registry-green" {
         queues    = 0
         rate      = 0
         tag       = 10
+    }
+
+    provisioner "remote-exec" {
+        inline = ["ip a"]
+
+        connection {
+            host        = self.name
+            type        = "ssh"
+            user        = var.provision_username
+            agent       = true
+        }
+    }
+
+    provisioner "local-exec" {
+        command = "ansible-playbook -i inv.green.yml -l ${self.name} -u ${var.provision_username} site.yml"
+        working_dir = "../../ansible"
     }
 }

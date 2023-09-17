@@ -1,3 +1,7 @@
+variable "provision_username" {
+    type = string
+}
+
 # proxmox_vm_qemu.mirror1:
 resource "proxmox_vm_qemu" "mirror1" {
     lifecycle {
@@ -74,6 +78,7 @@ resource "proxmox_vm_qemu" "mirror1" {
         rate      = 0
         tag       = 30
     }
+
     network {
         bridge    = "vmbr0"
         firewall  = true
@@ -84,6 +89,22 @@ resource "proxmox_vm_qemu" "mirror1" {
         queues    = 0
         rate      = 0
         tag       = 10
+    }
+
+    provisioner "remote-exec" {
+        inline = ["ip a"]
+
+        connection {
+            host        = self.name
+            type        = "ssh"
+            user        = var.provision_username
+            agent       = true
+        }
+    }
+
+    provisioner "local-exec" {
+        command = "ansible-playbook -i inv.mirror.yml -l ${self.name} -u ${var.provision_username} site.yml"
+        working_dir = "../../ansible"
     }
 }
 
@@ -163,6 +184,7 @@ resource "proxmox_vm_qemu" "mirror2" {
         rate      = 0
         tag       = 30
     }
+
     network {
         bridge    = "vmbr0"
         firewall  = true
@@ -173,5 +195,21 @@ resource "proxmox_vm_qemu" "mirror2" {
         queues    = 0
         rate      = 0
         tag       = 10
+    }
+
+    provisioner "remote-exec" {
+        inline = ["ip a"]
+
+        connection {
+            host        = self.name
+            type        = "ssh"
+            user        = var.provision_username
+            agent       = true
+        }
+    }
+
+    provisioner "local-exec" {
+        command = "ansible-playbook -i inv.mirror.yml -l ${self.name} -u ${var.provision_username} site.yml"
+        working_dir = "../../ansible"
     }
 }

@@ -1,3 +1,7 @@
+variable "provision_username" {
+    type = string
+}
+
 resource "proxmox_vm_qemu" "framework1-dev" {
     lifecycle {
         ignore_changes = [
@@ -54,6 +58,22 @@ resource "proxmox_vm_qemu" "framework1-dev" {
     vga {
         type = "qxl"
     }
+
+    provisioner "remote-exec" {
+      inline = ["ip a"]
+
+      connection {
+        host        = self.name
+        type        = "ssh"
+        user        = var.provision_username
+        agent       = true
+      }
+  }
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i inv.devclients.yml -l ${self.name} -u ${var.provision_username} site.yml"
+    working_dir = "../../ansible"
+  }
 }
 
 resource "proxmox_vm_qemu" "framework2-dev" {
