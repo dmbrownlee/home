@@ -11,6 +11,7 @@
     uid: "{{ mirroradmin.uid }}"
     group: "{{ mirroradmin.groupname }}"
     comment: "{{ mirroradmin.gecos }}"
+    shell: /bin/bash
     state: present
 - name: Ensure autofs mounts hosts under /net
   ansible.builtin.lineinfile:
