@@ -15,7 +15,9 @@ ARCH=amd64
  
 # log timestamp
 logger -t mirror[$$] updating Debian mirror
- 
+
+touch "$DEST/.write_test" &&
+rm "$DEST/.write_test" &&
 debmirror ${DEST} \
  --nosource \
  --host=${HOST} \
