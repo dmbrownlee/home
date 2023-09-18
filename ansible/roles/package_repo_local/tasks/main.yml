@@ -1,0 +1,37 @@
+---
+# tasks file for package_repo_local
+- name: Local package repository (Debian)
+  block:
+    - name: Ensure local package repository is enabled
+      ansible.builtin.debug:
+        msg: >
+          "Enabling local package repositories for Deban is not implemented"
+          "yet."
+      register: enabled_repos
+    - name: Ensure package cache is up to date (Debian)
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 600
+      when: enabled_repos.changed
+  when: ansible_distribution == "Debian"
+- name: Local package repository (Fedora)
+  block:
+    - name: Ensure local package repository is enabled
+      ansible.builtin.yum_repository:
+        name: home
+        description: Repo for locally managed packages
+        state: present
+        baseurl: "{{ local_software.baseurl }}"
+        enabled: true
+        gpgcheck: false
+        owner: root
+        group: root
+        mode: '0644'
+      register: enabled_repos
+    - name: Ensure cache is updated when repos are added
+      ansible.builtin.dnf:
+        name: bash
+        state: present
+        update_cache: true
+      when: enabled_repos.changed
+  when: ansible_distribution == "Fedora"
