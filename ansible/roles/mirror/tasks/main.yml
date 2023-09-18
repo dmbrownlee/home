@@ -48,8 +48,3 @@
     path: /etc/apache2/sites-enabled/debmirror.conf
     state: link
   notify: restart_apache
-- name: Ensure the default site is disabled
-  ansible.builtin.file:
-    path: /etc/apache2/sites-enabled/000-default.conf
-    state: absent
-  notify: restart_apache

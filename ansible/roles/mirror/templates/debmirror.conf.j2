@@ -1,5 +1,5 @@
 <VirtualHost *:80>
-        ServerName {{ ansible_fqdn }}
+        ServerName {{ mirrors.cname }}
         ServerAdmin {{ mirroradmin.username }}@{{ ansible_domain }}
 
         DocumentRoot {{ mirrors.mirror_root }}
