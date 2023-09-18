@@ -14,3 +14,4 @@
     - name: Ensure there is a silly example demonstrating assert
       ansible.builtin.assert:
         that:
+          - true
