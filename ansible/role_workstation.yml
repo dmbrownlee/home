@@ -1,9 +1,9 @@
 ---
-- name: Configure Fedora installs as Workstations
-  hosts: fedora_workstations
+- name: Configure workstations
+  hosts: workstations
   vars_files:
     - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: true
   roles:
-    - fedora-workstation
+    - workstation

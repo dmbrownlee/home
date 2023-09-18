@@ -1,4 +1,5 @@
 ---
+# handlers file for workstation
 - name: Ensure the display manager is restarted
   listen: restart_display_manager
   ansible.builtin.service:

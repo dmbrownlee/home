@@ -24,10 +24,10 @@
   tags:
     - minikube
 # Clients (user workstations and laptops)
-- name: fedora-workstation
-  import_playbook: role_fedora-workstation.yml
+- name: workstation
+  import_playbook: role_workstation.yml
   tags:
-    - fedora-workstation
+    - workstation
 - name: custombrowsers
   import_playbook: role_custombrowsers.yml
   tags:
