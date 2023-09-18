@@ -2,12 +2,10 @@
 - name: Ensure autofs is installed (Fedora hosts)
   ansible.builtin.dnf:
     name: autofs
-    update_cache: true
   when: ansible_distribution == 'Fedora'
 - name: Ensure autofs is installed (Debian hosts)
   ansible.builtin.apt:
     name: autofs
-    update_cache: true
   when: ansible_distribution == 'Debian'
 - name: Ensure autofs is started enabled at boot
   ansible.builtin.systemd:
