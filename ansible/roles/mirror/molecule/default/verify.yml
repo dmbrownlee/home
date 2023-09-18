@@ -1,35 +1,19 @@
 ---
 # This playbook is for post-role verificationl
-- name: Verify baseline role actually works (verify.yml)
-  hosts: all
+- name: Ensure ansible control host can fetch content from repo
+  hosts: molecule
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   tasks:
-    - name: Ensure the usage of this playbook is clear
-      debug:
-        msg: |
-          This playbook can be used to verify the role has met its objectives.
-          The the tasks of the role may not have failed, there may still be
-          semantic problems, for example, the playbook is missing a task to
-          start a service ot open a port in the host's firewall.  The assert
-          module can be useful here.
-    - name: Ensure there is a silly example demonstrating assert
-      ansible.builtin.assert:
-        that:
-          - true
-# - name: Ensure ansible control host can fetch content from mirror
-#   hosts: molecule
-#   vars_files:
-#     - "{{ lookup('env','HOME') }}/.site_data"
-#   tasks:
-#     - name: Ensure ansible control host can fetch content from mirror
-#       ansible.builtin.uri:
-#         url: "http://{{ mirrors.cname }}/debian/index.html"
-#         follow_redirects: none
-#         method: GET
-#       register: result
-#       until: result.status == 200
-#       retries: 5
-#       delay: 2
-#       # failed_when: result is failed or "'working!' not in result.content"
-#     # - name: Prove registered result does not have a content attribute
-#     #   debug:
-#     #     var: result
+    - name: Ensure ansible control host can fetch content from repo
+      ansible.builtin.uri:
+        url:
+          "http://{{ ansible_default_ipv4.address }}/debian/mirror_root.html"
+        follow_redirects: none
+        method: GET
+        headers:
+          host: "{{ mirrors.cname }}.{{ site_data.domain }}"
+      register: result
+      until: result.status == 200
+      retries: 5
+      delay: 2

@@ -8,9 +8,9 @@
   tasks:
     - name: Ensure moc docroot exists
       ansible.builtin.file:
-        path: "{{ local_repo.repo_root }}/fedora"
+        path: "{{ local_repo.repo_root }}"
         state: directory
     - name: Ensure landing page for site verification exists
       ansible.builtin.copy:
         content: "working!"
-        dest: "{{ local_repo.repo_root }}/fedora/index.html"
+        dest: "{{ local_repo.repo_root }}/repo_root.html"

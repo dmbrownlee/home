@@ -1,6 +1,6 @@
 <VirtualHost *:80>
-        ServerName repo.{{ ansible_domain }}
-        ServerAdmin repoadmin@{{ ansible_domain }}
+        ServerName {{ local_repo.cname }}.{{ site_data.domain }}
+        ServerAdmin {{ local_repo.admin }}@{{ site_data.domain }}
 
         DocumentRoot {{ local_repo.repo_root }}
         <Directory />

@@ -1,7 +1,7 @@
 ---
 # Idealy, this file would be replaced with a dependency on the autofs role, but
 # it's a workaround until I can troubleshoot running autofs in a container.
-- name: Create moc NAS content
+- name: Create mock NAS content
   hosts: molecule
   vars_files:
     - "{{ lookup('env','HOME') }}/.site_data"
@@ -13,4 +13,4 @@
     - name: Ensure landing page for site verification exists
       ansible.builtin.copy:
         content: "working!"
-        dest: "{{ mirrors.mirror_root }}/debian/index.html"
+        dest: "{{ mirrors.mirror_root }}/debian/mirror_root.html"
