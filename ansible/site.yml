@@ -15,6 +15,10 @@
   import_playbook: role_mirror.yml
   tags:
     - mirror
+- name: local_repo
+  import_playbook: role_local_repo.yml
+  tags:
+    - local_repo
 - name: netbox
   import_playbook: role_netbox.yml
   tags:
@@ -32,7 +36,7 @@
   import_playbook: role_custombrowsers.yml
   tags:
     - custombrowsers
-- name: steam
-  import_playbook: role_steam.yml
+- name: workstation_steam
+  import_playbook: role_workstation_steam.yml
   tags:
-    - steam
+    - workstation_steam

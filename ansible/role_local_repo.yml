@@ -1,9 +1,9 @@
 ---
-- name: Configure Steam
-  hosts: steam
+- name: Ensure repo hosts are configured
+  hosts: repos
   vars_files:
     - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: true
   roles:
-    - steam
+    - local_repo
