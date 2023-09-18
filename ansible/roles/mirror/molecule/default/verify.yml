@@ -4,7 +4,7 @@
   tasks:
     - name: Ensure ansible control host can fetch content from mirror
       ansible.builtin.uri:
-        url: "http://{{ ansible_default_ipv4.address }}/debian/verify.html"
+        url: "http://{{ ansible_default_ipv4.address }}/debian/index.html"
         follow_redirects: none
         method: GET
       register: result

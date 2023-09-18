@@ -14,6 +14,8 @@
 
 - name: Converge
   hosts: molecule
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
   tasks:
     - name: Include the role
       ansible.builtin.include_role:

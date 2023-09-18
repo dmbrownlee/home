@@ -30,8 +30,6 @@
       - apache2
       - debmirror
     state: present
-    update_cache: true
-    cache_valid_time: 300
 - name: Ensure shell script to mirror Debian exists
   ansible.builtin.template:
     src: debmirror.sh.j2
