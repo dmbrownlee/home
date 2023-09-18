@@ -1,5 +1,4 @@
-
-steam
+workstation_steam
 =========
 
 Configures the Steam client.
@@ -7,26 +6,23 @@ Configures the Steam client.
 Requirements
 ------------
 
-Fedora Linux
 
 Role Variables
 --------------
 
-none
 
 Dependencies
 ------------
 
-none
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+This might work.
 
-    - hosts: workstations
+    - hosts: all
       roles:
-         - { role: dmbrownlee.steam }
+         - { role: dmbrownlee.workstation_steam }
 
 License
 -------

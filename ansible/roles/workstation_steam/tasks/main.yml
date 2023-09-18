@@ -1,4 +1,5 @@
 ---
+# tasks file for workstation_steam
 - name: Ensure Steam is installed
   block:
     - name: Ensure Steam client is installed on Debian

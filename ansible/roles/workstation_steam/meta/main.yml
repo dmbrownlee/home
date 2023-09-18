@@ -1,0 +1,19 @@
+galaxy_info:
+  author: D. M. Brownlee
+  description: 
+  company: The Brownlee Family
+  license: TBD
+  namespace: dmbrownlee
+
+  min_ansible_version: 2.1
+
+  platforms:
+    - name: Debian
+      versions:
+        - 12
+    - name: Fedora
+      versions:
+        - 38
+
+  galaxy_tags: []
+dependencies: []
