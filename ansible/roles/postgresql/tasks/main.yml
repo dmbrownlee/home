@@ -5,8 +5,6 @@
     name:
       - postgresql
       - python3-psycopg2
-    update_cache: true
-    cache_valid_time: 300
 - name: Ensure postgresql is started
   ansible.builtin.systemd:
     name: postgresql
