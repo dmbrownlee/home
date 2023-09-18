@@ -1,0 +1,20 @@
+---
+# handlers file for local_repo
+# the "when" statement is a workaround for Ansible Molecule until I can find a
+# way to get autofs to work inside a podman container or a way to get molecule
+# to ignore this handler with a tag.
+- name: Make sure a autofs is restarted when there is a change
+  listen: restart_autofs
+  ansible.builtin.systemd:
+    state: restarted
+    name: autofs
+  when: >
+    ansible_virtualization_type is not defined or
+    ansible_virtualization_type != "podman"
+  # tags:
+  #   - molecule-notest
+- name: Make sure a apache is restarted when there is a change
+  listen: restart_apache
+  ansible.builtin.systemd:
+    state: restarted
+    name: apache2

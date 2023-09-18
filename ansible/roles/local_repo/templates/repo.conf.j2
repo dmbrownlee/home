@@ -1,0 +1,25 @@
+<VirtualHost *:80>
+        ServerName repo.{{ ansible_domain }}
+        ServerAdmin repoadmin@{{ ansible_domain }}
+
+        DocumentRoot {{ local_repo.repo_root }}
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory {{ local_repo.repo_root }}>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride All
+                Require all granted
+        </Directory>
+
+        ErrorLog /var/log/apache2/repo-error.log
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog /var/log/apache2/repo-access.log combined
+        ServerSignature On
+
+</VirtualHost>

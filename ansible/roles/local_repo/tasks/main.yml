@@ -1,0 +1,29 @@
+---
+# tasks file for local_repo
+- name: Ensure autofs mounts hosts under /net
+  ansible.builtin.lineinfile:
+    path: /etc/auto.master
+    regexp: '^#?(/net.*)$'
+    line: '\1'
+    backrefs: true
+    owner: root
+    group: root
+    mode: '0644'
+  register: result
+  notify: restart_autofs
+- name: Ensure apache2 is installed
+  ansible.builtin.apt:
+    name:
+      - apache2
+    state: present
+- name: Ensure the repo site configuration file exists
+  ansible.builtin.template:
+    src: repo.conf.j2
+    dest: /etc/apache2/sites-available/repo.conf
+  notify: restart_apache
+- name: Ensure the mirror site is enabled
+  ansible.builtin.file:
+    src: ../sites-available/repo.conf
+    path: /etc/apache2/sites-enabled/repo.conf
+    state: link
+  notify: restart_apache
