@@ -1,4 +1,5 @@
 ---
+# defaults file for baseline
 baseline:
   packages:
     - bash

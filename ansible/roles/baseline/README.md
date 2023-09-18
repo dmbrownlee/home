@@ -6,25 +6,23 @@ This role applies a Standard Operating Environment to a machine.  Besides instal
 Requirements
 ------------
 
-None
 
 Role Variables
 --------------
 
-None
 
 Dependencies
 ------------
 
-None
 
 Example Playbook
 ----------------
 
-- name: Apply Standard Operating Environment to the local host
-  hosts: localhost
-  roles:
-    - { role: baseline }
+This might work.
+
+    - hosts: all
+      roles:
+         - { role: dmbrownlee.baseline }
 
 License
 -------
@@ -34,4 +32,4 @@ TBD
 Author Information
 ------------------
 
-https://github.com/dmbrownlee
+none
