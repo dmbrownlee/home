@@ -1,5 +1,6 @@
 ---
-- name: Create
+# This playbook creates the testing containers on the localhost
+- name: Create the testing containers (create.yml)
   hosts: localhost
   gather_facts: false
   vars:
@@ -14,14 +15,9 @@
         image: "{{ item.image }}"
         state: started
         command: "{{ item.command }}"
-        # bash -c "while true; do sleep 10000; done"
         log_driver: json-file
       register: result
       loop: "{{ molecule_yml.platforms }}"
-
-    # - name: Print some info
-    #   ansible.builtin.debug:
-    #     msg: "{{ result.results }}"
 
     - name: Fail if container is not running
       when: >
@@ -33,9 +29,6 @@
       loop_control:
         label: "{{ item.container.Name }}"
 
-    # The combine function does a replace and configuring it to append
-    # doesn't work, so your manifest is limited to one platform (or you
-    # have to destroy the containers yourself).
     - name: Add container to molecule_inventory
       vars:
         inventory_partial_yaml: |
@@ -52,14 +45,12 @@
       loop_control:
         label: "{{ item.name }}"
 
-    - debug:
-        var: molecule_inventory
-
     - name: Dump molecule_inventory
       ansible.builtin.copy:
         content: |
           {{ molecule_inventory | to_yaml }}
-        dest: "{{ molecule_ephemeral_directory }}/inventory/molecule_inventory.yml"
+        dest:
+          "{{ molecule_ephemeral_directory }}/inventory/molecule_inventory.yml"
         mode: 0600
 
     - name: Force inventory refresh
@@ -70,7 +61,7 @@
         that: "'molecule' in groups"
         fail_msg: |
           molecule group was not found inside inventory groups: {{ groups }}
-      run_once: true # noqa: run-once[task]
+      run_once: true  # noqa: run-once[task]
 
 # we want to avoid errors like "Failed to create temporary directory"
 - name: Validate that inventory was refreshed

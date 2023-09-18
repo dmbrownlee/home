@@ -1,5 +1,6 @@
 ---
-- name: Destroy molecule containers
+# This playbook destroys the testing containers on the localhost
+- name: Destroy the molecule testing containers (destroy.yml)
   hosts: molecule
   gather_facts: false
   tasks:
@@ -21,5 +22,6 @@
   tasks:
     - name: Remove dynamic inventory file
       ansible.builtin.file:
-        path: "{{ molecule_ephemeral_directory }}/inventory/molecule_inventory.yml"
+        path:
+          "{{ molecule_ephemeral_directory }}/inventory/molecule_inventory.yml"
         state: absent
