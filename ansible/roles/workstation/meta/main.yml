@@ -19,3 +19,6 @@ galaxy_info:
   galaxy_tags: []
 dependencies:
   - role: dmbrownlee.updated_package_cache
+  - role: dmbrownlee.workstation_icaclient
+  - role: dmbrownlee.workstation_steam
+  - role: dmbrownlee.workstation_zoom
