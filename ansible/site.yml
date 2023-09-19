@@ -32,11 +32,3 @@
   import_playbook: role_workstation.yml
   tags:
     - workstation
-- name: custombrowsers
-  import_playbook: role_custombrowsers.yml
-  tags:
-    - custombrowsers
-- name: workstation_steam
-  import_playbook: role_workstation_steam.yml
-  tags:
-    - workstation_steam

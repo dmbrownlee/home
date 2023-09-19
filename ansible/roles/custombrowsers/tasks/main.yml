@@ -1,7 +1,0 @@
----
-- name: Ensure Google Chrome is installed
-  ansible.builtin.include_tasks: chrome.yml
-  when: install_chrome
-- name: Ensure Brave is installed
-  ansible.builtin.include_tasks: brave.yml
-  when: install_brave

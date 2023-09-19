@@ -1,9 +1,0 @@
----
-- name: Configure custom browsers
-  hosts: custombrowsers
-  vars_files:
-    - "{{ lookup('env','HOME') }}/.site_data"
-  remote_user: "{{ provisioning.username }}"
-  become: true
-  roles:
-    - custombrowsers
