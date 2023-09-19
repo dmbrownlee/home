@@ -1,7 +1,0 @@
----
-dnf_packages:
-  - '@Fedora Workstation'
-  - deja-dup
-  - keepassxc
-  - yubikey-manager
-  - yubikey-manager-qt

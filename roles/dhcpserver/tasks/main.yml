@@ -1,6 +1,0 @@
----
-- name: Install packages specific to DHCP servers
-  yum:
-    name: dhcp-server
-    state: present
-  become: yes

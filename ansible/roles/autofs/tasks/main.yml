@@ -1,0 +1,16 @@
+---
+- name: Ensure autofs is installed (Fedora hosts)
+  ansible.builtin.dnf:
+    name: autofs
+  when: ansible_distribution == 'Fedora'
+- name: Ensure autofs is installed (Debian hosts)
+  ansible.builtin.apt:
+    name: autofs
+  when: ansible_distribution == 'Debian'
+- name: Ensure autofs is started enabled at boot
+  ansible.builtin.systemd:
+    name: autofs
+    state: started
+    enabled: true
+  tags:
+    - molecule-notest

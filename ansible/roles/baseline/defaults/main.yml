@@ -1,0 +1,11 @@
+---
+# defaults file for baseline
+baseline:
+  packages:
+    - bash
+    - bash-completion
+    - curl
+    - openssh-server
+    - spice-vdagent
+    - tmux
+    - vim

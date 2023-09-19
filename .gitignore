@@ -1,14 +1,12 @@
 #===========================
-# Exclude site specific data
+# Excludes for ansible
 #===========================
+*.retry
+.inv.*.yml
 site_data
 site_data.yml
 vaultpw
 .vaultpw
-#===========================
-# Excludes for ansible
-#===========================
-*.retry
 #===========================
 # Excludes for vagrant
 #===========================
@@ -33,5 +31,4 @@ terraform.tfstate*backup
 *.swp
 *.un~
 .DS_Store
-inv
 *.log

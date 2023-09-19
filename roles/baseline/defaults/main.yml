@@ -1,9 +1,0 @@
----
-baseline:
-  packages:
-    - bash
-    - bash-completion
-    - curl
-    - openssh-server
-    - tmux
-    - vim

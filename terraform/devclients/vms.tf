@@ -1,3 +1,7 @@
+variable "provision_username" {
+    type = string
+}
+
 resource "proxmox_vm_qemu" "framework1-dev" {
     lifecycle {
         ignore_changes = [
@@ -46,7 +50,7 @@ resource "proxmox_vm_qemu" "framework1-dev" {
         bridge    = "vmbr0"
         macaddr   = "ca:fe:01:06:01:01"
         model     = "virtio"
-        tag       = 10
+        tag       = 30
     }
 
     timeouts {}
@@ -54,6 +58,22 @@ resource "proxmox_vm_qemu" "framework1-dev" {
     vga {
         type = "qxl"
     }
+
+    provisioner "remote-exec" {
+      inline = ["ip a"]
+
+      connection {
+        host        = self.name
+        type        = "ssh"
+        user        = var.provision_username
+        agent       = true
+      }
+  }
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i inv.devclients.yml -l ${self.name} -u ${var.provision_username} site.yml"
+    working_dir = "../../ansible"
+  }
 }
 
 resource "proxmox_vm_qemu" "framework2-dev" {
@@ -104,7 +124,7 @@ resource "proxmox_vm_qemu" "framework2-dev" {
         bridge    = "vmbr0"
         macaddr   = "ca:fe:01:06:02:01"
         model     = "virtio"
-        tag       = 10
+        tag       = 30
     }
 
     timeouts {}
@@ -162,7 +182,7 @@ resource "proxmox_vm_qemu" "workstation1-dev" {
         bridge    = "vmbr0"
         macaddr   = "ca:fe:01:06:03:01"
         model     = "virtio"
-        tag       = 10
+        tag       = 30
     }
 
     timeouts {}

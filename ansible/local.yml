@@ -1,0 +1,11 @@
+---
+- name: Ensure all hosts have the same standard operating environment
+  hosts: localhost
+  connection: local
+  become: true
+  roles:
+    - baseline
+- name: Ensure local accounts are created for hosts in the home.test domain
+  hosts: local_accounts
+  roles:
+    - local-accounts

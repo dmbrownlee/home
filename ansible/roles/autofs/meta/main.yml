@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  author: dmbrownlee
+  description: Install, configure, and enable autofs
+  company: The Brownlee Family
+  license: TBD
+  min_ansible_version: '2.1'
+  platforms:
+    - name: Fedora
+      versions:
+        - '38'
+    - name: Debian
+      versions:
+        - '12'
+  galaxy_tags: []
+
+dependencies:
+  - updated_package_cache

@@ -1,0 +1,16 @@
+---
+# Idealy, this file would be replaced with a dependency on the autofs role, but
+# it's a workaround until I can troubleshoot running autofs in a container.
+- name: Create moc NAS content
+  hosts: molecule
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
+  tasks:
+    - name: Ensure moc docroot exists
+      ansible.builtin.file:
+        path: "{{ mirrors.mirror_root }}/debian"
+        state: directory
+    - name: Ensure landing page for site verification exists
+      ansible.builtin.copy:
+        content: "working!"
+        dest: "{{ mirrors.mirror_root }}/debian/index.html"

@@ -1,0 +1,162 @@
+---
+# tasks file for netbox
+- name: Ensure prerequisite packages for Netbox are installed
+  ansible.builtin.apt:
+    name:
+      - redis-server
+      - git
+      - nginx
+      - openssl
+      - python3
+      - python3-pip
+      - python3-venv
+      - python3-dev
+      - build-essential
+      - libxml2-dev
+      - libxslt1-dev
+      - libffi-dev
+      - libpq-dev
+      - libssl-dev
+      - zlib1g-dev
+- name: Ensure the database owner exists
+  community.postgresql.postgresql_user:
+    name: "{{ netbox.postgresql.username }}"
+    password: "{{ netbox.postgresql.password }}"
+  become: true
+  become_user: postgres
+- name: Ensure the netbox database exists
+  community.postgresql.postgresql_db:
+    name: "{{ netbox.postgresql.database }}"
+  become: true
+  become_user: postgres
+- name: Ensure the netbox database exists
+  community.postgresql.postgresql_db:
+    name: "{{ netbox.postgresql.database }}"
+    owner: "{{ netbox.postgresql.username }}"
+  become: true
+  become_user: postgres
+- name: Ensure the netbox user has database privileges
+  community.postgresql.postgresql_privs:
+    type: database
+    database: "{{ netbox.postgresql.database }}"
+    roles: "{{ netbox.postgresql.username }}"
+    grant_option: false
+    privs: all
+  become: true
+  become_user: postgres
+- name: Ensure the redis server is started
+  ansible.builtin.systemd:
+    name: redis
+    state: started
+- name: Ensure there is a system user to own the netbox files
+  ansible.builtin.user:
+    name: "{{ netbox.system.username }}"
+    system: true
+- name: Ensure the /opt/netbox directory exists
+  ansible.builtin.file:
+    path: /opt/netbox
+    state: directory
+  register: netbox_directory
+- name: Perform initial netblock installation
+  block:
+    - name: Ensure the netbox webapp has been cloned from the repo
+      ansible.builtin.git:
+        dest: /opt/netbox
+        repo: https://github.com/netbox-community/netbox.git
+        depth: 1
+    - name: Ensure correct ownership and permissions on writable directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        owner: "{{ netbox.system.username }}"
+        recurse: true
+      loop:
+        - /opt/netbox/netbox/media
+        - /opt/netbox/netbox/reports
+        - /opt/netbox/netbox/scripts
+    - name: Get file stats on the included example configuration
+      ansible.builtin.stat:
+        path: /opt/netbox/netbox/netbox/configuration_example.py
+      register: example_config
+    - name: Ensure the example configuration has not changed
+      ansible.builtin.assert:
+        that: example_config.stat.checksum == netbox.example_config.checksum
+        fail_msg: >
+          The example configuration file provided with netbox has changed from
+          the version our configuration template is built on.  Please update
+          the template and then reset the expected checksum.
+    - name: Create the netbox configuration from template
+      ansible.builtin.template:
+        src: configuration.py.j2
+        dest: /opt/netbox/netbox/netbox/configuration.py
+    - name: Run the netbox installer
+      ansible.builtin.command:
+        cmd: /opt/netbox/upgrade.sh
+      register: netbox_installer
+    - name: Create the netbox admin user (web login)
+      ansible.builtin.shell:
+        cmd: |
+          source ../venv/bin/activate &&
+          echo -e '{{ netbox.app.username }}\n{{ netbox.app.username }}@{{ netbox.hostname }}\n{{ netbox.app.password }}\n{{ netbox.app.password }}\n' |
+          python3 manage.py createsuperuser
+        chdir: /opt/netbox/netbox
+        executable: /usr/bin/bash
+    - name: Enable housekeeping cronjob
+      ansible.builtin.file:
+        src: /opt/netbox/contrib/netbox-housekeeping.sh
+        path: /etc/cron.daily/netbox-housekeeping
+        state: link
+    - name: Get file stats on the gunicorn configuration
+      ansible.builtin.stat:
+        path: /opt/netbox/gunicorn.py
+      register: gunicorn_config
+    - debug:
+        var: gunicorn_config
+    - name: Ensure default gunicorn config is copied if config is missing
+      ansible.builtin.copy:
+        src: /opt/netbox/contrib/gunicorn.py
+        dest: /opt/netbox/gunicorn.py
+        remote_src: true
+  when: netbox_directory.changed
+- name: Ensure the systemd unit files for the netbox services exist
+  ansible.builtin.copy:
+    src: /opt/netbox/contrib/{{ item }}
+    dest: /etc/systemd/system/{{ item }}
+    remote_src: true
+  loop:
+    - netbox.service
+    - netbox-rq.service
+- name: Ensure the netbox services are enabled and started
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+    daemon_reload: true
+  loop:
+    - netbox
+    - netbox-rq
+- name: Ensure we have a private key to sign our self-signed cert
+  community.crypto.openssl_privatekey:
+    path: /etc/ssl/private/netbox.key
+    size: 2048
+- name: Ensure we have a self-signed cert for the netbox app
+  community.crypto.x509_certificate:
+    path: /etc/ssl/certs/netbox.crt
+    privatekey_path: /etc/ssl/private/netbox.key
+    provider: selfsigned
+- name: Ensure the netbox site config for nginx has been copied
+  ansible.builtin.copy:
+    src: /opt/netbox/contrib/nginx.conf
+    dest: /etc/nginx/sites-available/netbox
+    remote_src: true
+  notify: restart_nginx
+- name: Ensure the netbox site for nginx is enabled
+  ansible.builtin.file:
+    src: /etc/nginx/sites-available/netbox
+    path: /etc/nginx/sites-enabled/netbox
+    state: link
+  notify: restart_nginx
+- name: Ensure the default site for nginx is disabled
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: restart_nginx

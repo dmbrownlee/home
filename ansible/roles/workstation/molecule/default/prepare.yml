@@ -1,0 +1,18 @@
+---
+# This playbook prepares the testing containers on the localhost
+- name: Prerequisite configuration for the testing containers (prepare.yml)
+  hosts: all
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
+  tasks:
+    - name: Ensure the packages we touch exist
+      ansible.builtin.dnf:
+        name:
+          - accountsservice
+          - gdm
+        state: present
+      when: ansible_distribution == "Fedora"
+    - name: Ensure the provisioning user exists
+      ansible.builtin.user:
+        name: "{{ provisioning.username }}"
+        state: present

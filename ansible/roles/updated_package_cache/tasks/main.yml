@@ -1,0 +1,13 @@
+---
+# tasks file for updated_package_cache
+- name: Ensure package cache is up to date (Fedora)
+  ansible.builtin.dnf:
+    name: bash
+    state: present
+    update_cache: true
+  when: ansible_distribution == "Fedora"
+- name: Ensure package cache is up to date (Debian)
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 600
+  when: ansible_distribution == "Debian"

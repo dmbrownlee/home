@@ -1,0 +1,38 @@
+---
+- name: baseline
+  import_playbook: role_baseline.yml
+  tags:
+    - baseline
+- name: local-accounts
+  import_playbook: role_local-accounts.yml
+  tags:
+    - local-accounts
+- name: autofs
+  import_playbook: role_autofs.yml
+  tags:
+    - autofs
+- name: mirror
+  import_playbook: role_mirror.yml
+  tags:
+    - mirror
+- name: netbox
+  import_playbook: role_netbox.yml
+  tags:
+    - netbox
+- name: minikube
+  import_playbook: role_minikube.yml
+  tags:
+    - minikube
+# Clients (user workstations and laptops)
+- name: workstation
+  import_playbook: role_workstation.yml
+  tags:
+    - workstation
+- name: custombrowsers
+  import_playbook: role_custombrowsers.yml
+  tags:
+    - custombrowsers
+- name: steam
+  import_playbook: role_steam.yml
+  tags:
+    - steam

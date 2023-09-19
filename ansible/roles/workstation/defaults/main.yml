@@ -1,0 +1,10 @@
+---
+# defaults file for workstation
+zoom_should_be_installed: false
+icaclient_should_be_installed: false
+dnf_packages:
+  - '@Fedora Workstation'
+  - deja-dup
+  - keepassxc
+  - yubikey-manager
+  - yubikey-manager-qt

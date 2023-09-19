@@ -1,0 +1,3 @@
+---
+# defaults file for workstation_steam
+install_steam: false

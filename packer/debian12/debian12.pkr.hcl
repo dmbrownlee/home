@@ -68,7 +68,9 @@ variable "gecos" {
 variable "password" {
   type    = string
 }
-
+variable "keydir" {
+  type    = string
+}
 
 #==========================================
 # Variables for the automated install
@@ -195,11 +197,18 @@ build {
     inline              = [
       "echo '${var.username} ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/99${var.username}",
       "chmod 0440 /etc/sudoers.d/99${var.username}",
-      "echo 'auto ens18\niface ens18 inet dhcp\n' > /etc/network/interfaces.d/ens18"
+      "echo 'auto ens18\niface ens18 inet dhcp\n' > /etc/network/interfaces.d/ens18",
+      "mkdir -p /home/${var.username}/.ssh/",
+      "chown -R ${var.username}:${var.username} /home/${var.username}/.ssh/"
     ]
     inline_shebang      = "/bin/sh -e"
     skip_clean          = false
     start_retry_timeout = "${var.start_retry_timeout}"
+  }
+
+  provisioner "file" {
+    source      = "${var.keydir}/${var.username}.pub"
+    destination = "/home/${var.username}/.ssh/authorized_keys2"
   }
 
   provisioner "shell" {

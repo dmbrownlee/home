@@ -1,0 +1,41 @@
+---
+- name: Ensure site groups exist locally
+  ansible.builtin.group:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid }}"
+    state: present
+  loop: "{{ site_data.accounts.groups | list }}"
+- name: Ensure site users exist locally
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    state: present
+    password: "{{ item.password | default('!') }}"
+    update_password: on_create
+    uid: "{{ item.uid }}"
+    group: "{{ item.group | default(omit) }}"
+    comment: "{{ item.comment | default(omit) }}"
+    groups: "{{ item.groups | default(omit) }}"
+    append: "{{ (item.groups is defined) | ternary(true, omit) }}"
+  loop: "{{ site_data.accounts.users | list }}"
+- name: Ensure administrative users are in the admin group
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    state: present
+    groups: "{{ admin_group }}"
+    append: true
+  when:
+    - item.name in admin_users
+  loop: "{{ site_data.accounts.users | list }}"
+- name: Ensure non-admin users are NOT in the wheel group
+  ansible.builtin.command:
+    argv:
+      - 'gpasswd'
+      - '-d'
+      - "{{ item.name }}"
+      - "{{ admin_group }}"
+  changed_when: gpw.rc == 0
+  failed_when: gpw.rc != 0 and gpw.rc != 3
+  register: gpw
+  when:
+    - item.name not in admin_users
+  loop: "{{ site_data.accounts.users | list }}"

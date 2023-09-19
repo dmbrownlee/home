@@ -1,3 +1,7 @@
+variable "provision_username" {
+    type = string
+}
+
 resource "proxmox_vm_qemu" "k8s1" {
     lifecycle {
         ignore_changes = [
@@ -74,6 +78,22 @@ resource "proxmox_vm_qemu" "k8s1" {
     }
 
     timeouts {}
+
+    provisioner "remote-exec" {
+      inline = ["ip a"]
+
+      connection {
+        host        = self.name
+        type        = "ssh"
+        user        = var.provision_username
+        agent       = true
+      }
+  }
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i inv.k8s.yml -l ${self.name} -u ${var.provision_username} site.yml"
+    working_dir = "../../ansible"
+  }
 }
 
 resource "proxmox_vm_qemu" "k8s2" {
@@ -152,6 +172,22 @@ resource "proxmox_vm_qemu" "k8s2" {
     }
 
     timeouts {}
+
+    provisioner "remote-exec" {
+      inline = ["ip a"]
+
+      connection {
+        host        = self.name
+        type        = "ssh"
+        user        = var.provision_username
+        agent       = true
+      }
+  }
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i inv.k8s.yml -l ${self.name} -u ${var.provision_username} site.yml"
+    working_dir = "../../ansible"
+  }
 }
 
 resource "proxmox_vm_qemu" "k8s3" {
@@ -230,5 +266,20 @@ resource "proxmox_vm_qemu" "k8s3" {
     }
 
     timeouts {}
-}
 
+    provisioner "remote-exec" {
+      inline = ["ip a"]
+
+      connection {
+        host        = self.name
+        type        = "ssh"
+        user        = var.provision_username
+        agent       = true
+      }
+  }
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i inv.k8s.yml -l ${self.name} -u ${var.provision_username} site.yml"
+    working_dir = "../../ansible"
+  }
+}

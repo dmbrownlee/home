@@ -1,0 +1,12 @@
+---
+# tasks file for postgresql
+- name: Ensure postgresql package is installed
+  ansible.builtin.apt:
+    name:
+      - postgresql
+      - python3-psycopg2
+- name: Ensure postgresql is started
+  ansible.builtin.systemd:
+    name: postgresql
+    enabled: true
+    state: started

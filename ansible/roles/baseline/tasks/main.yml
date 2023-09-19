@@ -1,0 +1,34 @@
+---
+# tasks file for baseline
+- name: Ensure the hostname is configured correctly
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+    use: systemd
+  tags:
+    - molecule-notest
+- name: Update existing packages (Debian)
+  ansible.builtin.apt:
+    clean: true
+    autoremove: true
+    upgrade: full
+  when: ansible_distribution == "Debian"
+- name: Update existing packages (Fedora)
+  ansible.builtin.dnf:
+    name: "*"
+    state: latest
+    update_only: true
+  when: ansible_distribution == "Fedora"
+- name: Ensure baseline packages are installed (Debian)
+  ansible.builtin.apt:
+    name: "{{ baseline.packages }}"
+    state: present
+  when: ansible_distribution == "Debian"
+- name: Ensure baseline packages are installed (Fedora)
+  ansible.builtin.dnf:
+    name: "{{ baseline.packages }}"
+    state: latest
+  when: ansible_distribution == "Fedora"
+- name: Ensure root password is locked
+  ansible.builtin.user:
+    name: root
+    password_lock: true

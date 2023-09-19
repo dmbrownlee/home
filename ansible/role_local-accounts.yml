@@ -1,0 +1,9 @@
+---
+- name: Ensure local accounts are created
+  hosts: all
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data"
+  remote_user: "{{ provisioning.username }}"
+  become: true
+  roles:
+    - local-accounts

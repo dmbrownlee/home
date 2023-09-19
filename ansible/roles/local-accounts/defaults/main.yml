@@ -1,0 +1,10 @@
+---
+# The administrative (sudo) group depends on Linux distribution.
+admin_group: sudo
+# The admin users are host specific and should be overridden in inventory.
+admin_users: []
+# This is site-wide account info that should be in the site_data file.
+site_data:
+  accounts:
+    groups: []
+    users: []
