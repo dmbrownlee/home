@@ -1,9 +1,9 @@
 ---
-- name: Configure Steam
+- name: Configure Citrix ICA client
   hosts: workstations
   vars_files:
     - "{{ lookup('env','HOME') }}/.site_data"
   remote_user: "{{ provisioning.username }}"
   become: true
   roles:
-    - workstation_steam
+    - workstation_icaclient
