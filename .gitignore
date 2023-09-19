@@ -17,6 +17,7 @@ vaultpw
 secrets.tfvars
 .terraform/
 .terraform.lock.hcl
+.terraform.tfstate.lock.info
 terraform-plugin-proxmox.log
 terraform.tfstate
 terraform.tfstate*backup
