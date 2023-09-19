@@ -4,9 +4,9 @@
   block:
     - name: Ensure chrome is installed (Debian)
       block:
-        - name: TODO
+        - name: TODO - Chrome Install (Debian)
           debug:
-            msg: "Installation of Brave on Debian is not yet implemented."
+            msg: "Installation of Chrome on Debian is not yet implemented."
       when: ansible_distribution == "Debian"
     - name: Ensure chrome is installed (Fedora)
       block:

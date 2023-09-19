@@ -4,7 +4,8 @@
   block:
     - name: Ensure brave is installed (Debian)
       block:
-        - debug:
+        - name: TODO - Brave Install (Debian)
+          debug:
             msg: "Installation of Brave on Debian is not yet implemented."
       when: ansible_distribution == "Debian"
     - name: Ensure brave is installed (Fedora)

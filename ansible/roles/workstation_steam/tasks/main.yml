@@ -1,16 +1,16 @@
 ---
 # tasks file for workstation_steam
-- name: Ensure Steam is installed
+- name: Install Steam
   block:
-    - name: Ensure Steam client is installed on Debian
+    - name: Ensure Steam client is installed (Debian)
       block:
-        - name: TODO
+        - name: TODO - Steam Install (Debian)
           debug:
             msg: >
               "Automating the installation of Steam on Debian is not"
               "implemented yet."
       when: ansible_distribution == "Debian"
-    - name: Ensure Steam client is installed on Fedora
+    - name: Ensure Steam client is installed (Fedora)
       block:
         - name: Ensure the RPM Fusion free repo is enabled for machines with Steam
           ansible.builtin.dnf:

@@ -3,12 +3,16 @@
 - name: Install zoom
   block:
     - name: Ensure Zoom is installed (Debian)
-      ansible.builtin.debug:
-        msg: "Zoom installation on Debian is not implemented yet."
+      block:
+        - name: TODO - Zoom Install (Debian)
+          ansible.builtin.debug:
+            msg: "Zoom installation on Debian is not implemented yet."
       when: ansible_distribution == "Debian"
     - name: Ensure Zoom is installed (Fedora)
-      ansible.builtin.dnf:
-        name: zoom
-        state: present
+      block:
+        - name: Install the zoom package
+          ansible.builtin.dnf:
+            name: zoom
+            state: present
       when: ansible_distribution == "Fedora"
   when: install_zoom
