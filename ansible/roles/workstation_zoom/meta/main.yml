@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: D. M. Brownlee
-  description: 
+  description: Zoom client
   company: The Brownlee Family
   license: TBD
   namespace: dmbrownlee
@@ -9,6 +9,9 @@ galaxy_info:
   min_ansible_version: 2.1
 
   platforms:
+    - name: Fedora
+      versions:
+        - 38
     - name: Debian
       versions:
         - 12
