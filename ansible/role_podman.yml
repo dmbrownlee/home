@@ -1,9 +1,0 @@
----
-- name: Ensure software for hosting containers is installed
-  hosts: container_hosts
-  vars_files:
-    - "{{ lookup('env','HOME') }}/.site_data"
-  remote_user: "{{ provisioning.username }}"
-  become: true
-  roles:
-    - podman

@@ -1,9 +1,0 @@
----
-- name: Ensure dnsmasq servers are configured
-  hosts: dnsmasq_servers
-  vars_files:
-    - "{{ lookup('env','HOME') }}/.site_data"
-  remote_user: "{{ provisioning.username }}"
-  become: true
-  roles:
-    - dnsmasq
