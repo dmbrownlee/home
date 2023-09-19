@@ -1,18 +1,15 @@
 ---
 # tasks file for workstation_zoom
-- name: Install zoom
+- name: Ensure Zoom is installed (Debian)
   block:
-    - name: Ensure Zoom is installed (Debian)
-      block:
-        - name: TODO - Zoom Install (Debian)
-          ansible.builtin.debug:
-            msg: "Zoom installation on Debian is not implemented yet."
-      when: ansible_distribution == "Debian"
-    - name: Ensure Zoom is installed (Fedora)
-      block:
-        - name: Install the zoom package
-          ansible.builtin.dnf:
-            name: zoom
-            state: present
-      when: ansible_distribution == "Fedora"
-  when: install_zoom
+    - name: TODO - Zoom Install (Debian)
+      ansible.builtin.debug:
+        msg: "Zoom installation on Debian is not implemented yet."
+  when: ansible_distribution == "Debian"
+- name: Ensure Zoom is installed (Fedora)
+  block:
+    - name: Install the zoom package
+      ansible.builtin.dnf:
+        name: zoom
+        state: present
+  when: ansible_distribution == "Fedora"

@@ -20,7 +20,7 @@ platforms:
 provisioner:
   name: ansible
   options:
-    extra_vars: "dnf_packages=[]"
+    extra_vars: '{"dnf_packages":[],"addons":{"brave":true,"chrome":true,"icaclient":true,"steam":true,"zoom":true}}'
   log: true
 verifier:
   name: ansible

@@ -22,3 +22,25 @@
         dest: /etc/systemd/system/default.target
         state: link
   when: ansible_distribution == "Fedora"
+- name: Add-on software
+  block:
+    - name: Install Brave
+      ansible.builtin.include_role:
+        name: workstation_brave
+      when: addons.brave
+    - name: Install Brave
+      ansible.builtin.include_role:
+        name: workstation_chrome
+      when: addons.chrome
+    - name: Install ICAClient
+      ansible.builtin.include_role:
+        name: workstation_icaclient
+      when: addons.icaclient
+    - name: Install Steam
+      ansible.builtin.include_role:
+        name: workstation_steam
+      when: addons.steam
+    - name: Install Zoom
+      ansible.builtin.include_role:
+        name: workstation_zoom
+      when: addons.zoom

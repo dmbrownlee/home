@@ -1,34 +1,31 @@
 ---
 # tasks file for workstation_brave
-- name: Brave Install
+- name: Ensure brave is installed (Debian)
   block:
-    - name: Ensure brave is installed (Debian)
-      block:
-        - name: TODO - Brave Install (Debian)
-          debug:
-            msg: "Installation of Brave on Debian is not yet implemented."
-      when: ansible_distribution == "Debian"
-    - name: Ensure brave is installed (Fedora)
-      block:
-        - name: Ensure the Brave repo is enabled
-          ansible.builtin.yum_repository:
-            name: brave-browser
-            description: Brave Browser
-            state: present
-            baseurl: https://brave-browser-rpm-release.s3.brave.com/$basearch
-            enabled: true
-            gpgcheck: true
-            gpgkey:
-              https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
-            owner: root
-            group: root
-            mode: '0644'
-          become: true
-        - name: Ensure Brave is installed
-          ansible.builtin.package:
-            name: brave-browser
-            state: present
-            update_cache: true
-          become: true
-      when: ansible_distribution == "Fedora"
-  when: install_brave
+    - name: TODO - Brave Install (Debian)
+      debug:
+        msg: "Installation of Brave on Debian is not yet implemented."
+  when: ansible_distribution == "Debian"
+- name: Ensure brave is installed (Fedora)
+  block:
+    - name: Ensure the Brave repo is enabled
+      ansible.builtin.yum_repository:
+        name: brave-browser
+        description: Brave Browser
+        state: present
+        baseurl: https://brave-browser-rpm-release.s3.brave.com/$basearch
+        enabled: true
+        gpgcheck: true
+        gpgkey:
+          https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+        owner: root
+        group: root
+        mode: '0644'
+      become: true
+    - name: Ensure Brave is installed
+      ansible.builtin.package:
+        name: brave-browser
+        state: present
+        update_cache: true
+      become: true
+  when: ansible_distribution == "Fedora"
