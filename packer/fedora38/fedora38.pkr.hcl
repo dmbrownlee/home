@@ -72,6 +72,9 @@ variable "gecos" {
 variable "password" {
   type    = string
 }
+variable "keydir" {
+  type    = string
+}
 
 
 #==========================================
@@ -131,7 +134,7 @@ source "proxmox-iso" "fedora38-kickstart" {
     "<wait><wait><wait><wait>",
     "<leftCtrlOn>x"
   ]
-  boot_wait    = "20s"
+  boot_wait    = "30s"
   cores        = "${var.cores}"
   cpu_type     = "x86-64-v2-AES"
   disable_kvm  = false
@@ -190,10 +193,20 @@ build {
     binary              = false
     execute_command     = "echo '${var.password}' | {{ .Vars }} sudo -E -S '{{ .Path }}'"
     expect_disconnect   = true
-    inline              = ["echo '${var.username} ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/99${var.username}", "chmod 0440 /etc/sudoers.d/99${var.username}"]
+    inline              = [
+      "echo '${var.username} ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/99${var.username}",
+      "chmod 0440 /etc/sudoers.d/99${var.username}",
+      "mkdir -p /home/${var.username}/.ssh/",
+      "chown -R ${var.username}:${var.username} /home/${var.username}/.ssh/"
+    ]
     inline_shebang      = "/bin/sh -e"
     skip_clean          = false
     start_retry_timeout = "${var.start_retry_timeout}"
+  }
+
+  provisioner "file" {
+    source      = "${var.keydir}/${var.username}.pub"
+    destination = "/home/${var.username}/.ssh/authorized_keys2"
   }
 
   provisioner "shell" {
