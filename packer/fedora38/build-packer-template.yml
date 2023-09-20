@@ -1,7 +1,7 @@
 ---
 - name: Build steps
   block:
-    - name: Ensure {{ item.name }} template is built (Debian)
+    - name: Ensure {{ item.name }} template is built (Fedora)
       shell: >
         packer build \
             -var pm_api_url=$PM_API_URL \
@@ -19,9 +19,8 @@
             -var vlan={{ item.vlan }} \
             -var vm_name={{ item.name }} \
             -var install_file={{ item.af }} \
-            -var mirror={{ item.mirror }} \
             {{ item.packercfg }}
-      when: item.packercfg == "debian12.pkr.hcl"
+      when: item.packercfg == "fedora38.pkr.hcl"
       register: build
     - name: Dump build result
       debug:

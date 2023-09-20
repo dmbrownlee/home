@@ -3,25 +3,10 @@
 - name: Build packer templates
   hosts: localhost
   vars_files:
-    - site_data
+    - "{{ lookup('env','HOME') }}/.site_data"
   tasks:
-    - name: Ensure templates are built
-      shell: >
-        packer build \
-            -var pm_api_url=$PM_API_URL \
-            -var pm_api_token_id=$PM_API_TOKEN_ID \
-            -var pm_api_token_secret=$PM_API_TOKEN_SECRET \
-            -var username=$PROVISION_USER \
-            -var gecos="$PROVISION_GECOS" \
-            -var password="$PROVISION_PW" \
-            -var iso_storage_pool=$PM_ISO_STORAGE_POOL \
-            -var domain=$(dnsdomainname) \
-            -var vm_id={{ item.id }} \
-            -var pve_node={{ item.node }} \
-            -var storage_pool={{ item.sp }} \
-            -var vlan={{ item.vlan }} \
-            -var vm_name={{ item.name }} \
-            -var install_file={{ item.af }} \
-            -var luks_initial_password={{ item.luks_initial_password }} \
-            fedora38.pkr.hcl
-      loop: "{{ templates }}"
+    - name: Have packer build Proxmox templates
+      ansible.builtin.include_tasks: build-packer-template.yml
+      loop: "{{ proxmox.templates }}"
+      loop_control:
+        label: "{{ item.name }} ({{ item.id }})"

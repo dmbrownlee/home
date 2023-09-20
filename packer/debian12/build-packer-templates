@@ -3,11 +3,10 @@
 - name: Build packer templates
   hosts: localhost
   vars_files:
-    - site_data
+    - "{{ lookup('env','HOME') }}/.site_data"
   tasks:
     - name: Have packer build Proxmox templates
       ansible.builtin.include_tasks: build-packer-template.yml
-      loop: "{{ templates }}"
+      loop: "{{ proxmox.templates }}"
       loop_control:
         label: "{{ item.name }} ({{ item.id }})"
-
