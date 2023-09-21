@@ -206,14 +206,19 @@ build {
 
   provisioner "file" {
     source      = "${var.keydir}/${var.username}.pub"
-    destination = "/home/${var.username}/.ssh/authorized_keys2"
+    destination = "/home/${var.username}/.ssh/authorized_keys"
   }
 
   provisioner "shell" {
     binary              = false
     execute_command     = "echo '${var.password}' | {{ .Vars }} sudo -E -S '{{ .Path }}'"
     expect_disconnect   = true
-    inline              = ["dnf update -y", "dnf upgrade -y", "dnf autoremove -y"]
+    inline              = [
+      "chmod 600 /home/${var.username}/.ssh/authorized_keys",
+      "dnf update -y",
+      "dnf upgrade -y",
+      "dnf autoremove -y"
+    ]
     inline_shebang      = "/bin/sh -e"
     skip_clean          = false
     start_retry_timeout = "${var.start_retry_timeout}"
