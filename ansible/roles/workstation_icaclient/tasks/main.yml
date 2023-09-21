@@ -2,9 +2,11 @@
 # tasks file for workstation_icaclient
 - name: Ensure icaclient is installed (Debian)
   block:
-    - name: TODO - ICAClient Install (Debian)
-      ansible.builtin.debug:
-        msg: "icaclient installation on Debian is not implemented yet."
+    - name: Install Citrix Workspace packages
+      ansible.builtin.apt:
+        deb:
+          http://{{ local_repo.cname }}.{{ site_data.domain }}/debian/{{ item }}
+      loop: "{{ icaclient_debs }}"
   when: ansible_distribution == "Debian"
 - name: Ensure icaclient is installed (Fedora)
   block:

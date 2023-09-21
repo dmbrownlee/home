@@ -1,2 +1,6 @@
 ---
 # defaults file for workstation_icaclient
+icaclient_deb_version: 23.8.0.39
+icaclient_debs:
+  - icaclient_{{ icaclient_deb_version }}_amd64.deb
+  - ctxusb_{{ icaclient_deb_version }}_amd64.deb
