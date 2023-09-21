@@ -2,9 +2,11 @@
 # tasks file for workstation_chrome
 - name: Ensure chrome is installed (Debian)
   block:
-    - name: TODO - Chrome Install (Debian)
-      debug:
-        msg: "Installation of Chrome on Debian is not yet implemented."
+    - name: Install Chrome (Debian)
+      ansible.builtin.apt:
+        deb:
+          http://{{ local_repo.cname }}.{{ site_data.domain }}/debian/{{ item }}
+      loop: "{{ google_chrome_debs }}"
   when: ansible_distribution == "Debian"
 - name: Ensure chrome is installed (Fedora)
   block:
