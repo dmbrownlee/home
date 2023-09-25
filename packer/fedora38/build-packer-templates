@@ -3,7 +3,7 @@
 - name: Build packer templates
   hosts: localhost
   vars_files:
-    - "{{ lookup('env','HOME') }}/.site_data"
+    - "{{ lookup('env','HOME') }}/.site_data.yml"
   tasks:
     - name: Have packer build Proxmox templates
       ansible.builtin.include_tasks: build-packer-template.yml

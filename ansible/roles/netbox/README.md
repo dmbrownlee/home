@@ -9,7 +9,7 @@ Requirements
 
 Role Variables
 --------------
-This role expects you to define these variables in ~/.site_data:
+This role expects you to define these variables in ~/.site_data.yml:
 
 ---
 netbox:

@@ -10,7 +10,7 @@
 - name: Authorize Keys
   hosts: all:!localhost
   vars_files:
-    - "{{ lookup('env','HOME') }}/.site_data"
+    - "{{ lookup('env','HOME') }}/.site_data.yml"
   remote_user: "{{ provisioning.username }}"
   gather_facts: true
   tasks:
