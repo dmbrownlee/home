@@ -4,7 +4,7 @@
 - name: Create mock NAS content
   hosts: molecule
   vars_files:
-    - "{{ lookup('env','HOME') }}/.site_data"
+    - "{{ lookup('env','HOME') }}/.site_data.yml"
   tasks:
     - name: Ensure moc docroot exists
       ansible.builtin.file:

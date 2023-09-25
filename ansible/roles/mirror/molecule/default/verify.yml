@@ -3,7 +3,7 @@
 - name: Ensure ansible control host can fetch content from repo
   hosts: molecule
   vars_files:
-    - "{{ lookup('env','HOME') }}/.site_data"
+    - "{{ lookup('env','HOME') }}/.site_data.yml"
   tasks:
     - name: Ensure ansible control host can fetch content from repo
       ansible.builtin.uri:

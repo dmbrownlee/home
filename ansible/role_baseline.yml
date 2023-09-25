@@ -2,7 +2,7 @@
 - name: Ensure all hosts have the same standard operating environment
   hosts: all
   vars_files:
-    - "{{ lookup('env','HOME') }}/.site_data"
+    - "{{ lookup('env','HOME') }}/.site_data.yml"
   remote_user: "{{ provisioning.username }}"
   become: true
   gather_facts: true

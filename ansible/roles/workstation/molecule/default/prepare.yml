@@ -3,7 +3,7 @@
 - name: Prerequisite configuration for the testing containers (prepare.yml)
   hosts: all
   vars_files:
-    - "{{ lookup('env','HOME') }}/.site_data"
+    - "{{ lookup('env','HOME') }}/.site_data.yml"
   tasks:
     - name: Ensure the packages we touch exist
       ansible.builtin.dnf:

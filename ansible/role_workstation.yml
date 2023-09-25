@@ -2,7 +2,7 @@
 - name: Configure workstations
   hosts: workstations
   vars_files:
-    - "{{ lookup('env','HOME') }}/.site_data"
+    - "{{ lookup('env','HOME') }}/.site_data.yml"
   remote_user: "{{ provisioning.username }}"
   become: true
   roles:
