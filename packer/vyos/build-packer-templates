@@ -1,0 +1,13 @@
+#!/usr/bin/ansible-playbook
+---
+- name: Build packer templates
+  hosts: localhost
+  vars_files:
+    - "{{ lookup('env','HOME') }}/.site_data.yml"
+  tasks:
+    - name: Have packer build Proxmox templates
+      ansible.builtin.include_tasks: build-packer-template.yml
+      when: item.packercfg == "vyos.pkr.hcl"
+      loop: "{{ proxmox.templates }}"
+      loop_control:
+        label: "{{ item.name }} ({{ item.id }})"
