@@ -35,7 +35,7 @@ resource "proxmox_vm_qemu" "ansible1" {
   scsihw                 = "virtio-scsi-single"
   sockets                = 1
   tablet                 = true
-  target_node            = "pve1-mgt"
+  target_node            = "pve1"
   vcpus                  = 0
 
   disk {
@@ -129,7 +129,7 @@ resource "proxmox_vm_qemu" "git1" {
   scsihw                 = "virtio-scsi-single"
   sockets                = 1
   tablet                 = true
-  target_node            = "pve1-mgt"
+  target_node            = "pve1"
   vcpus                  = 0
 
   disk {
@@ -222,7 +222,7 @@ resource "proxmox_vm_qemu" "netbox1" {
   scsihw                 = "virtio-scsi-single"
   sockets                = 1
   tablet                 = true
-  target_node            = "pve1-mgt"
+  target_node            = "pve1"
   vcpus                  = 0
 
   disk {
@@ -315,7 +315,7 @@ resource "proxmox_vm_qemu" "pxe1" {
   scsihw                 = "virtio-scsi-single"
   sockets                = 1
   tablet                 = true
-  target_node            = "pve1-mgt"
+  target_node            = "pve1"
   vcpus                  = 0
 
   disk {
