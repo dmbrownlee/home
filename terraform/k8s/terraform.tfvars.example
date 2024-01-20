@@ -1,0 +1,3 @@
+# Rename this file to terraform.tfvars after supplying your own site
+# specific values.
+endpoint = "https://pve1.example.com:8006/"
