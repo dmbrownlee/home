@@ -15,3 +15,14 @@ variable "endpoint" {
   default     = "https://pve1.example.com:8006/"
 }
 
+variable "ciuser" {
+  description = "Default cloud-init account"
+  type        = string
+  default     = "ansible"
+}
+
+variable "cipassword" {
+  description = "Password for cloud-init account"
+  type        = string
+  sensitive   = true
+}
