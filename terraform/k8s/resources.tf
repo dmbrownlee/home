@@ -42,6 +42,15 @@ resource "proxmox_virtual_environment_vm" "k8scp1" {
     vlan_id     = 1001
   }
   on_boot = false
+  connection {
+    type     = "ssh"
+    user     = var.ciuser
+    agent    = true
+    host     = self.name
+  }
+  provisioner "remote-exec" {
+    inline = [ "ip a" ]
+  }
 }
 
 resource "proxmox_virtual_environment_vm" "k8scp2" {
@@ -88,6 +97,15 @@ resource "proxmox_virtual_environment_vm" "k8scp2" {
     vlan_id     = 1001
   }
   on_boot = false
+  connection {
+    type     = "ssh"
+    user     = var.ciuser
+    agent    = true
+    host     = self.name
+  }
+  provisioner "remote-exec" {
+    inline = [ "ip a" ]
+  }
 }
 
 resource "proxmox_virtual_environment_vm" "k8scp3" {
@@ -134,6 +152,15 @@ resource "proxmox_virtual_environment_vm" "k8scp3" {
     vlan_id     = 1001
   }
   on_boot = false
+  connection {
+    type     = "ssh"
+    user     = var.ciuser
+    agent    = true
+    host     = self.name
+  }
+  provisioner "remote-exec" {
+    inline = [ "ip a" ]
+  }
 }
 
 resource "proxmox_virtual_environment_vm" "k8sw1" {
@@ -180,6 +207,15 @@ resource "proxmox_virtual_environment_vm" "k8sw1" {
     vlan_id     = 1001
   }
   on_boot = false
+  connection {
+    type     = "ssh"
+    user     = var.ciuser
+    agent    = true
+    host     = self.name
+  }
+  provisioner "remote-exec" {
+    inline = [ "ip a" ]
+  }
 }
 
 resource "proxmox_virtual_environment_vm" "k8sw2" {
@@ -226,5 +262,14 @@ resource "proxmox_virtual_environment_vm" "k8sw2" {
     vlan_id     = 1001
   }
   on_boot = false
+  connection {
+    type     = "ssh"
+    user     = var.ciuser
+    agent    = true
+    host     = self.name
+  }
+  provisioner "remote-exec" {
+    inline = [ "ip a" ]
+  }
 }
 
