@@ -33,8 +33,8 @@ resource "proxmox_virtual_environment_vm" "k8scp1" {
     }
   }
   memory {
-    dedicated = 4096
-    floating  = 4096
+    dedicated = 8192
+    floating  = 8192
   }
   network_device {
     bridge      = "vmbr0"
@@ -79,8 +79,8 @@ resource "proxmox_virtual_environment_vm" "k8scp2" {
     }
   }
   memory {
-    dedicated = 4096
-    floating  = 4096
+    dedicated = 8192
+    floating  = 8192
   }
   network_device {
     bridge      = "vmbr0"
@@ -125,8 +125,8 @@ resource "proxmox_virtual_environment_vm" "k8scp3" {
     }
   }
   memory {
-    dedicated = 4096
-    floating  = 4096
+    dedicated = 8192
+    floating  = 8192
   }
   network_device {
     bridge      = "vmbr0"
@@ -171,8 +171,8 @@ resource "proxmox_virtual_environment_vm" "k8sw1" {
     }
   }
   memory {
-    dedicated = 4096
-    floating  = 4096
+    dedicated = 8192
+    floating  = 8192
   }
   network_device {
     bridge      = "vmbr0"
@@ -217,8 +217,8 @@ resource "proxmox_virtual_environment_vm" "k8sw2" {
     }
   }
   memory {
-    dedicated = 4096
-    floating  = 4096
+    dedicated = 8192
+    floating  = 8192
   }
   network_device {
     bridge      = "vmbr0"
