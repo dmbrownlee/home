@@ -66,6 +66,15 @@ resource "proxmox_virtual_environment_vm" "control_plane_nodes" {
   }
 }
 
+resource "ansible_host" "control_plane_nodes" {
+  for_each    = toset([ for node in local.control_plane_nodes: node.hostname ])
+  name        = each.value
+  groups = ["control_plane_nodes"]
+  depends_on = [
+    resource.proxmox_virtual_environment_vm.control_plane_nodes
+  ]
+}
+
 resource "proxmox_virtual_environment_vm" "worker_nodes" {
   for_each    = { for node in local.worker_nodes: node.hostname => { mac_address = node.mac_address, vm_id = node.vm_id } }
   name        = each.key
@@ -120,5 +129,60 @@ resource "proxmox_virtual_environment_vm" "worker_nodes" {
   provisioner "remote-exec" {
     inline = [ "ip a" ]
   }
+}
+
+resource "ansible_host" "worker_nodes" {
+  for_each    = toset([ for node in local.worker_nodes: node.hostname ])
+  name        = each.value
+  groups = ["worker_nodes"]
+  depends_on = [
+    resource.proxmox_virtual_environment_vm.control_plane_nodes
+  ]
+}
+
+resource "ansible_playbook" "control_plane_nodes" {
+  for_each    = toset([ for node in local.control_plane_nodes: node.hostname ])
+  playbook   = "playbook.yml"
+  name       = each.value
+  replayable = true
+  ignore_playbook_failure = true
+  extra_vars = {
+    private_key      = var.ssh_private_keys[var.ciuser]
+    ansible_ssh_user = var.ciuser
+  }
+  depends_on = [
+    resource.ansible_host.control_plane_nodes
+  ]
+}
+
+resource "ansible_playbook" "worker_nodes" {
+  for_each    = toset([ for node in local.worker_nodes: node.hostname ])
+  playbook   = "playbook.yml"
+  name       = each.value
+  replayable = true
+  ignore_playbook_failure = true
+  extra_vars = {
+    private_key      = var.ssh_private_keys[var.ciuser]
+    ansible_ssh_user = var.ciuser
+  }
+  depends_on = [
+    resource.ansible_host.worker_nodes
+  ]
+}
+
+output "cp_playbook_stderr" {
+  value = ansible_playbook.control_plane_nodes
+}
+
+output "cp_playbook_stdout" {
+  value = ansible_playbook.control_plane_nodes
+}
+
+output "worker_playbook_stderr" {
+  value = ansible_playbook.worker_nodes
+}
+
+output "worker_playbook_stdout" {
+  value = ansible_playbook.worker_nodes
 }
 
