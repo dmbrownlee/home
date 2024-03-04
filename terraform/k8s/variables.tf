@@ -31,3 +31,9 @@ variable "cipubkey" {
   description = "Cloud-init public key"
   type        = list(string)
 }
+
+variable "ssh_private_key_files" {
+  description = "A map of SSH private key paths"
+  type        = map(string)
+}
+

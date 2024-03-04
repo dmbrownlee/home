@@ -147,7 +147,7 @@ resource "ansible_playbook" "control_plane_nodes" {
   replayable = true
   ignore_playbook_failure = true
   extra_vars = {
-    private_key      = var.ssh_private_keys[var.ciuser]
+    private_key      = var.ssh_private_key_files[var.ciuser]
     ansible_ssh_user = var.ciuser
   }
   depends_on = [
@@ -162,7 +162,7 @@ resource "ansible_playbook" "worker_nodes" {
   replayable = true
   ignore_playbook_failure = true
   extra_vars = {
-    private_key      = var.ssh_private_keys[var.ciuser]
+    private_key      = var.ssh_private_key_files[var.ciuser]
     ansible_ssh_user = var.ciuser
   }
   depends_on = [
