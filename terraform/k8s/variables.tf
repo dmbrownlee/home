@@ -26,3 +26,8 @@ variable "cipassword" {
   type        = string
   sensitive   = true
 }
+
+variable "cipubkey" {
+  description = "Cloud-init public key"
+  type        = list(string)
+}
