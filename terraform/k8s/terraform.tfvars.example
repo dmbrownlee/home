@@ -1,3 +1,6 @@
 # Rename this file to terraform.tfvars after supplying your own site
 # specific values.
 endpoint = "https://pve1.example.com:8006/"
+ciuser     = "ansible"
+cipassword = "AGoodPassword"
+cipubkey   = ["ssh-rsa aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrssstttuuuvvvwwwxxxyyyzzzAAABBBCCCDDDEEEFFFGGGHHHIIIJJJKKKLLLMMMNNNOOOPPPQQQRRRSSSTTTUUUVVVWWWXXXYYYZZZ111222333444555666777888999000=="]
