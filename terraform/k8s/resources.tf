@@ -170,19 +170,11 @@ resource "ansible_playbook" "worker_nodes" {
   ]
 }
 
-output "cp_playbook_stderr" {
+output "cp_playbook_output" {
   value = ansible_playbook.control_plane_nodes
 }
 
-output "cp_playbook_stdout" {
-  value = ansible_playbook.control_plane_nodes
-}
-
-output "worker_playbook_stderr" {
-  value = ansible_playbook.worker_nodes
-}
-
-output "worker_playbook_stdout" {
+output "worker_playbook_output" {
   value = ansible_playbook.worker_nodes
 }
 
