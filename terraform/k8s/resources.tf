@@ -58,6 +58,9 @@ resource "proxmox_virtual_environment_vm" "control_plane_nodes" {
   provisioner "remote-exec" {
     inline = [ "ip a" ]
   }
+  vga {
+    type = "qxl"
+  }
 }
 
 resource "ansible_host" "control_plane_nodes" {
@@ -128,6 +131,9 @@ resource "proxmox_virtual_environment_vm" "worker_nodes" {
   }
   provisioner "remote-exec" {
     inline = [ "ip a" ]
+  }
+  vga {
+    type = "qxl"
   }
 }
 
