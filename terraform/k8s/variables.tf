@@ -1,3 +1,21 @@
+variable "control_plane_nodes" {
+  type = list(object({
+    hostname = string,
+    pve_node = string,
+    vm_id    = number,
+    mac_address = string
+  }))
+}
+
+variable "worker_nodes" {
+  type = list(object({
+    hostname = string,
+    pve_node = string,
+    vm_id    = number,
+    mac_address = string
+  }))
+}
+
 #===========================================================
 # These variables are used by the Terraform Proxmox provider
 #

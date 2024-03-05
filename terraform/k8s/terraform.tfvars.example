@@ -1,9 +1,34 @@
 # Rename this file to terraform.tfvars after supplying your own site
 # specific values.
+#=============
+# Proxmox
+#=============
 endpoint = "https://pve1.example.com:8006/"
+
+#=============
+# Cloud-init
+#=============
 ciuser     = "ansible"
 cipassword = "AGoodPassword"
 cipubkey   = ["ssh-rsa aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrssstttuuuvvvwwwxxxyyyzzzAAABBBCCCDDDEEEFFFGGGHHHIIIJJJKKKLLLMMMNNNOOOPPPQQQRRRSSSTTTUUUVVVWWWXXXYYYZZZ111222333444555666777888999000=="]
+
+#=============
+# Ansible
+#=============
 ssh_private_key_files = {
   ansible = "~/keys/ansible"
 }
+
+#=============
+# Kubernetes
+#=============
+control_plane_nodes = [
+  { hostname = "k8scp1", pve_node = "pve1", vm_id = 401, mac_address = "ca:fe:01:05:01:01" },
+  { hostname = "k8scp2", pve_node = "pve2", vm_id = 402, mac_address = "ca:fe:01:05:02:01" },
+  { hostname = "k8scp3", pve_node = "pve3", vm_id = 403, mac_address = "ca:fe:01:05:03:01" }
+]
+
+worker_nodes = [
+  { hostname = "k8sw1", pve_node = "pve1", vm_id = 404, mac_address = "ca:fe:01:05:04:01" },
+  { hostname = "k8sw2", pve_node = "pve2", vm_id = 405, mac_address = "ca:fe:01:05:05:01" }
+]

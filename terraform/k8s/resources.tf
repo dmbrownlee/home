@@ -1,21 +1,15 @@
-locals {
-  control_plane_nodes = [
-    { vm_id = 401, hostname = "k8scp1", mac_address = "ca:fe:01:05:01:01" },
-    { vm_id = 402, hostname = "k8scp2", mac_address = "ca:fe:01:05:02:01" },
-    { vm_id = 403, hostname = "k8scp3", mac_address = "ca:fe:01:05:03:01" }
-  ]
-  worker_nodes = [
-    { vm_id = 404, hostname = "k8sw1", mac_address = "ca:fe:01:05:04:01" },
-    { vm_id = 405, hostname = "k8sw2", mac_address = "ca:fe:01:05:05:01" }
-  ]
-}
-
 resource "proxmox_virtual_environment_vm" "control_plane_nodes" {
-  for_each    = { for node in local.control_plane_nodes: node.hostname => { mac_address = node.mac_address, vm_id = node.vm_id } }
+  for_each    = { for n in var.control_plane_nodes:
+                    n.hostname => {
+                      pve_node = n.pve_node,
+                      mac_address = n.mac_address,
+                      vm_id = n.vm_id
+                    }
+                }
   name        = each.key
   description = "Managed by Terraform"
   tags        = ["debian12-genericcloud", "k8s", "terraform"]
-  node_name   = "pve1"
+  node_name   = each.value.pve_node
   vm_id       = each.value.vm_id
 
   clone {
@@ -67,8 +61,8 @@ resource "proxmox_virtual_environment_vm" "control_plane_nodes" {
 }
 
 resource "ansible_host" "control_plane_nodes" {
-  for_each    = toset([ for node in local.control_plane_nodes: node.hostname ])
-  name        = each.value
+  for_each    = toset([ for n in var.control_plane_nodes: n.hostname ])
+  name        = each.key
   groups = ["control_plane_nodes"]
   depends_on = [
     resource.proxmox_virtual_environment_vm.control_plane_nodes
@@ -76,11 +70,17 @@ resource "ansible_host" "control_plane_nodes" {
 }
 
 resource "proxmox_virtual_environment_vm" "worker_nodes" {
-  for_each    = { for node in local.worker_nodes: node.hostname => { mac_address = node.mac_address, vm_id = node.vm_id } }
+  for_each    = { for n in var.worker_nodes:
+                    n.hostname => {
+                      pve_node = n.pve_node,
+                      mac_address = n.mac_address,
+                      vm_id = n.vm_id
+                    }
+                }
   name        = each.key
   description = "Managed by Terraform"
   tags        = ["debian12-genericcloud", "k8s", "terraform"]
-  node_name   = "pve1"
+  node_name   = each.value.pve_node
   vm_id       = each.value.vm_id
 
   clone {
@@ -132,8 +132,8 @@ resource "proxmox_virtual_environment_vm" "worker_nodes" {
 }
 
 resource "ansible_host" "worker_nodes" {
-  for_each    = toset([ for node in local.worker_nodes: node.hostname ])
-  name        = each.value
+  for_each    = toset([ for n in var.worker_nodes: n.hostname ])
+  name        = each.key
   groups = ["worker_nodes"]
   depends_on = [
     resource.proxmox_virtual_environment_vm.control_plane_nodes
@@ -141,9 +141,9 @@ resource "ansible_host" "worker_nodes" {
 }
 
 resource "ansible_playbook" "control_plane_nodes" {
-  for_each    = toset([ for node in local.control_plane_nodes: node.hostname ])
+  for_each    = toset([ for n in var.control_plane_nodes: n.hostname ])
   playbook   = "playbook.yml"
-  name       = each.value
+  name       = each.key
   replayable = true
   ignore_playbook_failure = true
   extra_vars = {
@@ -156,9 +156,9 @@ resource "ansible_playbook" "control_plane_nodes" {
 }
 
 resource "ansible_playbook" "worker_nodes" {
-  for_each    = toset([ for node in local.worker_nodes: node.hostname ])
+  for_each    = toset([ for n in var.worker_nodes: n.hostname ])
   playbook   = "playbook.yml"
-  name       = each.value
+  name       = each.key
   replayable = true
   ignore_playbook_failure = true
   extra_vars = {
