@@ -3,12 +3,22 @@
   hosts: all
   become: yes
   tasks:
-    - name: Ensure package cache and default system packages are up to date
+    - name: Wait until the lock file is removed
+      ansible.builtin.wait_for:
+        path: /var/lock/file.lock
+        state: absent
+    - name: Ensure package cache is updated
       ansible.builtin.apt:
         update_cache: yes
+        cache_valid_time: 3600
+    - name: Wait until the lock file is removed
+      ansible.builtin.wait_for:
+        path: /var/lock/file.lock
+        state: absent
+    - name: Ensure default system packages are up to date
+      ansible.builtin.apt:
         upgrade: yes
         autoclean: yes
-        cache_valid_time: 3600
     - name: Ensure GPG and some other handy items are installed
       ansible.builtin.apt:
         name:
@@ -37,10 +47,10 @@
         repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/kubernetes.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /
         filename: kubernetes
       register: kubernetes_repo
-    # - name: Wait until the lock file is removed
-    #     ansible.builtin.wait_for:
-    #       path: /var/lock/file.lock
-    #       state: absent
+    - name: Wait until the lock file is removed
+      ansible.builtin.wait_for:
+        path: /var/lock/file.lock
+        state: absent
     - name: Ensure package cache and default system packages are up to date
       ansible.builtin.apt:
         update_cache: yes
@@ -83,6 +93,10 @@
         sysctl_set: true
         state: present
         reload: true
+    - name: Wait until the lock file is removed
+      ansible.builtin.wait_for:
+        path: /var/lock/file.lock
+        state: absent
     - name: Ensure containerd is installed
       ansible.builtin.apt:
         name:
@@ -99,13 +113,15 @@
         mode: '-644'
         src: config.toml.j2
       register: containerd_config
-    - debug:
-        var: containerd_config
     - name: Ensure containerd is restarted if its configuration changed
       ansible.builtin.systemd:
         name: containerd
         state: restarted
       when: containerd_config.changed
+    - name: Wait until the lock file is removed
+      ansible.builtin.wait_for:
+        path: /var/lock/file.lock
+        state: absent
     - name: Ensure the kubernetes CLI tools are installed
       ansible.builtin.apt:
         name:
