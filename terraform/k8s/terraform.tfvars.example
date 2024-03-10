@@ -3,11 +3,29 @@
 #=============
 # Proxmox
 #=============
+# Here is where we specify the URL for the web API for the Proxmox cluster.
 endpoint = "https://pve1.example.com:8006/"
+
+# Here is where we specify the node interface to which we add the VLANs. The
+# switch port patched to this interface should be configured as a VLAN trunk.
+node_vlan_interfaces = {
+  pve1 = "vmbr0"
+  pve2 = "vmbr0"
+  pve3 = "vmbr0"
+}
 
 #=============
 # Cloud-init
 #=============
+# This is where we specify the user credentials for the administrative user
+# cloud-init will create on each VM cloned from a cloud-init template image.
+# Since we will be using Ansible for configuration management, it makes sense
+# for this to be the "ansible" user.  If any other users need to be configured,
+# Ansible can do that.  After Terraform has created and booted the VM, it will
+# run Ansible to do further machine configuration.  The corresponding private
+# SSH key should be added to your SSH agent as SSH is usually configured to
+# disallow password logins.  Note, the public key does not include the comment
+# you see at the end of the line in the .pub file.
 ciuser     = "ansible"
 cipassword = "AGoodPassword"
 cipubkey   = ["ssh-rsa aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrssstttuuuvvvwwwxxxyyyzzzAAABBBCCCDDDEEEFFFGGGHHHIIIJJJKKKLLLMMMNNNOOOPPPQQQRRRSSSTTTUUUVVVWWWXXXYYYZZZ111222333444555666777888999000=="]
@@ -15,9 +33,52 @@ cipubkey   = ["ssh-rsa aaabbbcccdddeeefffggghhhiiijjjkkklllmmmnnnooopppqqqrrrsss
 #=============
 # Ansible
 #=============
+# ssh_private_key_files is a map of paths to SSH private key files indexed by
+# username.  Here, we specify the location of the "ansible" user's private
+# SSH key that needs to be known when Terraform runs ansible-playbook.
 ssh_private_key_files = {
   ansible = "~/keys/ansible"
 }
+
+#=============
+# Site VLANs
+#=============
+# vlans is a map of site VLAN objects indexed by name.  Besides the VLAN ID,
+# each VLAN specifies networking configuration for the netblock the VLAN uses
+# in case the virtual machines connected to the VLAN do not use DHCP for
+# network configuration.
+vlans = [
+  {
+    vlan_id = 10,
+    comment = "PROVISIONING",
+    ipv4_gateway = "10.48.0.254",
+    ipv4_dns_servers = [ "10.48.80.254" ]
+  },
+  {
+    vlan_id = 1000,
+    comment = "LABS",
+    ipv4_gateway = "10.48.81.254",
+    ipv4_dns_servers = [ "10.48.80.254" ]
+  },
+  {
+    vlan_id = 1001,
+    comment = "K8S",
+    ipv4_gateway = "10.48.81.254",
+    ipv4_dns_servers = [ "10.48.81.254" ]
+  },
+  {
+    vlan_id = 1002,
+    comment = "K3S",
+    ipv4_gateway = "10.48.81.254",
+    ipv4_dns_servers = [ "10.48.82.254" ]
+  },
+  {
+    vlan_id = 80,
+    comment = "DMZ",
+    ipv4_gateway = "10.48.83.254",
+    ipv4_dns_servers = [ "10.48.83.254" ]
+  },
+]
 
 #=============
 # Kubernetes

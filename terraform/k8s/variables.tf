@@ -1,3 +1,17 @@
+variable "node_vlan_interfaces" {
+  type = map(string)
+}
+
+variable "vlans" {
+  description = "Map of VLAN objects indexed on name"
+  type = list(object({
+    vlan_id = number,
+    comment = string
+    ipv4_gateway = string,
+    ipv4_dns_servers = list(string)
+  }))
+}
+
 variable "control_plane_nodes" {
   type = list(object({
     hostname = string,
