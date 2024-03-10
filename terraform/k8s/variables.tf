@@ -1,3 +1,8 @@
+variable "template_node" {
+  description = "Hostname of the Proxmox node where template VMs are stored"
+  type        = string
+}
+
 variable "node_vlan_interfaces" {
   type = map(string)
 }
@@ -9,6 +14,15 @@ variable "vlans" {
     comment = string
     ipv4_gateway = string,
     ipv4_dns_servers = list(string)
+  }))
+}
+
+variable "vm_templates" {
+  description = "Map of VM template objects keyed on template name"
+  type = map(object({
+    vm_id            = number,
+    cloud_init_image = string,
+    vlan             = number
   }))
 }
 
@@ -69,3 +83,22 @@ variable "ssh_private_key_files" {
   type        = map(string)
 }
 
+#=========================
+# cloud-init image files
+#=========================
+variable "cloud_init_images" {
+  type = map(object({
+    url       = string,
+    file_name = string
+  }))
+}
+
+#=========================
+# cloud-init image files
+#=========================
+variable "iso_storage" {
+  type = object({
+    node = string,
+    name = string
+  })
+}
