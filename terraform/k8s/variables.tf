@@ -39,20 +39,26 @@ variable "load_balancers" {
 }
 
 variable "control_plane_nodes" {
+  description = "List of control plane nodes in the kubernetes cluster"
   type = list(object({
     hostname = string,
     pve_node = string,
     vm_id    = number,
-    mac_address = string
+    cloud_init_image = string,
+    mac_address = string,
+    ipv4_address = string
   }))
 }
 
 variable "worker_nodes" {
+  description = "List of worker nodes in the kubernetes cluster"
   type = list(object({
     hostname = string,
     pve_node = string,
     vm_id    = number,
-    mac_address = string
+    cloud_init_image = string,
+    mac_address = string,
+    ipv4_address = string
   }))
 }
 

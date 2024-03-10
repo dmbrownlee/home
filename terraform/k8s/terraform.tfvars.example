@@ -66,7 +66,7 @@ vlans = [
   {
     vlan_id = 1000,
     comment = "LABS",
-    ipv4_gateway = "192.168.81.254",
+    ipv4_gateway = "192.168.80.254",
     ipv4_dns_servers = [ "192.168.80.254" ]
   },
   {
@@ -78,7 +78,7 @@ vlans = [
   {
     vlan_id = 1002,
     comment = "K3S",
-    ipv4_gateway = "192.168.81.254",
+    ipv4_gateway = "192.168.82.254",
     ipv4_dns_servers = [ "192.168.82.254" ]
   },
   {
@@ -155,12 +155,47 @@ load_balancers = [
 # Kubernetes
 #=============
 control_plane_nodes = [
-  { hostname = "k8scp1", pve_node = "pve1", vm_id = 401, mac_address = "ca:fe:01:05:01:01" },
-  { hostname = "k8scp2", pve_node = "pve2", vm_id = 402, mac_address = "ca:fe:01:05:02:01" },
-  { hostname = "k8scp3", pve_node = "pve3", vm_id = 403, mac_address = "ca:fe:01:05:03:01" }
+  {
+    hostname = "k8scp1",
+    pve_node = "pve1",
+    vm_id = 401,
+    cloud_init_image = "debian12-genericcloud-20240102"
+    mac_address = "ca:fe:01:05:01:01",
+    ipv4_address = "192.168.83.91/24"
+  },
+  {
+    hostname = "k8scp2",
+    pve_node = "pve2",
+    vm_id = 402,
+    cloud_init_image = "debian12-genericcloud-20240102"
+    mac_address = "ca:fe:01:05:02:01",
+    ipv4_address = "192.168.83.92/24"
+  },
+  {
+    hostname = "k8scp3",
+    pve_node = "pve3",
+    vm_id = 403,
+    cloud_init_image = "debian12-genericcloud-20240102"
+    mac_address = "ca:fe:01:05:03:01",
+    ipv4_address = "192.168.83.93/24"
+  }
 ]
 
 worker_nodes = [
-  { hostname = "k8sw1", pve_node = "pve1", vm_id = 404, mac_address = "ca:fe:01:05:04:01" },
-  { hostname = "k8sw2", pve_node = "pve2", vm_id = 405, mac_address = "ca:fe:01:05:05:01" }
+  {
+    hostname = "k8sw1",
+    pve_node = "pve1",
+    vm_id = 404,
+    cloud_init_image = "debian12-genericcloud-20240102"
+    mac_address = "ca:fe:01:05:04:01",
+    ipv4_address = "192.168.83.94/24"
+  },
+  {
+    hostname = "k8sw2",
+    pve_node = "pve2",
+    vm_id = 405,
+    cloud_init_image = "debian12-genericcloud-20240102"
+    mac_address = "ca:fe:01:05:05:01",
+    ipv4_address = "192.168.83.95/24"
+  }
 ]

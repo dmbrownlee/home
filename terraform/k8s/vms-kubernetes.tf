@@ -1,21 +1,28 @@
+locals {
+  k8s_vlan = var.vlans[index(var.vlans.*.comment, "DMZ")]
+}
+
 resource "proxmox_virtual_environment_vm" "control_plane_nodes" {
+  depends_on  = [proxmox_virtual_environment_vm.vm_templates]
   for_each    = { for n in var.control_plane_nodes:
                     n.hostname => {
                       pve_node = n.pve_node,
+                      vm_id = n.vm_id,
+                      cloud_init_image = n.cloud_init_image,
                       mac_address = n.mac_address,
-                      vm_id = n.vm_id
+                      ipv4_address = n.ipv4_address
                     }
                 }
   name        = each.key
   description = "Managed by Terraform"
-  tags        = ["debian12-genericcloud", "k8s", "terraform"]
+  tags        = [each.value.cloud_init_image, "k8s", "terraform"]
   node_name   = each.value.pve_node
   vm_id       = each.value.vm_id
 
   clone {
     datastore_id = "truenas1"
     node_name    = "pve3"
-    vm_id        = 999
+    vm_id        = var.vm_templates[each.value.cloud_init_image].vm_id
     full         = true
   }
   disk {
@@ -28,9 +35,13 @@ resource "proxmox_virtual_environment_vm" "control_plane_nodes" {
   }
   initialization {
     datastore_id = "truenas1"
+    dns {
+      servers = local.k8s_vlan.ipv4_dns_servers
+    }
     ip_config {
       ipv4 {
-        address = "dhcp"
+        address = each.value.ipv4_address
+        gateway = local.k8s_vlan.ipv4_gateway
       }
     }
     user_account {
@@ -46,9 +57,9 @@ resource "proxmox_virtual_environment_vm" "control_plane_nodes" {
   network_device {
     bridge      = "vmbr0"
     mac_address = each.value.mac_address
-    vlan_id     = 1001
+    vlan_id     = local.k8s_vlan.vlan_id
   }
-  on_boot = false
+  on_boot = true
   connection {
     type     = "ssh"
     user     = var.ciuser
@@ -61,35 +72,29 @@ resource "proxmox_virtual_environment_vm" "control_plane_nodes" {
   vga {
     type = "qxl"
   }
-}
-
-resource "ansible_host" "control_plane_nodes" {
-  for_each    = toset([ for n in var.control_plane_nodes: n.hostname ])
-  name        = each.key
-  groups = ["control_plane_nodes"]
-  depends_on = [
-    resource.proxmox_virtual_environment_vm.control_plane_nodes
-  ]
 }
 
 resource "proxmox_virtual_environment_vm" "worker_nodes" {
+  depends_on  = [proxmox_virtual_environment_vm.vm_templates]
   for_each    = { for n in var.worker_nodes:
                     n.hostname => {
                       pve_node = n.pve_node,
+                      vm_id = n.vm_id,
+                      cloud_init_image = n.cloud_init_image,
                       mac_address = n.mac_address,
-                      vm_id = n.vm_id
+                      ipv4_address = n.ipv4_address
                     }
                 }
   name        = each.key
   description = "Managed by Terraform"
-  tags        = ["debian12-genericcloud", "k8s", "terraform"]
+  tags        = [each.value.cloud_init_image, "k8s", "terraform"]
   node_name   = each.value.pve_node
   vm_id       = each.value.vm_id
 
   clone {
     datastore_id = "truenas1"
     node_name    = "pve3"
-    vm_id        = 999
+    vm_id        = var.vm_templates[each.value.cloud_init_image].vm_id
     full         = true
   }
   disk {
@@ -102,9 +107,13 @@ resource "proxmox_virtual_environment_vm" "worker_nodes" {
   }
   initialization {
     datastore_id = "truenas1"
+    dns {
+      servers = local.k8s_vlan.ipv4_dns_servers
+    }
     ip_config {
       ipv4 {
-        address = "dhcp"
+        address = each.value.ipv4_address
+        gateway = local.k8s_vlan.ipv4_gateway
       }
     }
     user_account {
@@ -120,9 +129,9 @@ resource "proxmox_virtual_environment_vm" "worker_nodes" {
   network_device {
     bridge      = "vmbr0"
     mac_address = each.value.mac_address
-    vlan_id     = 1001
+    vlan_id     = local.k8s_vlan.vlan_id
   }
-  on_boot = false
+  on_boot = true
   connection {
     type     = "ssh"
     user     = var.ciuser
@@ -136,51 +145,3 @@ resource "proxmox_virtual_environment_vm" "worker_nodes" {
     type = "qxl"
   }
 }
-
-resource "ansible_host" "worker_nodes" {
-  for_each    = toset([ for n in var.worker_nodes: n.hostname ])
-  name        = each.key
-  groups = ["worker_nodes"]
-  depends_on = [
-    resource.proxmox_virtual_environment_vm.control_plane_nodes
-  ]
-}
-
-resource "ansible_playbook" "control_plane_nodes" {
-  for_each    = toset([ for n in var.control_plane_nodes: n.hostname ])
-  playbook   = "playbook.yml"
-  name       = each.key
-  replayable = true
-  ignore_playbook_failure = true
-  extra_vars = {
-    private_key      = var.ssh_private_key_files[var.ciuser]
-    ansible_ssh_user = var.ciuser
-  }
-  depends_on = [
-    resource.ansible_host.control_plane_nodes
-  ]
-}
-
-resource "ansible_playbook" "worker_nodes" {
-  for_each    = toset([ for n in var.worker_nodes: n.hostname ])
-  playbook   = "playbook.yml"
-  name       = each.key
-  replayable = true
-  ignore_playbook_failure = true
-  extra_vars = {
-    private_key      = var.ssh_private_key_files[var.ciuser]
-    ansible_ssh_user = var.ciuser
-  }
-  depends_on = [
-    resource.ansible_host.worker_nodes
-  ]
-}
-
-output "cp_playbook_output" {
-  value = ansible_playbook.control_plane_nodes
-}
-
-output "worker_playbook_output" {
-  value = ansible_playbook.worker_nodes
-}
-
