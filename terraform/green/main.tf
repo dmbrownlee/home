@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 1.5.5"
+  required_version = ">= 1.7.4"
   required_providers {
     proxmox = {
       source  = "TheGameProfi/proxmox"
@@ -7,7 +7,7 @@ terraform {
     }
     ansible = {
       source  = "ansible/ansible"
-      version = "1.1.0"
+      version = "1.2.0"
     }
   }
 }
