@@ -73,4 +73,7 @@ resource "proxmox_virtual_environment_vm" "load_balancers" {
   provisioner "remote-exec" {
     inline = [ "ip a" ]
   }
+  vga {
+    type = "qxl"
+  }
 }
