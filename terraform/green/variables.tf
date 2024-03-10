@@ -15,3 +15,8 @@ variable "pm_api_token_id" {
   description = "Proxmox API token ID"
   type        = string
 }
+
+variable "green_target_node" {
+  description = "Proxmox node for Green nodes"
+  type        = string
+}
