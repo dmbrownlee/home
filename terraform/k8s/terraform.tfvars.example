@@ -152,6 +152,20 @@ load_balancers = [
 ]
 
 #=============
+# Minikube
+#=============
+minikube_nodes = [
+  {
+    hostname = "minikube",
+    pve_node = "pve1",
+    vm_id = 400,
+    cloud_init_image = "debian12-genericcloud-20240102"
+    mac_address = "ca:fe:01:05:00:01",
+    ipv4_address = "192.168.83.90/24"
+  }
+]
+
+#=============
 # Kubernetes
 #=============
 control_plane_nodes = [
