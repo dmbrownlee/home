@@ -38,6 +38,18 @@ variable "load_balancers" {
   }))
 }
 
+variable "minikube_nodes" {
+  description = "List of minikube nodes"
+  type = list(object({
+    hostname = string,
+    pve_node = string,
+    vm_id    = number,
+    cloud_init_image = string,
+    mac_address = string,
+    ipv4_address = string
+  }))
+}
+
 variable "control_plane_nodes" {
   description = "List of control plane nodes in the kubernetes cluster"
   type = list(object({
