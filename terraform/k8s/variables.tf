@@ -26,6 +26,18 @@ variable "vm_templates" {
   }))
 }
 
+variable "load_balancers" {
+  description = "List of load balancers"
+  type = list(object({
+    hostname = string,
+    pve_node = string,
+    vm_id    = number,
+    cloud_init_image = string,
+    mac_address = string,
+    ipv4_address = string
+  }))
+}
+
 variable "control_plane_nodes" {
   type = list(object({
     hostname = string,
