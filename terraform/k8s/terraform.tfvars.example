@@ -129,6 +129,28 @@ vm_templates = {
   }
 }
 
+#=================
+# Load Balancers
+#=================
+load_balancers = [
+  {
+    hostname = "lb1",
+    pve_node = "pve1",
+    vm_id = 501,
+    cloud_init_image = "debian12-genericcloud-20240102",
+    mac_address = "ca:fe:01:06:01:01",
+    ipv4_address = "192.168.83.251/24"
+  },
+  {
+    hostname = "lb2",
+    pve_node = "pve2",
+    vm_id = 502,
+    cloud_init_image = "debian12-genericcloud-20240102",
+    mac_address = "ca:fe:01:06:02:01",
+    ipv4_address = "192.168.83.252/24"
+  },
+]
+
 #=============
 # Kubernetes
 #=============
