@@ -22,7 +22,6 @@ variable "vm_templates" {
   type = map(object({
     vm_id            = number,
     cloud_init_image = string,
-    vlan             = number
   }))
 }
 
