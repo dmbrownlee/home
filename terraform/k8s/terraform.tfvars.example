@@ -120,12 +120,10 @@ vm_templates = {
   debian12-genericcloud-20240102 = {
     vm_id            = 999,
     cloud_init_image = "debian12-genericcloud-20240102",
-    vlan             = 1000
   },
   debian12-genericcloud-20240211 = {
     vm_id            = 998,
     cloud_init_image = "debian12-genericcloud-20240102",
-    vlan             = 1000
   }
 }
 

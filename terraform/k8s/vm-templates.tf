@@ -1,3 +1,7 @@
+locals {
+  template_vlan = var.vlans[index(var.vlans.*.comment, "PROVISIONING")]
+}
+
 resource "proxmox_virtual_environment_download_file" "cloud_init_images" {
   for_each     = toset(keys(var.cloud_init_images))
   content_type = "iso"
@@ -89,7 +93,7 @@ resource "proxmox_virtual_environment_vm" "vm_templates" {
     mtu        = 0
     queues     = 0
     rate_limit = 0
-    vlan_id    = each.value.vlan
+    vlan_id     = local.template_vlan.vlan_id
   }
 
   operating_system {
