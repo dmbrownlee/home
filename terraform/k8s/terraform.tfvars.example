@@ -6,6 +6,15 @@
 # Here is where we specify the URL for the web API for the Proxmox cluster.
 endpoint = "https://pve1.example.com:8006/"
 
+# Here we specify which Proxmox node on which to store the VM templates and
+# the name of the storage we use for storing ISO images (actually qcow2
+# cloud-init images ).
+template_node = "pve3"
+iso_storage = {
+  node = "pve3",
+  name = "truenas1"
+}
+
 # Here is where we specify the node interface to which we add the VLANs. The
 # switch port patched to this interface should be configured as a VLAN trunk.
 node_vlan_interfaces = {
@@ -51,34 +60,74 @@ vlans = [
   {
     vlan_id = 10,
     comment = "PROVISIONING",
-    ipv4_gateway = "10.48.0.254",
-    ipv4_dns_servers = [ "10.48.80.254" ]
+    ipv4_gateway = "192.168.10.254",
+    ipv4_dns_servers = [ "192.168.10.254" ]
   },
   {
     vlan_id = 1000,
     comment = "LABS",
-    ipv4_gateway = "10.48.81.254",
-    ipv4_dns_servers = [ "10.48.80.254" ]
+    ipv4_gateway = "192.168.81.254",
+    ipv4_dns_servers = [ "192.168.80.254" ]
   },
   {
     vlan_id = 1001,
     comment = "K8S",
-    ipv4_gateway = "10.48.81.254",
-    ipv4_dns_servers = [ "10.48.81.254" ]
+    ipv4_gateway = "192.168.81.254",
+    ipv4_dns_servers = [ "192.168.81.254" ]
   },
   {
     vlan_id = 1002,
     comment = "K3S",
-    ipv4_gateway = "10.48.81.254",
-    ipv4_dns_servers = [ "10.48.82.254" ]
+    ipv4_gateway = "192.168.81.254",
+    ipv4_dns_servers = [ "192.168.82.254" ]
   },
   {
     vlan_id = 80,
     comment = "DMZ",
-    ipv4_gateway = "10.48.83.254",
-    ipv4_dns_servers = [ "10.48.83.254" ]
+    ipv4_gateway = "192.168.83.254",
+    ipv4_dns_servers = [ "192.168.83.254" ]
   },
 ]
+
+#=========================
+# cloud-init image files
+#=========================
+# cloud_init_images stores a map of distro cloud-init images that should exist
+# within Proxmox storage.  Terraform will download these to the Proxmox
+# cluster's ISO storage.  Note, Proxmox does not recognize the .qcow2 extension
+# so the resulting filename, as it appears in the Proxmox ISO storage, needs to
+# end in .img.
+cloud_init_images = {
+  debian12-genericcloud-20240102 = {
+    url       = "https://cloud.debian.org/images/cloud/bookworm/20240102-1614/debian-12-genericcloud-amd64-20240102-1614.qcow2",
+    file_name = "debian-12-genericcloud-amd64-20240102.qcow2.img"
+  },
+  debian12-genericcloud-20240211 = {
+    url       = "https://cloud.debian.org/images/cloud/bookworm/20240211-1654/debian-12-genericcloud-amd64-20240211-1654.qcow2",
+    file_name = "debian-12-genericcloud-amd64-20240211.qcow2.img"
+  }
+}
+
+#============================
+# Template virtual machines
+#============================
+# vm_templates describes a map of virtual machine templates Terraform will
+# create from the disk images listed above in cloud_init_images. The keys for
+# the map are the names of the template virtual machines and the objects they
+# refer to contain the name of the cloud-init image to use, the Proxmox VM id
+# to use, and the VLAN the template will default to using.
+vm_templates = {
+  debian12-genericcloud-20240102 = {
+    vm_id            = 999,
+    cloud_init_image = "debian12-genericcloud-20240102",
+    vlan             = 1000
+  },
+  debian12-genericcloud-20240211 = {
+    vm_id            = 998,
+    cloud_init_image = "debian12-genericcloud-20240102",
+    vlan             = 1000
+  }
+}
 
 #=============
 # Kubernetes
