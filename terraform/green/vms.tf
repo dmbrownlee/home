@@ -35,7 +35,7 @@ resource "proxmox_vm_qemu" "ansible2" {
   scsihw                 = "virtio-scsi-single"
   sockets                = 1
   tablet                 = true
-  target_node            = "pve2-mgt"
+  target_node            = var.green_target_node
   vcpus                  = 0
 
   disk {
@@ -129,7 +129,7 @@ resource "proxmox_vm_qemu" "git2" {
   scsihw                 = "virtio-scsi-single"
   sockets                = 1
   tablet                 = true
-  target_node            = "pve2-mgt"
+  target_node            = var.green_target_node
   vcpus                  = 0
 
   disk {
@@ -222,7 +222,7 @@ resource "proxmox_vm_qemu" "netbox2" {
   scsihw                 = "virtio-scsi-single"
   sockets                = 1
   tablet                 = true
-  target_node            = "pve2-mgt"
+  target_node            = var.green_target_node
   vcpus                  = 0
 
   disk {
@@ -315,7 +315,7 @@ resource "proxmox_vm_qemu" "pxe2" {
   scsihw                 = "virtio-scsi-single"
   sockets                = 1
   tablet                 = true
-  target_node            = "pve2-mgt"
+  target_node            = var.green_target_node
   vcpus                  = 0
 
   disk {
