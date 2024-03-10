@@ -2,7 +2,7 @@ locals {
   k8s_vlan = var.vlans[index(var.vlans.*.comment, "DMZ")]
 }
 
-resource "proxmox_virtual_environment_vm" "control_plane_nodes" {
+resource "proxmox_virtual_environment_vm" "k8s_control_plane" {
   depends_on  = [proxmox_virtual_environment_vm.vm_templates]
   for_each    = { for n in var.control_plane_nodes:
                     n.hostname => {
@@ -74,7 +74,7 @@ resource "proxmox_virtual_environment_vm" "control_plane_nodes" {
   }
 }
 
-resource "proxmox_virtual_environment_vm" "worker_nodes" {
+resource "proxmox_virtual_environment_vm" "k8s_workers" {
   depends_on  = [proxmox_virtual_environment_vm.vm_templates]
   for_each    = { for n in var.worker_nodes:
                     n.hostname => {
