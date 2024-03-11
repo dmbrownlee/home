@@ -46,11 +46,3 @@ resource "ansible_playbook" "k8s_workers" {
     resource.ansible_playbook.k8s_control_plane
   ]
 }
-
-output "k8s_control_plane_playbook_output" {
-  value = ansible_playbook.k8s_control_plane
-}
-
-output "k8s_workers_playbook_output" {
-  value = ansible_playbook.k8s_workers
-}
