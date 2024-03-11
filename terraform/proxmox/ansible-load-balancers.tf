@@ -30,11 +30,3 @@ resource "ansible_playbook" "load_balancers" {
     resource.ansible_host.load_balancers
   ]
 }
-
-/* output "lb1_playbook_output" { */
-/*   value = ansible_playbook.lb1 */
-/* } */
-
-/* output "lb2_playbook_output" { */
-/*   value = ansible_playbook.lb2 */
-/* } */
