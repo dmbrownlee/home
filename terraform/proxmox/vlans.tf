@@ -8,20 +8,20 @@
 locals {
   node_vlans = flatten([
     for node in data.proxmox_virtual_environment_nodes.available_nodes.names : [
-      for vlan in var.vlans: {
+      for vlan in var.vlans : {
         node_name = node
         name      = "${var.node_vlan_interfaces[node]}.${vlan.vlan_id}"
         interface = var.node_vlan_interfaces[node]
-        vlan = vlan.vlan_id
-        comment = vlan.comment
+        vlan      = vlan.vlan_id
+        comment   = vlan.comment
       }
     ]
   ])
 }
 
 resource "proxmox_virtual_environment_network_linux_vlan" "vlans" {
-  for_each  = tomap({
-    for node_vlan in local.node_vlans: "${node_vlan.node_name}.${node_vlan.vlan}" => node_vlan
+  for_each = tomap({
+    for node_vlan in local.node_vlans : "${node_vlan.node_name}.${node_vlan.vlan}" => node_vlan
   })
   node_name = each.value.node_name
   name      = each.value.name

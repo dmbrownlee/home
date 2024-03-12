@@ -3,11 +3,11 @@ locals {
 }
 
 resource "proxmox_virtual_environment_vm" "load_balancers" {
-  depends_on  = [
+  depends_on = [
     proxmox_virtual_environment_vm.vm_templates,
     proxmox_virtual_environment_vm.dnsmasq
   ]
-  for_each = { for vm in var.vms: vm.hostname => vm if vm.role == "load_balancer" }
+  for_each    = { for vm in var.vms : vm.hostname => vm if vm.role == "load_balancer" }
   name        = each.key
   description = "Managed by Terraform"
   tags        = ["terraform", each.value.cloud_init_image, each.value.role]
@@ -60,13 +60,13 @@ resource "proxmox_virtual_environment_vm" "load_balancers" {
   }
   on_boot = true
   connection {
-    type     = "ssh"
-    user     = var.ciuser
-    agent    = true
-    host     = self.name
+    type  = "ssh"
+    user  = var.ciuser
+    agent = true
+    host  = self.name
   }
   provisioner "remote-exec" {
-    inline = [ "ip a" ]
+    inline = ["ip a"]
   }
   vga {
     type = "qxl"

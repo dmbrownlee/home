@@ -22,13 +22,13 @@ resource "proxmox_virtual_environment_vm" "vm_templates" {
   bios            = "seabios"
   keyboard_layout = "en-us"
   migrate         = false
-  name          = each.key
-  node_name     = var.vm_template_storage.node
-  on_boot       = false
-  reboot        = false
-  scsi_hardware = "virtio-scsi-single"
-  started       = false
-  tablet_device = true
+  name            = each.key
+  node_name       = var.vm_template_storage.node
+  on_boot         = false
+  reboot          = false
+  scsi_hardware   = "virtio-scsi-single"
+  started         = false
+  tablet_device   = true
   tags = [
     each.key,
     "terraform"
@@ -42,7 +42,7 @@ resource "proxmox_virtual_environment_vm" "vm_templates" {
   timeout_shutdown_vm = 1800
   timeout_start_vm    = 1800
   timeout_stop_vm     = 300
-  vm_id = each.value.vm_id
+  vm_id               = each.value.vm_id
 
   agent {
     enabled = false
@@ -93,7 +93,7 @@ resource "proxmox_virtual_environment_vm" "vm_templates" {
     mtu        = 0
     queues     = 0
     rate_limit = 0
-    vlan_id     = local.template_vlan.vlan_id
+    vlan_id    = local.template_vlan.vlan_id
   }
 
   operating_system {

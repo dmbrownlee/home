@@ -3,11 +3,11 @@ locals {
 }
 
 resource "proxmox_virtual_environment_vm" "minikube" {
-  depends_on  = [
+  depends_on = [
     proxmox_virtual_environment_vm.vm_templates,
     proxmox_virtual_environment_vm.dnsmasq
   ]
-  for_each = { for vm in var.vms: vm.hostname => vm if vm.role == "minikube" }
+  for_each    = { for vm in var.vms : vm.hostname => vm if vm.role == "minikube" }
   name        = each.key
   description = "Managed by Terraform"
   tags        = ["terraform", each.value.cloud_init_image, each.value.role]
@@ -18,11 +18,11 @@ resource "proxmox_virtual_environment_vm" "minikube" {
     datastore_id = var.vm_template_storage.name
     node_name    = var.vm_template_storage.node
     vm_id        = var.vm_templates[each.value.cloud_init_image].vm_id
-    full = true
+    full         = true
   }
   cpu {
     sockets = 1
-    cores = 8
+    cores   = 8
   }
   disk {
     datastore_id = var.vm_storage
@@ -51,7 +51,7 @@ resource "proxmox_virtual_environment_vm" "minikube" {
   }
   memory {
     dedicated = 16384
-    floating = 16384
+    floating  = 16384
   }
   network_device {
     bridge      = "vmbr0"
@@ -60,13 +60,13 @@ resource "proxmox_virtual_environment_vm" "minikube" {
   }
   on_boot = false
   connection {
-    type     = "ssh"
-    user     = var.ciuser
-    agent    = true
-    host     = self.name
+    type  = "ssh"
+    user  = var.ciuser
+    agent = true
+    host  = self.name
   }
   provisioner "remote-exec" {
-    inline = [ "ip a" ]
+    inline = ["ip a"]
   }
   vga {
     type = "qxl"
