@@ -1,7 +1,3 @@
-locals {
-  minikube_vlan = var.vlans[index(var.vlans.*.comment, "DMZ")]
-}
-
 resource "proxmox_virtual_environment_vm" "minikube" {
   depends_on = [
     proxmox_virtual_environment_vm.vm_templates,
@@ -35,12 +31,12 @@ resource "proxmox_virtual_environment_vm" "minikube" {
   initialization {
     datastore_id = var.vm_storage
     dns {
-      servers = local.minikube_vlan.ipv4_dns_servers
+      servers = var.vlans[index(var.vlans.*.vlan_id, each.value.vlan_id)].ipv4_dns_servers
     }
     ip_config {
       ipv4 {
         address = each.value.ipv4_address
-        gateway = local.minikube_vlan.ipv4_gateway
+        gateway = var.vlans[index(var.vlans.*.vlan_id, each.value.vlan_id)].ipv4_gateway
       }
     }
     user_account {
