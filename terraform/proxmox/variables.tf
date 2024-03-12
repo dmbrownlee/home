@@ -34,66 +34,6 @@ variable "vms" {
   }))
 }
 
-/* variable "dnsmask_nodes" { */
-/*   description = "List of dnsmask nodes" */
-/*   type = list(object({ */
-/*     hostname = string, */
-/*     pve_node = string, */
-/*     vm_id    = number, */
-/*     cloud_init_image = string, */
-/*     mac_address = string, */
-/*     ipv4_address = string */
-/*   })) */
-/* } */
-
-/* variable "load_balancers" { */
-/*   description = "List of load balancers" */
-/*   type = list(object({ */
-/*     hostname = string, */
-/*     pve_node = string, */
-/*     vm_id    = number, */
-/*     cloud_init_image = string, */
-/*     mac_address = string, */
-/*     ipv4_address = string */
-/*   })) */
-/* } */
-
-/* variable "minikube_nodes" { */
-/*   description = "List of minikube nodes" */
-/*   type = list(object({ */
-/*     hostname = string, */
-/*     pve_node = string, */
-/*     vm_id    = number, */
-/*     cloud_init_image = string, */
-/*     mac_address = string, */
-/*     ipv4_address = string */
-/*   })) */
-/* } */
-
-/* variable "control_plane_nodes" { */
-/*   description = "List of control plane nodes in the kubernetes cluster" */
-/*   type = list(object({ */
-/*     hostname = string, */
-/*     pve_node = string, */
-/*     vm_id    = number, */
-/*     cloud_init_image = string, */
-/*     mac_address = string, */
-/*     ipv4_address = string */
-/*   })) */
-/* } */
-
-/* variable "worker_nodes" { */
-/*   description = "List of worker nodes in the kubernetes cluster" */
-/*   type = list(object({ */
-/*     hostname = string, */
-/*     pve_node = string, */
-/*     vm_id    = number, */
-/*     cloud_init_image = string, */
-/*     mac_address = string, */
-/*     ipv4_address = string */
-/*   })) */
-/* } */
-
 #===========================================================
 # These variables are used by the Terraform Proxmox provider
 #
