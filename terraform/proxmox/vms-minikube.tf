@@ -20,8 +20,8 @@ resource "proxmox_virtual_environment_vm" "minikube" {
   vm_id       = each.value.vm_id
 
   clone {
-    datastore_id = "truenas1"
-    node_name = "pve3"
+    datastore_id = var.vm_template_storage.name
+    node_name    = var.vm_template_storage.node
     vm_id        = var.vm_templates[each.value.cloud_init_image].vm_id
     full = true
   }
@@ -29,7 +29,7 @@ resource "proxmox_virtual_environment_vm" "minikube" {
     cores = 8
   }
   initialization {
-    datastore_id = "truenas1"
+    datastore_id = var.vm_storage
     dns {
       servers = local.minikube_vlan.ipv4_dns_servers
     }

@@ -61,7 +61,7 @@ resource "proxmox_virtual_environment_vm" "vm_templates" {
   }
 
   disk {
-    datastore_id = "truenas1"
+    datastore_id = var.vm_template_storage.name
     discard      = "on"
     file_id      = proxmox_virtual_environment_download_file.cloud_init_images[each.value.cloud_init_image].id
     interface    = "scsi0"
