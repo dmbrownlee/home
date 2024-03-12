@@ -25,6 +25,18 @@ variable "vm_templates" {
   }))
 }
 
+variable "dnsmask_nodes" {
+  description = "List of dnsmask nodes"
+  type = list(object({
+    hostname = string,
+    pve_node = string,
+    vm_id    = number,
+    cloud_init_image = string,
+    mac_address = string,
+    ipv4_address = string
+  }))
+}
+
 variable "load_balancers" {
   description = "List of load balancers"
   type = list(object({
