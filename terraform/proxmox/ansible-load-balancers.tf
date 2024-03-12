@@ -1,5 +1,5 @@
 resource "ansible_host" "load_balancers" {
-  for_each    = toset([ for n in var.load_balancers: n.hostname ])
+  for_each = { for vm in var.vms: vm.hostname => vm if vm.role == "load_balancer" }
   name        = each.key
   groups = ["load_balancers"]
   /* variables = { */
@@ -14,7 +14,7 @@ resource "ansible_host" "load_balancers" {
 }
 
 resource "ansible_playbook" "load_balancers" {
-  for_each    = toset([ for n in var.load_balancers: n.hostname ])
+  for_each = { for vm in var.vms: vm.hostname => vm if vm.role == "load_balancer" }
   name       = each.key
   playbook   = "ansible/load-balancers/playbook.yml"
   replayable = true

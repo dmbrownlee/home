@@ -4,18 +4,10 @@ locals {
 
 resource "proxmox_virtual_environment_vm" "minikube" {
   depends_on  = [proxmox_virtual_environment_vm.vm_templates]
-  for_each    = { for n in var.minikube_nodes:
-                    n.hostname => {
-                      pve_node = n.pve_node,
-                      vm_id = n.vm_id,
-                      cloud_init_image = n.cloud_init_image,
-                      mac_address = n.mac_address,
-                      ipv4_address = n.ipv4_address
-                    }
-                }
+  for_each = { for vm in var.vms: vm.hostname => vm if vm.role == "minikube" }
   name        = each.key
   description = "Managed by Terraform"
-  tags        = [each.value.cloud_init_image, "minikube", "terraform"]
+  tags        = ["terraform", each.value.cloud_init_image, each.value.role]
   node_name   = each.value.pve_node
   vm_id       = each.value.vm_id
 
@@ -52,7 +44,7 @@ resource "proxmox_virtual_environment_vm" "minikube" {
   network_device {
     bridge      = "vmbr0"
     mac_address = each.value.mac_address
-    vlan_id     = local.minikube_vlan.vlan_id
+    vlan_id     = each.value.vlan_id
   }
   on_boot = false
   connection {
