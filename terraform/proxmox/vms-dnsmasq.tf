@@ -17,6 +17,10 @@ resource "proxmox_virtual_environment_vm" "dnsmasq" {
     vm_id        = var.vm_templates[each.value.cloud_init_image].vm_id
     full         = true
   }
+  cpu {
+    sockets = 1
+    cores   = 1
+  }
   disk {
     datastore_id = var.vm_storage
     interface    = "scsi0"
