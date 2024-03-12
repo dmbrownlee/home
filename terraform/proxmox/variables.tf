@@ -1,8 +1,3 @@
-variable "template_node" {
-  description = "Hostname of the Proxmox node where template VMs are stored"
-  type        = string
-}
-
 variable "node_vlan_interfaces" {
   type = map(string)
 }
@@ -148,6 +143,7 @@ variable "iso_storage" {
 # VM template storage
 #=========================
 variable "vm_template_storage" {
+  description = "Proxmox node and storage name where VM templates are stored"
   type = object({
     node = string,
     name = string
@@ -158,5 +154,6 @@ variable "vm_template_storage" {
 # VM storage
 #=========================
 variable "vm_storage" {
+  description = "Name of Proxmox storage location where VM disks are stored"
   type = string
 }

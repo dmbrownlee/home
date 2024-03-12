@@ -23,7 +23,7 @@ resource "proxmox_virtual_environment_vm" "vm_templates" {
   keyboard_layout = "en-us"
   migrate         = false
   name          = each.key
-  node_name     = var.template_node
+  node_name     = var.vm_template_storage.node
   on_boot       = false
   reboot        = false
   scsi_hardware = "virtio-scsi-single"
