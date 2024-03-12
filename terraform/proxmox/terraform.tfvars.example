@@ -10,6 +10,11 @@ endpoint = "https://pve1.example.com:8006/"
 # the name of the storage we use for storing ISO images (actually qcow2
 # cloud-init images ).
 template_node = "pve3"
+vm_storage = "truenas1"
+vm_template_storage = {
+  node = "pve3",
+  name = "truenas1"
+}
 iso_storage = {
   node = "pve3",
   name = "truenas1"
@@ -70,12 +75,6 @@ vlans = [
     ipv4_dns_servers = [ "192.168.80.254" ]
   },
   {
-    vlan_id = 1001,
-    comment = "K8S",
-    ipv4_gateway = "192.168.81.254",
-    ipv4_dns_servers = [ "192.168.81.254" ]
-  },
-  {
     vlan_id = 1002,
     comment = "K3S",
     ipv4_gateway = "192.168.82.254",
@@ -123,7 +122,7 @@ vm_templates = {
   },
   debian12-genericcloud-20240211 = {
     vm_id            = 998,
-    cloud_init_image = "debian12-genericcloud-20240102",
+    cloud_init_image = "debian12-genericcloud-20240211",
   }
 }
 

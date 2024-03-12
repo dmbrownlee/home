@@ -20,13 +20,13 @@ resource "proxmox_virtual_environment_vm" "k8s_control_plane" {
   vm_id       = each.value.vm_id
 
   clone {
-    datastore_id = "truenas1"
-    node_name    = "pve3"
+    datastore_id = var.vm_template_storage.name
+    node_name    = var.vm_template_storage.node
     vm_id        = var.vm_templates[each.value.cloud_init_image].vm_id
     full         = true
   }
   disk {
-    datastore_id = "truenas1"
+    datastore_id = var.vm_storage
     interface    = "scsi0"
     size         = 60
     discard      = "on"
@@ -34,7 +34,7 @@ resource "proxmox_virtual_environment_vm" "k8s_control_plane" {
     ssd          = true
   }
   initialization {
-    datastore_id = "truenas1"
+    datastore_id = var.vm_storage
     dns {
       servers = local.k8s_vlan.ipv4_dns_servers
     }
@@ -92,13 +92,13 @@ resource "proxmox_virtual_environment_vm" "k8s_workers" {
   vm_id       = each.value.vm_id
 
   clone {
-    datastore_id = "truenas1"
-    node_name    = "pve3"
+    datastore_id = var.vm_template_storage.name
+    node_name    = var.vm_template_storage.node
     vm_id        = var.vm_templates[each.value.cloud_init_image].vm_id
     full         = true
   }
   disk {
-    datastore_id = "truenas1"
+    datastore_id = var.vm_storage
     interface    = "scsi0"
     size         = 60
     discard      = "on"
@@ -106,7 +106,7 @@ resource "proxmox_virtual_environment_vm" "k8s_workers" {
     ssd          = true
   }
   initialization {
-    datastore_id = "truenas1"
+    datastore_id = var.vm_storage
     dns {
       servers = local.k8s_vlan.ipv4_dns_servers
     }

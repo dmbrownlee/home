@@ -131,3 +131,20 @@ variable "iso_storage" {
     name = string
   })
 }
+
+#=========================
+# VM template storage
+#=========================
+variable "vm_template_storage" {
+  type = object({
+    node = string,
+    name = string
+  })
+}
+
+#=========================
+# VM storage
+#=========================
+variable "vm_storage" {
+  type = string
+}

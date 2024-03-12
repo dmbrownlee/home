@@ -20,8 +20,8 @@ resource "proxmox_virtual_environment_vm" "load_balancers" {
   vm_id       = each.value.vm_id
 
   clone {
-    datastore_id = "truenas1"
-    node_name    = "pve3"
+    datastore_id = var.vm_template_storage.name
+    node_name    = var.vm_template_storage.node
     vm_id        = var.vm_templates[each.value.cloud_init_image].vm_id
     full         = true
   }
@@ -30,7 +30,7 @@ resource "proxmox_virtual_environment_vm" "load_balancers" {
     cores   = 1
   }
   disk {
-    datastore_id = "truenas1"
+    datastore_id = var.vm_storage
     interface    = "scsi0"
     size         = 20
     discard      = "on"
@@ -38,7 +38,7 @@ resource "proxmox_virtual_environment_vm" "load_balancers" {
     ssd          = true
   }
   initialization {
-    datastore_id = "truenas1"
+    datastore_id = var.vm_storage
     dns {
       servers = local.lb_vlan.ipv4_dns_servers
     }
