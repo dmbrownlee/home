@@ -286,7 +286,7 @@ vms = [
       disk      = 40
     }
     mac_address      = "ca:fe:01:05:00:01",
-    vlan_id          = 80,
-    ipv4_address     = "192.168.83.90/24"
+    vlan_id          = 1000,
+    ipv4_address     = "192.168.80.90/24"
   }
 ]

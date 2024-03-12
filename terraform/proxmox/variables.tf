@@ -28,14 +28,14 @@ variable "vms" {
     role             = string,
     pve_node         = string,
     cloud_init_image = string,
-    hardware         = object({
+    hardware = object({
       cpu_cores = number,
       memory    = number,
       disk      = number
     })
-    mac_address      = string,
-    vlan_id          = number,
-    ipv4_address     = string
+    mac_address  = string,
+    vlan_id      = number,
+    ipv4_address = string
   }))
 }
 
