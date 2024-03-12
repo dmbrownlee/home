@@ -3,7 +3,10 @@ locals {
 }
 
 resource "proxmox_virtual_environment_vm" "minikube" {
-  depends_on  = [proxmox_virtual_environment_vm.vm_templates]
+  depends_on  = [
+    proxmox_virtual_environment_vm.vm_templates,
+    proxmox_virtual_environment_vm.dnsmasq
+  ]
   for_each = { for vm in var.vms: vm.hostname => vm if vm.role == "minikube" }
   name        = each.key
   description = "Managed by Terraform"
@@ -18,7 +21,16 @@ resource "proxmox_virtual_environment_vm" "minikube" {
     full = true
   }
   cpu {
+    sockets = 1
     cores = 8
+  }
+  disk {
+    datastore_id = var.vm_storage
+    interface    = "scsi0"
+    size         = 60
+    discard      = "on"
+    iothread     = true
+    ssd          = true
   }
   initialization {
     datastore_id = var.vm_storage
