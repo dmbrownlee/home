@@ -5,9 +5,9 @@ variable "node_vlan_interfaces" {
 variable "vlans" {
   description = "Map of VLAN objects indexed on name"
   type = list(object({
-    vlan_id = number,
-    comment = string
-    ipv4_gateway = string,
+    vlan_id          = number,
+    comment          = string
+    ipv4_gateway     = string,
     ipv4_dns_servers = list(string)
   }))
 }
@@ -23,14 +23,14 @@ variable "vm_templates" {
 variable "vms" {
   description = "The list of Proxmox VMs"
   type = list(object({
-    vm_id    = number,
-    hostname = string,
-    role     = string,
-    pve_node = string,
+    vm_id            = number,
+    hostname         = string,
+    role             = string,
+    pve_node         = string,
     cloud_init_image = string,
-    mac_address = string,
-    vlan_id = number,
-    ipv4_address = string
+    mac_address      = string,
+    vlan_id          = number,
+    ipv4_address     = string
   }))
 }
 
@@ -109,5 +109,5 @@ variable "vm_template_storage" {
 #=========================
 variable "vm_storage" {
   description = "Name of Proxmox storage location where VM disks are stored"
-  type = string
+  type        = string
 }
