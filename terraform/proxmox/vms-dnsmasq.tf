@@ -1,10 +1,10 @@
 locals {
-  dnsmask_vlan = var.vlans[index(var.vlans.*.comment, "DMZ")]
+  dnsmasq_vlan = var.vlans[index(var.vlans.*.comment, "DMZ")]
 }
 
-resource "proxmox_virtual_environment_vm" "dnsmask" {
+resource "proxmox_virtual_environment_vm" "dnsmasq" {
   depends_on  = [proxmox_virtual_environment_vm.vm_templates]
-  for_each = { for vm in var.vms: vm.hostname => vm if vm.role == "dnsmask" }
+  for_each = { for vm in var.vms: vm.hostname => vm if vm.role == "dnsmasq" }
   name        = each.key
   description = "Managed by Terraform"
   tags        = ["terraform", each.value.cloud_init_image, each.value.role]
@@ -28,12 +28,12 @@ resource "proxmox_virtual_environment_vm" "dnsmask" {
   initialization {
     datastore_id = var.vm_storage
     dns {
-      servers = local.dnsmask_vlan.ipv4_dns_servers
+      servers = local.dnsmasq_vlan.ipv4_dns_servers
     }
     ip_config {
       ipv4 {
         address = each.value.ipv4_address
-        gateway = local.dnsmask_vlan.ipv4_gateway
+        gateway = local.dnsmasq_vlan.ipv4_gateway
       }
     }
     user_account {

@@ -5,7 +5,7 @@ locals {
 resource "proxmox_virtual_environment_vm" "k8s_workers" {
   depends_on  = [
     proxmox_virtual_environment_vm.vm_templates,
-    proxmox_virtual_environment_vm.dnsmask
+    proxmox_virtual_environment_vm.dnsmasq
   ]
   for_each = { for vm in var.vms: vm.hostname => vm if vm.role == "k8s_worker" }
   name        = each.key
