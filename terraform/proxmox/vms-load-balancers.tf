@@ -22,12 +22,12 @@ resource "proxmox_virtual_environment_vm" "load_balancers" {
   }
   cpu {
     sockets = 1
-    cores   = 1
+    cores   = each.value.hardware.cpu_cores
   }
   disk {
     datastore_id = var.vm_storage
     interface    = "scsi0"
-    size         = 20
+    size         = each.value.hardware.disk
     discard      = "on"
     iothread     = true
     ssd          = true
@@ -50,8 +50,8 @@ resource "proxmox_virtual_environment_vm" "load_balancers" {
     }
   }
   memory {
-    dedicated = 512
-    floating  = 512
+    dedicated = each.value.hardware.memory
+    floating  = each.value.hardware.memory
   }
   network_device {
     bridge      = "vmbr0"

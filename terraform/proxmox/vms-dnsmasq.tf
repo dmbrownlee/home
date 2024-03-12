@@ -19,12 +19,12 @@ resource "proxmox_virtual_environment_vm" "dnsmasq" {
   }
   cpu {
     sockets = 1
-    cores   = 1
+    cores   = each.value.hardware.cpu_cores
   }
   disk {
     datastore_id = var.vm_storage
     interface    = "scsi0"
-    size         = 20
+    size         = each.value.hardware.disk
     discard      = "on"
     iothread     = true
     ssd          = true
@@ -47,8 +47,8 @@ resource "proxmox_virtual_environment_vm" "dnsmasq" {
     }
   }
   memory {
-    dedicated = 1024
-    floating  = 1024
+    dedicated = each.value.hardware.memory
+    floating  = each.value.hardware.memory
   }
   network_device {
     bridge      = "vmbr0"
