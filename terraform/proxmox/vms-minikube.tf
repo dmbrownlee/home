@@ -22,12 +22,12 @@ resource "proxmox_virtual_environment_vm" "minikube" {
   }
   cpu {
     sockets = 1
-    cores   = 8
+    cores   = each.value.hardware.cpu_cores
   }
   disk {
     datastore_id = var.vm_storage
     interface    = "scsi0"
-    size         = 60
+    size         = each.value.hardware.disk
     discard      = "on"
     iothread     = true
     ssd          = true
@@ -50,8 +50,8 @@ resource "proxmox_virtual_environment_vm" "minikube" {
     }
   }
   memory {
-    dedicated = 16384
-    floating  = 16384
+    dedicated = each.value.hardware.memory
+    floating  = each.value.hardware.memory
   }
   network_device {
     bridge      = "vmbr0"
