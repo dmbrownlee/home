@@ -2,9 +2,28 @@
 # tasks file for workstation_brave
 - name: Ensure brave is installed (Debian)
   block:
-    - name: TODO - Brave Install (Debian)
-      debug:
-        msg: "Installation of Brave on Debian is not yet implemented."
+    - name: Ensure GPG is installed
+      ansible.builtin.apt:
+        name: gnupg
+        state: present
+        update_cache: true
+      become: true
+    - name: Ensure GPG key for Brave is installed
+      ansible.builtin.apt_key:
+        url: https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+        keyring: /etc/apt/trusted.gpg.d/brave-browser-archive.gpg
+      become: true
+    - name: Ensure apt repo for Brave browser is configured
+      ansible.builtin.copy:
+        content: "deb [signed-by=/etc/apt/trusted.gpg.d/brave-browser-archive.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"
+        dest: /etc/apt/sources.list.d/brave-browser-release.list
+      become: true
+    - name: Ensure Brave is installed
+      ansible.builtin.apt:
+        name: brave-browser
+        state: present
+        update_cache: true
+      become: true
   when: ansible_distribution == "Debian"
 - name: Ensure brave is installed (Fedora)
   block:
