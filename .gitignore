@@ -14,7 +14,7 @@ vaultpw
 #===========================
 # Excludes for terraform
 #===========================
-secrets.tfvars
+*.tfvars
 .terraform/
 .terraform.lock.hcl
 .terraform.tfstate.lock.info
