@@ -15,4 +15,4 @@ galaxy_info:
 
   galaxy_tags: []
 dependencies:
-  - role: dmbrownlee.updated_package_cache
+  - role: updated_package_cache

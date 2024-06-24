@@ -15,5 +15,5 @@ galaxy_info:
 
   galaxy_tags: []
 dependencies:
-  - role: dmbrownlee.updated_package_cache
-  - role: dmbrownlee.postgresql
+  - role: updated_package_cache
+  - role: postgresql
