@@ -26,6 +26,10 @@ terraform.tfstate*backup
 *.tfstate
 *.tfstate.*backup
 #===========================
+# Excludes for kubernetes
+#===========================
+**/kubeconfig
+#===========================
 # Other files
 #===========================
 .travis.yml
