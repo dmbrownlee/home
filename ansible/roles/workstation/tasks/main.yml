@@ -22,6 +22,28 @@
         dest: /etc/systemd/system/default.target
         state: link
   when: ansible_distribution == "Fedora"
+- name: Workstation (Debian)
+  block:
+    - name: Ensure the ansible user is hidden from the login screen
+      ansible.builtin.copy:
+        src: ansible
+        dest: /var/lib/AccountsService/users
+        mode: '0600'
+      notify: restart_display_manager
+    - name: Ensure Debian workstation specific packages are installed
+      ansible.builtin.dnf:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ debian_workstation_packages }}"
+      when:
+        - debian_workstation_packages is defined
+        - (debian_workstation_packages | length > 0)
+    - name: Ensure default systemd target is graphical.target
+      ansible.builtin.file:
+        src: /usr/lib/systemd/system/graphical.target
+        dest: /etc/systemd/system/default.target
+        state: link
+  when: ansible_distribution == "Debian"
 - name: Add-on software
   block:
     - name: Install Brave
