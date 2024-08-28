@@ -69,6 +69,9 @@ resource "proxmox_virtual_environment_vm" "k8s_servers" {
   provisioner "remote-exec" {
     inline = ["hostnamectl"]
   }
+  startup {
+    order = 10
+  }
   vga {
     type = "qxl"
   }
@@ -144,6 +147,9 @@ resource "proxmox_virtual_environment_vm" "k8s_agents" {
   }
   provisioner "remote-exec" {
     inline = ["hostnamectl"]
+  }
+  startup {
+    order = 20
   }
   vga {
     type = "qxl"
