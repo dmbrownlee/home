@@ -1,0 +1,14 @@
+token: {{ k3s_token }}
+{% if k3s_role == "k3s_initial_cp" %}
+tls-san:
+  - {{ k3s_vip_ip }}
+  - {{ k3s_vip_hostname }}
+  - {{ k3s_vip_hostname }}.{{ k3s_vip_domain }}
+{% endif %}
+{% if k3s_role == "k3s_initial_cp" or k3s_role == "k3s_server" %}
+disable:
+  - servicelb
+{% endif %}
+{% if k3s_role == "k3s_server" or k3s_role == "k3s_agent" %}
+server: {{ k3s_api_url }}
+{% endif %}
