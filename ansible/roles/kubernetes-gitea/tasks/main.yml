@@ -1,0 +1,28 @@
+---
+- name: Ensure the helm repo for gitea is added
+  kubernetes.core.helm_repository:
+    kubeconfig: "{{ k3s_local_kubeconfig_path }}"
+    name: gitea-charts
+    repo_url: "https://dl.gitea.com/charts/"
+- name: Ensure the gitea helm chart is installed
+  kubernetes.core.helm:
+    kubeconfig: "{{ k3s_local_kubeconfig_path }}"
+    name: gitea
+    chart_ref: gitea-charts/gitea
+    release_namespace: gitea
+    create_namespace: true
+    values:
+      ingress:
+        enabled: true
+        className: traefik
+        hosts:
+          - host: "{{ cnames.gitea }}"
+            paths:
+              - path: /
+                pathType: Prefix
+      extraVolumes:
+        - name: backup-pvc
+          volumeName: text
+      # extraContainerVolumeMounts:
+      #   - name: foo
+      #     mountPath: /backups

@@ -1,0 +1,9 @@
+---
+- name: Immich Installation
+  hosts: immich_clusters
+  roles:
+    - kubernetes-immich
+- name: Gitea Installation
+  hosts: gitea_clusters
+  roles:
+    - kubernetes-gitea
